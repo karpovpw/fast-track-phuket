@@ -299,7 +299,7 @@ function App() {
             <h2 style={{ fontSize: '2.5rem' }}>{t('reviews.title')}</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
               <div key={i} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div style={{ color: 'var(--color-gold)' }}>
                   <Quote size={32} style={{ opacity: 0.3 }} />

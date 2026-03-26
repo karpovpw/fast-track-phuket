@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Globe, MessageCircle, Star, Shield, Luggage, Building, 
   ChevronDown, Send, X, Check, ArrowRight,
-  Coins, CreditCard, Users, Quote
+  Coins, CreditCard, Quote
 } from 'lucide-react';
 import Hero3D from './components/Hero3D';
 import './index.css';
@@ -280,8 +280,8 @@ function App() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2.5rem' }}>
             {[1, 2, 3].map(i => (
               <div key={i} className="card" style={{ textAlign: 'center', padding: '3rem 2rem' }}>
-                <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--color-gold)', margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-bg)' }}>
-                  <Users size={40} />
+                <div style={{ width: '100px', height: '100px', borderRadius: '50%', margin: '0 auto 1.5rem', overflow: 'hidden', border: '2px solid var(--color-gold)' }}>
+                  <img src={`/w${i}.png`} alt={t(`team.w${i}.n`)} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>{t(`team.w${i}.n`)}</h4>
                 <div style={{ color: 'var(--color-gold)', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', marginBottom: '1.2rem' }}>{t(`team.w${i}.r`)}</div>
@@ -299,7 +299,7 @@ function App() {
             <h2 style={{ fontSize: '2.5rem' }}>{t('reviews.title')}</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-            {[1, 2, 3].map(i => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i => (
               <div key={i} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div style={{ color: 'var(--color-gold)' }}>
                   <Quote size={32} style={{ opacity: 0.3 }} />
@@ -388,29 +388,29 @@ function App() {
       </footer>
 
       {/* Modals */}
-      <SimpleModal isOpen={activeModal === 'tdac'} onClose={() => setActiveModal(null)} title="Thailand Digital Arrival Card Guide" highlight={true}>
+      <SimpleModal isOpen={activeModal === 'tdac'} onClose={() => setActiveModal(null)} title={t("tdac_modal.title")} highlight={true}>
         <div style={{ color: 'var(--color-text-secondary)', lineHeight: 1.8 }}>
-          <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem', color: '#fff' }}>The official TDAC form is required for 2026 entry.</p>
+          <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem', color: '#fff' }}>{t("tdac_modal.p1")}</p>
           <div style={{ background: 'rgba(212, 175, 55, 0.1)', padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem', border: '1px solid var(--color-gold)' }}>
-            <h4 style={{ color: 'var(--color-gold)', marginBottom: '0.5rem' }}>⚠️ SCAM PROTECTION</h4>
-            <p>The official portal is <strong>100% free</strong>. Never pay for this form. Use ONLY <strong>tdac.immigration.go.th</strong>.</p>
+            <h4 style={{ color: 'var(--color-gold)', marginBottom: '0.5rem' }}>{t("tdac_modal.scam_title")}</h4>
+            <p>{t("tdac_modal.scam_desc")}</p>
           </div>
-          <h4 style={{ color: '#fff', marginBottom: '1rem' }}>Filing Guide:</h4>
+          <h4 style={{ color: '#fff', marginBottom: '1rem' }}>{t("tdac_modal.guide_title")}</h4>
           <ol style={{ paddingLeft: '1.5rem', display: 'grid', gap: '0.8rem' }}>
-            <li>Register at the official portal 72h before landing.</li>
-            <li>Port: Select <strong>Phuket Airport (HKT)</strong>.</li>
-            <li>Accurately input passport and flight TG/EK numbers.</li>
-            <li>Save the resulting QR code – you MUST show it on your phone.</li>
+            <li>{t("tdac_modal.step1")}</li>
+            <li>{t("tdac_modal.step2")}</li>
+            <li>{t("tdac_modal.step3")}</li>
+            <li>{t("tdac_modal.step4")}</li>
           </ol>
         </div>
       </SimpleModal>
 
-      <SimpleModal isOpen={activeModal === 'terms'} onClose={() => setActiveModal(null)} title="Terms & Conditions">
-        <p style={{ lineHeight: 1.7 }}>Service is non-refundable 24 hours prior to arrival. 100% refund if the airline cancels the flight. We track all delays automatically.</p>
+      <SimpleModal isOpen={activeModal === 'terms'} onClose={() => setActiveModal(null)} title={t("modal.terms.title")}>
+        <p style={{ lineHeight: 1.7 }}>{t("modal.terms.desc")}</p>
       </SimpleModal>
 
-      <SimpleModal isOpen={activeModal === 'privacy'} onClose={() => setActiveModal(null)} title="Privacy Policy">
-        <p style={{ lineHeight: 1.7 }}>We securely process your name and flight number only for coordination. Data is wiped after service completion. Conversations via WhatsApp/Telegram are end-to-end encrypted.</p>
+      <SimpleModal isOpen={activeModal === 'privacy'} onClose={() => setActiveModal(null)} title={t("modal.privacy.title")}>
+        <p style={{ lineHeight: 1.7 }}>{t("modal.privacy.desc")}</p>
       </SimpleModal>
 
     </div>

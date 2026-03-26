@@ -50,6 +50,13 @@ en_dict = {
   "reviews.1.n": "John D.", "reviews.1.t": "Life saver!", "reviews.1.d": "Skipped a 2-hour queue at HKT. The concierge was already waiting at the gate.",
   "reviews.2.n": "Maria S.", "reviews.2.t": "Perfect for families", "reviews.2.d": "Traveling with kids was so much easier. Fast, efficient, and very polite.",
   "reviews.3.n": "Viktor K.", "reviews.3.t": "Worth every cent", "reviews.3.d": "Professional service from start to finish. Best way to start a holiday in Phuket.",
+  "reviews.4.n": "Sarah M.", "reviews.4.t": "Smooth and stress-free", "reviews.4.d": "I was nervous about arriving in Thailand, but the escort made everything seamless.",
+  "reviews.5.n": "David L.", "reviews.5.t": "Excellent coordination", "reviews.5.d": "My flight was delayed, but the team adjusted automatically without any extra charge.",
+  "reviews.6.n": "Elena R.", "reviews.6.t": "Incredible VIP feeling", "reviews.6.d": "From landing to the taxi, everything took me exactly 6 minutes.",
+  "reviews.7.n": "Lucas H.", "reviews.7.t": "Highly recommended", "reviews.7.d": "The dedicated priority lane was completely empty. I'll use this every time from now on.",
+  "reviews.8.n": "Priya T.", "reviews.8.t": "Friendly and helpful", "reviews.8.d": "The staff helped me carry my bags and navigated me to the driver.",
+  "reviews.9.n": "Ahmed Y.", "reviews.9.t": "Great value", "reviews.9.d": "Given how long the normal line was, the price was absolutely worth the time saved.",
+  "reviews.10.n": "Emma P.", "reviews.10.t": "Flawless service", "reviews.10.d": "Very polite staff, accurate communication, and delivered exactly what was promised.",
 
   "team.title": "Airport Professionals You Can Trust",
   "team.subtitle": "Our experienced team has processed over 10,000 travelers at Phuket International Airport since 2019.",
@@ -79,7 +86,22 @@ en_dict = {
   "faq.3.q": "Do you help with Thai forms?", "faq.3.a": "Yes, our team assists you in filling out all mandatory entry forms.",
 
   "footer.legal": "© 2015-2026 Phuket Airport Fast Track. All rights reserved.",
-  "modal.close": "Close Window"
+  "modal.close": "Close Window",
+
+  "tdac_modal.title": "Thailand Digital Arrival Card Guide",
+  "tdac_modal.p1": "The official TDAC form is required for 2026 entry.",
+  "tdac_modal.scam_title": "⚠️ SCAM PROTECTION",
+  "tdac_modal.scam_desc": "The official portal is 100% free. Never pay for this form. Use ONLY tdac.immigration.go.th.",
+  "tdac_modal.guide_title": "Filing Guide:",
+  "tdac_modal.step1": "Register at the official portal 72h before landing.",
+  "tdac_modal.step2": "Port: Select Phuket Airport (HKT).",
+  "tdac_modal.step3": "Accurately input passport and flight TG/EK numbers.",
+  "tdac_modal.step4": "Save the resulting QR code – you MUST show it on your phone.",
+
+  "modal.terms.title": "Terms & Conditions",
+  "modal.terms.desc": "Service is non-refundable 24 hours prior to arrival. 100% refund if the airline cancels the flight. We track all delays automatically.",
+  "modal.privacy.title": "Privacy Policy",
+  "modal.privacy.desc": "We securely process your name and flight number only for coordination. Data is wiped after service completion. Conversations via WhatsApp/Telegram are end-to-end encrypted."
 }
 
 with open('src/locales/en.json', 'w', encoding='utf-8') as f:
@@ -103,7 +125,7 @@ for lang in languages:
     print(f"Translating to {lang}...")
     lang_dict = {}
     for k, v in en_dict.items():
-        if isinstance(v, str):
+        if isinstance(v, str) and not k.endswith('.n'):
             lang_dict[k] = translate_text(v, lang)
             time.sleep(0.1) # Be nice to Google
         else:

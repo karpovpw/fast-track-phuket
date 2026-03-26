@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Globe, MessageCircle, Star, Shield, Luggage, Building, 
   ChevronDown, Send, X, Check, ArrowRight,
-  BookOpen, Coins, Flag
+  Coins, CreditCard, Users, Quote
 } from 'lucide-react';
 import Hero3D from './components/Hero3D';
 import './index.css';
@@ -73,9 +73,9 @@ function App() {
   };
 
   const paymentMethods = [
-    { key: "1", icon: <Building size={24} />, title: "Bank Transfer", desc: "Thai bank QR payment in THB — instant confirmation." },
-    { key: "3", icon: <Coins size={24} />, title: "USDT Crypto", desc: "TRC20 or ERC20 USDT transfer accepted." },
-    { key: "6", icon: <Flag size={24} />, title: "Russian Cards", desc: "Payment in rubles to Russian bank cards." }
+    { key: "1", icon: <Building size={24} />, title: t("payments.1.t"), desc: t("payments.1.d") },
+    { key: "2", icon: <Coins size={24} />, title: t("payments.2.t"), desc: t("payments.2.d") },
+    { key: "4", icon: <CreditCard size={24} />, title: t("payments.4.t"), desc: t("payments.4.d") }
   ];
 
   return (
@@ -243,30 +243,73 @@ function App() {
         </div>
       </section>
 
-      {/* TDAC Highlight Card */}
+      {/* Featured TDAC Guide */}
       <section style={{ padding: '6rem 0' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-            <div 
-              className="card" onClick={() => setActiveModal('tdac')} 
-              style={{ background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(10,10,10,0) 100%)', border: '2px solid var(--color-gold)', cursor: 'pointer', position: 'relative' }}
-            >
-              <div style={{ position: 'absolute', top: '1.2rem', right: '1.2rem', background: 'var(--color-gold)', color: 'var(--color-bg)', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 800 }}>REQUIRED</div>
-              <Star size={32} className="text-gold" style={{ marginBottom: '1.5rem' }} />
-              <h3>Official TDAC 2026 Guide</h3>
-              <p style={{ color: 'var(--color-text-secondary)', marginTop: '1rem', lineHeight: 1.6 }}>Step-by-step instructions on filling the mandatory Thailand Arrival Card for free. Avoid common scams.</p>
-              <div style={{ marginTop: '2.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-gold)', fontWeight: 700 }}>
-                View Guide Now <ArrowRight size={18} />
-              </div>
+          <div 
+            className="card" onClick={() => setActiveModal('tdac')} 
+            style={{ 
+              background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(10,10,10,0.5) 100%)', 
+              border: '2px solid var(--color-gold)', 
+              cursor: 'pointer', 
+              position: 'relative',
+              padding: '4rem',
+              textAlign: 'center'
+            }}
+          >
+            <div style={{ background: 'var(--color-gold)', color: 'var(--color-bg)', padding: '0.4rem 1.2rem', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 800, position: 'absolute', top: '2rem', left: '50%', transform: 'translateX(-50%)' }}>MANDATORY FOR 2026</div>
+            <Star size={48} className="text-gold" style={{ marginTop: '1.5rem', marginBottom: '2rem' }} />
+            <h2 style={{ fontSize: '3rem', marginBottom: '1.5rem' }}>{t('guides.tdac.t')}</h2>
+            <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.25rem', maxWidth: '800px', margin: '0 auto 2.5rem', lineHeight: 1.6 }}>
+              {t('guides.tdac.d')}
+            </p>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', color: 'var(--color-gold)', fontWeight: 800, fontSize: '1.2rem', borderBottom: '2px solid' }}>
+              READ THE OFFICIAL GUIDE <ArrowRight size={24} />
             </div>
-            {['arr-guide', 'ft-what', 'entry'].map((guide, i) => (
-              <div key={guide} className="card" onClick={() => setActiveModal(guide)} style={{ cursor: 'pointer' }}>
-                <BookOpen size={32} style={{ marginBottom: '1.5rem', opacity: 0.5 }} />
-                <h3>{t(`guides.${i+1}.t`)}</h3>
-                <p style={{ color: 'var(--color-text-secondary)', marginTop: '1.1rem', lineHeight: 1.5 }}>{t(`guides.${i+1}.d`)}</p>
-                <div style={{ marginTop: '2.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--color-gold)' }}>
-                  Learn More <ArrowRight size={16} />
+          </div>
+        </div>
+      </section>
+
+      {/* Workers / Team Section */}
+      <section style={{ padding: '6rem 0' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <h2 style={{ fontSize: '2.5rem', marginBottom: '1.2rem' }}>{t('team.title')}</h2>
+            <p style={{ color: 'var(--color-text-secondary)', maxWidth: '600px', margin: '0 auto' }}>{t('team.subtitle')}</p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2.5rem' }}>
+            {[1, 2, 3].map(i => (
+              <div key={i} className="card" style={{ textAlign: 'center', padding: '3rem 2rem' }}>
+                <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--color-gold)', margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-bg)' }}>
+                  <Users size={40} />
                 </div>
+                <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>{t(`team.w${i}.n`)}</h4>
+                <div style={{ color: 'var(--color-gold)', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', marginBottom: '1.2rem' }}>{t(`team.w${i}.r`)}</div>
+                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.95rem', lineHeight: 1.6 }}>{t(`team.w${i}.d`)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reviews Section */}
+      <section style={{ padding: '6rem 0', background: 'rgba(20,20,20,0.4)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <h2 style={{ fontSize: '2.5rem' }}>{t('reviews.title')}</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+            {[1, 2, 3].map(i => (
+              <div key={i} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <div style={{ color: 'var(--color-gold)' }}>
+                  <Quote size={32} style={{ opacity: 0.3 }} />
+                </div>
+                <div style={{ display: 'flex', gap: '0.25rem' }}>
+                  {[1, 2, 3, 4, 5].map(star => <Star key={star} size={16} fill="var(--color-gold)" className="text-gold" />)}
+                </div>
+                <h4 style={{ fontSize: '1.1rem' }}>"{t(`reviews.${i}.t`)}"</h4>
+                <p style={{ color: 'var(--color-text-secondary)', fontStyle: 'italic', flex: 1 }}>{t(`reviews.${i}.d`)}</p>
+                <div style={{ fontWeight: 600 }}>{t(`reviews.${i}.n`)}</div>
               </div>
             ))}
           </div>
@@ -360,25 +403,6 @@ function App() {
             <li>Save the resulting QR code – you MUST show it on your phone.</li>
           </ol>
         </div>
-      </SimpleModal>
-
-      <SimpleModal isOpen={activeModal === 'arr-guide'} onClose={() => setActiveModal(null)} title={t('guides.1.t')}>
-        <p style={{ lineHeight: 1.6 }}>{t('guides.1.d')}</p>
-        <p style={{ marginTop: '1.5rem', color: '#fff' }}>Arrival process without VIP: 60-90 minutes. With Fast Track: Under 5 minutes.</p>
-      </SimpleModal>
-
-      <SimpleModal isOpen={activeModal === 'ft-what'} onClose={() => setActiveModal(null)} title={t('guides.2.t')}>
-        <p style={{ lineHeight: 1.6 }}>{t('guides.2.d')}</p>
-        <p style={{ marginTop: '1.5rem', color: '#fff' }}>A dedicated officer greets you with a sign, takes you through the priority lane, and handles baggage identification.</p>
-      </SimpleModal>
-
-      <SimpleModal isOpen={activeModal === 'entry'} onClose={() => setActiveModal(null)} title={t('guides.3.t')}>
-        <p style={{ lineHeight: 1.6 }}>{t('guides.3.d')}</p>
-        <ul style={{ paddingLeft: '1.5rem', marginTop: '1.5rem' }}>
-          <li>Passport (6mo validity)</li>
-          <li>TDAC QR Code</li>
-          <li>Hotel Address</li>
-        </ul>
       </SimpleModal>
 
       <SimpleModal isOpen={activeModal === 'terms'} onClose={() => setActiveModal(null)} title="Terms & Conditions">

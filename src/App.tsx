@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Globe, MessageCircle, Star, Shield, Luggage, Building, 
   ChevronDown, Send, X, Check, ArrowRight,
-  BookOpen, Coins, Flag, Phone
+  BookOpen, Coins, Flag
 } from 'lucide-react';
 import Hero3D from './components/Hero3D';
 import './index.css';
@@ -102,9 +102,6 @@ function App() {
             </a>
             <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="animate-bounce-soft" style={{ color: '#25D366', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
               <MessageCircle size={18} /> <span>WhatsApp</span>
-            </a>
-            <a href="tel:+66993879422" style={{ color: 'var(--color-gold)', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
-              <Phone size={18} /> <span>Call</span>
             </a>
           </div>
 

@@ -2,16 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://fast-track-phuket.com/</loc>
-    <lastmod>2026-03-26</lastmod>
+    <lastmod>2026-03-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fast-track-phuket.com/" />
     <xhtml:link rel="alternate" hreflang="ru" href="https://fast-track-phuket.com/?lang=ru" />
     <xhtml:link rel="alternate" hreflang="zh" href="https://fast-track-phuket.com/?lang=zh" />
     <xhtml:link rel="alternate" hreflang="hi" href="https://fast-track-phuket.com/?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://fast-track-phuket.com/?lang=he" />
     <xhtml:link rel="alternate" hreflang="ar" href="https://fast-track-phuket.com/?lang=ar" />
     <xhtml:link rel="alternate" hreflang="es" href="https://fast-track-phuket.com/?lang=es" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://fast-track-phuket.com/?lang=de" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://fast-track-phuket.com/?lang=fr" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://fast-track-phuket.com/?lang=de" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://fast-track-phuket.com/?lang=it" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fast-track-phuket.com/" />
+  </url>
+  <url>
+    <loc>https://fast-track-phuket.com/llms.txt</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://fast-track-phuket.com/llms-full.txt</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://fast-track-phuket.com/ai.txt</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

@@ -1,4 +1,49 @@
+# Welcome all crawlers — Phuket Airport Fast Track
+# https://fast-track-phuket.com
+
 User-agent: *
 Allow: /
 
+# Explicitly welcome AI crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
 Sitemap: https://fast-track-phuket.com/sitemap.xml
+
+# AI-friendly content files
+# LLM context: https://fast-track-phuket.com/llms.txt
+# LLM full context: https://fast-track-phuket.com/llms-full.txt
+# AI permissions: https://fast-track-phuket.com/ai.txt

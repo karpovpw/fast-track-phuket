@@ -125,118 +125,57 @@ function App() {
 
       {/* Navigation */}
       <nav style={{ padding: '0.75rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'rgba(10, 10, 10, 0.6)', backdropFilter: 'blur(15px)', position: 'sticky', top: 0, zIndex: 100, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        
+        {/* Language Selector (Moved to Left) */}
+        <div style={{ position: 'relative' }}>
+          <button onClick={() => setLangOpen(!langOpen)} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,0.2)', padding: '0.4rem 0.6rem', borderRadius: '4px', cursor: 'pointer', fontSize: '0.8rem' }}>
+            <Globe size={16} /> <span className="mobile-hide">{languages.find(l => l.code === i18n.language)?.name || 'Language'}</span> <ChevronDown size={12} />
+          </button>
+          <AnimatePresence>
+            {langOpen && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
+                style={{ position: 'absolute', top: '100%', left: 0, marginTop: '0.5rem', backgroundColor: 'var(--color-surface)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.2rem', minWidth: '130px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)', zIndex: 1000 }}
+              >
+                {languages.map(lang => (
+                  <button key={lang.code} onClick={() => changeLanguage(lang.code)} style={{ textAlign: 'left', padding: '0.4rem 0.8rem', background: 'transparent', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: '0.85rem' }}>
+                    {lang.name}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
         <div style={{ fontWeight: 700, fontSize: '1.4rem', fontFamily: 'var(--font-heading)', letterSpacing: '1px' }}>
           FAST<span className="text-gold">TRACK</span>
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-          
-          {/* Top Bar Chat Buttons with Text Labels */}
+          {/* Top Bar Chat Buttons with Text Labels (Reduced on Mobile) */}
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="animate-bounce-soft" style={{ color: '#2AABEE', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
+            <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="mobile-hide" style={{ color: '#2AABEE', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
               <Send size={18} /> <span>{t('nav.telegram') || 'Telegram'}</span>
             </a>
-            <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="animate-bounce-soft" style={{ color: '#25D366', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
+            <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="mobile-hide" style={{ color: '#25D366', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
               <MessageCircle size={18} /> <span>{t('nav.whatsapp') || 'WhatsApp'}</span>
             </a>
-          </div>
-
-          <div style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.1)' }} />
-
-          <div style={{ position: 'relative' }}>
-            <button onClick={() => setLangOpen(!langOpen)} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,0.2)', padding: '0.4rem 0.8rem', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}>
-              <Globe size={16} /> {languages.find(l => l.code === i18n.language)?.name || 'Language'} <ChevronDown size={12} />
-            </button>
-            <AnimatePresence>
-              {langOpen && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
-                  style={{ position: 'absolute', top: '100%', right: 0, marginTop: '0.5rem', backgroundColor: 'var(--color-surface)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.2rem', minWidth: '130px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)' }}
-                >
-                  {languages.map(lang => (
-                    <button key={lang.code} onClick={() => changeLanguage(lang.code)} style={{ textAlign: 'left', padding: '0.4rem 0.8rem', background: 'transparent', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: '0.85rem' }}>
-                      {lang.name}
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
         </div>
       </nav>
 
-      <section style={{ padding: '6rem 0', position: 'relative' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '4rem', alignItems: 'center' }}>
-          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}>
-            <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.1, marginBottom: '1.5rem' }}>{t('hero.title')}</h1>
-            <p style={{ fontSize: '1.25rem', color: 'var(--color-text-secondary)', marginBottom: '2.5rem' }}>{t('hero.subtitle')}</p>
-            <div className="takeaway-list">
+      <section style={{ padding: '8rem 0', position: 'relative' }}>
+        <div className="container" style={{ maxWidth: '900px', textAlign: 'center' }}>
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
+            <h1 style={{ fontSize: 'clamp(3rem, 7vw, 5rem)', lineHeight: 1.1, marginBottom: '2rem' }}>{t('hero.title')}</h1>
+            <p style={{ fontSize: '1.4rem', color: 'var(--color-text-secondary)', marginBottom: '3.5rem', lineHeight: 1.6 }}>{t('hero.subtitle')}</p>
+            <div className="takeaway-list" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
               {[1, 2, 5].map(i => (
-                <div key={i} className="takeaway-item">
+                <div key={i} className="takeaway-item" style={{ maxWidth: '600px', width: '100%', justifyContent: 'center' }}>
                   <Check size={20} className="text-gold" />
-                  <span>{t(`takeaways.${i}`)}</span>
+                  <span style={{ fontSize: '1.1rem' }}>{t(`takeaways.${i}`)}</span>
                 </div>
               ))}
-            </div>
-          </motion.div>
-
-          {/* Calculator with Fixed Labels and Inputs */}
-          <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}>
-            <div className="card" style={{ padding: '2.5rem', border: '1px solid var(--color-gold)', background: 'rgba(10,10,10,0.5)', backdropFilter: 'blur(20px)' }}>
-              <h3 style={{ marginBottom: '1.5rem', textAlign: 'center' }}>{t('calc.title')}</h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <div>
-                  <div style={{ display: 'block', marginBottom: '1.5rem' }}>
-                    <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.service')}</label>
-                    <select value={calcService} onChange={(e) => setCalcService(e.target.value)} style={{ width: '100%', padding: '0.8rem', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '4px' }}>
-                      <option value="arr" style={{ color: '#000' }}>{t('packages.arr.title')} (฿1,700)</option>
-                      <option value="dep" style={{ color: '#000' }}>{t('packages.dep.title')} (฿1,800)</option>
-                      <option value="combo" style={{ color: '#000' }}>{t('packages.combo.title')} (฿3,300)</option>
-                    </select>
-                  </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
-                    <div>
-                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.adults')}</label>
-                      <input 
-                        type="number" min="0" 
-                        value={calcAdults} 
-                        onChange={(e) => setCalcAdults(e.target.value === '' ? '' : parseInt(e.target.value))} 
-                        style={{ width: '100%' }}
-                      />
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.kids')}</label>
-                      <input 
-                        type="number" min="0" 
-                        value={calcKids} 
-                        onChange={(e) => setCalcKids(e.target.value === '' ? '' : parseInt(e.target.value))} 
-                        style={{ width: '100%' }}
-                      />
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.infants') || 'Infants'}</label>
-                      <input 
-                        type="number" min="0" 
-                        value={calcInfants} 
-                        onChange={(e) => setCalcInfants(e.target.value === '' ? '' : parseInt(e.target.value))} 
-                        style={{ width: '100%' }}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div style={{ padding: '1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderRadius: '8px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '0.8rem', opacity: 0.6, marginBottom: '0.25rem' }}>{t('calc.estimate')}</div>
-                  <span style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--color-gold)' }}>฿{totalPrice.toLocaleString()}</span>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                   <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="btn" style={{ background: '#2AABEE', color: '#fff', padding: '1rem' }}>
-                    <Send size={18} /> Telegram
-                  </a>
-                  <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', padding: '1rem' }}>
-                    <MessageCircle size={18} /> WhatsApp
-                  </a>
-                </div>
-              </div>
             </div>
           </motion.div>
         </div>
@@ -253,6 +192,7 @@ function App() {
             {['arr', 'dep', 'combo'].map((pkg) => {
               const iActive = selectedPackage === pkg;
               const isComboFeatured = pkg === 'combo' && !selectedPackage;
+              const pkgPrice = pkg === 'arr' ? '1,700' : pkg === 'dep' ? '1,800' : '3,300';
               return (
               <div 
                 key={pkg} 
@@ -272,7 +212,10 @@ function App() {
                     {t('packages.combo.badge')}
                   </div>
                 )}
-                <h3 style={{ fontSize: '1.75rem', marginBottom: '1.5rem', color: pkg === 'combo' ? 'var(--color-gold)' : '#fff' }}>{t(`packages.${pkg}.title`)}</h3>
+                <div style={{ marginBottom: '1.5rem' }}>
+                  <h3 style={{ fontSize: '1.75rem', marginBottom: '0.25rem', color: pkg === 'combo' ? 'var(--color-gold)' : '#fff' }}>{t(`packages.${pkg}.title`)}</h3>
+                  <div style={{ fontSize: '1.2rem', fontWeight: 700, opacity: 0.9 }}>฿{pkgPrice}</div>
+                </div>
                 <div style={{ flex: 1, marginBottom: '2.5rem' }}>
                   {(t(`packages.${pkg}.features`) as string).split('|').map((feature, idx) => (
                     <div key={idx} style={{ display: 'flex', gap: '0.75rem', marginBottom: '0.75rem', fontSize: '0.95rem', alignItems: 'flex-start' }}>
@@ -403,6 +346,70 @@ function App() {
                 </div>
              </div>
           </div>
+        </div>
+      </section>
+
+      {/* Pricing Calculator Section (Moved Below Prices Table) */}
+      <section style={{ padding: '6rem 0', background: 'rgba(20, 20, 20, 0.5)' }} id="calculator">
+        <div className="container" style={{ maxWidth: '600px' }}>
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <div className="card" style={{ padding: '3rem', border: '1px solid var(--color-gold)', background: 'rgba(10,10,10,0.6)', backdropFilter: 'blur(20px)' }}>
+              <h3 style={{ marginBottom: '2rem', textAlign: 'center', fontSize: '2rem' }}>{t('calc.title')}</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <div>
+                  <div style={{ display: 'block', marginBottom: '1.5rem' }}>
+                    <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.service')}</label>
+                    <select value={calcService} onChange={(e) => setCalcService(e.target.value)} style={{ width: '100%', padding: '1rem', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '4px' }}>
+                      <option value="arr" style={{ color: '#000' }}>{t('packages.arr.title')} (฿1,700)</option>
+                      <option value="dep" style={{ color: '#000' }}>{t('packages.dep.title')} (฿1,800)</option>
+                      <option value="combo" style={{ color: '#000' }}>{t('packages.combo.title')} (฿3,300)</option>
+                    </select>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.adults')}</label>
+                      <input 
+                        type="number" min="0" 
+                        value={calcAdults} 
+                        onChange={(e) => setCalcAdults(e.target.value === '' ? '' : parseInt(e.target.value))} 
+                        style={{ width: '100%', padding: '1rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.kids')}</label>
+                      <input 
+                        type="number" min="0" 
+                        value={calcKids} 
+                        onChange={(e) => setCalcKids(e.target.value === '' ? '' : parseInt(e.target.value))} 
+                        style={{ width: '100%', padding: '1rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.infants') || 'Infants'}</label>
+                      <input 
+                        type="number" min="0" 
+                        value={calcInfants} 
+                        onChange={(e) => setCalcInfants(e.target.value === '' ? '' : parseInt(e.target.value))} 
+                        style={{ width: '100%', padding: '1rem' }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div style={{ padding: '2rem', background: 'rgba(212, 175, 55, 0.15)', borderRadius: '12px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '0.9rem', opacity: 0.6, marginBottom: '0.25rem', fontWeight: 600 }}>{t('calc.estimate')}</div>
+                  <span style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--color-gold)' }}>฿{totalPrice.toLocaleString()}</span>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                   <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="btn" style={{ background: '#2AABEE', color: '#fff', padding: '1.2rem', fontWeight: 700 }}>
+                    <Send size={20} /> Telegram
+                  </a>
+                  <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', padding: '1.2rem', fontWeight: 700 }}>
+                    <MessageCircle size={20} /> WhatsApp
+                  </a>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -566,6 +573,28 @@ function App() {
           ))}
         </div>
       </SimpleModal>
+
+      {/* Floating Chat Buttons */}
+      <div style={{ position: 'fixed', bottom: '2rem', right: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', zIndex: 1000 }}>
+         <motion.a 
+            href={ctaLinks.whatsapp} target="_blank" rel="noreferrer"
+            whileHover={{ scale: 1.1 }}
+            animate={{ y: [0, -6, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            style={{ width: '60px', height: '60px', background: '#25D366', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 25px rgba(37, 211, 102, 0.4)', textDecoration: 'none' }}
+         >
+           <MessageCircle size={32} />
+         </motion.a>
+         <motion.a 
+            href={ctaLinks.telegram} target="_blank" rel="noreferrer"
+            whileHover={{ scale: 1.1 }}
+            animate={{ y: [0, -6, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 2 }}
+            style={{ width: '60px', height: '60px', background: '#2AABEE', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 25px rgba(42, 171, 238, 0.4)', textDecoration: 'none' }}
+         >
+           <Send size={32} />
+         </motion.a>
+      </div>
 
     </div>
   );

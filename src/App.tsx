@@ -124,10 +124,10 @@ function App() {
       </div>
 
       {/* Navigation */}
-      <nav style={{ padding: '0.75rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'rgba(10, 10, 10, 0.6)', backdropFilter: 'blur(15px)', position: 'sticky', top: 0, zIndex: 100, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+      <nav style={{ padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'rgba(10, 10, 10, 0.6)', backdropFilter: 'blur(15px)', top: 0, zIndex: 100, borderBottom: '1px solid rgba(255,255,255,0.05)', position: 'sticky' }}>
         
         {/* Language Selector (Moved to Left) */}
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative', zIndex: 2 }}>
           <button onClick={() => setLangOpen(!langOpen)} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,0.2)', padding: '0.4rem 0.6rem', borderRadius: '4px', cursor: 'pointer', fontSize: '0.8rem' }}>
             <Globe size={16} /> <span className="mobile-hide">{languages.find(l => l.code === i18n.language)?.name || 'Language'}</span> <ChevronDown size={12} />
           </button>
@@ -147,18 +147,19 @@ function App() {
           </AnimatePresence>
         </div>
 
-        <div style={{ fontWeight: 700, fontSize: '1.4rem', fontFamily: 'var(--font-heading)', letterSpacing: '1px' }}>
+        {/* Centered Logo */}
+        <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', fontWeight: 800, fontSize: '1.4rem', fontFamily: 'var(--font-heading)', letterSpacing: '1px', pointerEvents: 'none', whiteSpace: 'nowrap' }}>
           FAST<span className="text-gold">TRACK</span>
         </div>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-          {/* Top Bar Chat Buttons with Text Labels (Reduced on Mobile) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', zIndex: 2 }}>
+          {/* Top Bar Chat Buttons (Responsive) */}
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
             <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="mobile-hide" style={{ color: '#2AABEE', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
-              <Send size={18} /> <span>{t('nav.telegram') || 'Telegram'}</span>
+              <Send size={18} /> <span>Telegram</span>
             </a>
             <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="mobile-hide" style={{ color: '#25D366', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
-              <MessageCircle size={18} /> <span>{t('nav.whatsapp') || 'WhatsApp'}</span>
+              <MessageCircle size={18} /> <span>WhatsApp</span>
             </a>
           </div>
         </div>

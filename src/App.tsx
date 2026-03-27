@@ -185,38 +185,43 @@ function App() {
             <div className="card" style={{ padding: '2.5rem', border: '1px solid var(--color-gold)', background: 'rgba(10,10,10,0.5)', backdropFilter: 'blur(20px)' }}>
               <h3 style={{ marginBottom: '1.5rem', textAlign: 'center' }}>{t('calc.title')}</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr 0.8fr 0.8fr', gap: '1rem' }}>
-                  <div style={{ display: 'block' }}>
+                <div>
+                  <div style={{ display: 'block', marginBottom: '1.5rem' }}>
                     <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.service')}</label>
-                    <select value={calcService} onChange={(e) => setCalcService(e.target.value)}>
-                      <option value="arr">{t('packages.arr.title')} (฿1,700)</option>
-                      <option value="dep">{t('packages.dep.title')} (฿1,800)</option>
-                      <option value="combo">{t('packages.combo.title')} (฿3,300)</option>
+                    <select value={calcService} onChange={(e) => setCalcService(e.target.value)} style={{ width: '100%', padding: '0.8rem', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '4px' }}>
+                      <option value="arr" style={{ color: '#000' }}>{t('packages.arr.title')} (฿1,700)</option>
+                      <option value="dep" style={{ color: '#000' }}>{t('packages.dep.title')} (฿1,800)</option>
+                      <option value="combo" style={{ color: '#000' }}>{t('packages.combo.title')} (฿3,300)</option>
                     </select>
                   </div>
-                  <div>
-                    <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.adults')}</label>
-                    <input 
-                      type="number" min="0" 
-                      value={calcAdults} 
-                      onChange={(e) => setCalcAdults(e.target.value === '' ? '' : parseInt(e.target.value))} 
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.kids')}</label>
-                    <input 
-                      type="number" min="0" 
-                      value={calcKids} 
-                      onChange={(e) => setCalcKids(e.target.value === '' ? '' : parseInt(e.target.value))} 
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.infants') || 'Infants'}</label>
-                    <input 
-                      type="number" min="0" 
-                      value={calcInfants} 
-                      onChange={(e) => setCalcInfants(e.target.value === '' ? '' : parseInt(e.target.value))} 
-                    />
+                  <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{t('calc.adults')}</label>
+                      <input 
+                        type="number" min="0" 
+                        value={calcAdults} 
+                        onChange={(e) => setCalcAdults(e.target.value === '' ? '' : parseInt(e.target.value))} 
+                        style={{ width: '100%' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{t('calc.kids')}</label>
+                      <input 
+                        type="number" min="0" 
+                        value={calcKids} 
+                        onChange={(e) => setCalcKids(e.target.value === '' ? '' : parseInt(e.target.value))} 
+                        style={{ width: '100%' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{t('calc.infants') || 'Infants'}</label>
+                      <input 
+                        type="number" min="0" 
+                        value={calcInfants} 
+                        onChange={(e) => setCalcInfants(e.target.value === '' ? '' : parseInt(e.target.value))} 
+                        style={{ width: '100%' }}
+                      />
+                    </div>
                   </div>
                 </div>
                 <div style={{ padding: '1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderRadius: '8px', textAlign: 'center' }}>
@@ -274,18 +279,41 @@ function App() {
                 </div>
                 
                 <div style={{ marginTop: 'auto' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
-                      <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="btn" style={{ background: '#2AABEE', color: '#fff', fontSize: '0.85rem', padding: '0.8rem' }} onClick={(e) => e.stopPropagation()}>
-                        <Send size={18} /> Telegram
-                      </a>
-                      <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', fontSize: '0.85rem', padding: '0.8rem' }} onClick={(e) => e.stopPropagation()}>
-                        <MessageCircle size={18} /> WhatsApp
-                      </a>
-                    </div>
-                    <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.8rem', opacity: 0.5, fontWeight: 600 }}>
-                      BOOK {pkg === 'arr' ? 'ARRIVAL' : pkg === 'dep' ? 'DEPARTURE' : 'COMBO'} →
-                    </div>
+                  {selectedPackage === pkg && (
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                        <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="btn" style={{ background: '#2AABEE', color: '#fff', fontSize: '0.85rem', padding: '0.8rem' }} onClick={(e) => e.stopPropagation()}>
+                          <Send size={18} /> Telegram
+                        </a>
+                        <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', fontSize: '0.85rem', padding: '0.8rem' }} onClick={(e) => e.stopPropagation()}>
+                          <MessageCircle size={18} /> WhatsApp
+                        </a>
+                      </div>
+                      <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.8rem', opacity: 0.5, fontWeight: 600 }}>
+                        BOOK {pkg === 'arr' ? 'ARRIVAL' : pkg === 'dep' ? 'DEPARTURE' : 'COMBO'} →
+                      </div>
+                    </motion.div>
+                  )}
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reduced Payment Methods */}
+      <section style={{ padding: '6rem 0', background: 'rgba(20,20,20,0.4)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <h2 style={{ fontSize: '2.5rem', marginBottom: '1.1rem' }}>{t('payments.title')}</h2>
+            <p style={{ color: 'var(--color-text-secondary)' }}>Secure and trusted payment options</p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem' }}>
+            {paymentMethods.map(pm => (
+              <div key={pm.key} className="card" style={{ textAlign: 'center' }}>
+                <div style={{ color: 'var(--color-gold)', marginBottom: '1.2rem', display: 'flex', justifyContent: 'center' }}>{pm.icon}</div>
+                <h4 style={{ marginBottom: '1rem', fontSize: '1.2rem' }}>{pm.title}</h4>
+                <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{pm.desc}</p>
               </div>
             ))}
           </div>
@@ -309,7 +337,7 @@ function App() {
                      <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)' }}>{t('packages.th1')}</th>
                      <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)' }}>{t('packages.th2')}</th>
                      <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)', color: 'var(--color-gold)' }}>{t('packages.th3')}</th>
-                     <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)' }}>{t('packages.th4')}</th>
+                     <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)' }}>{t('packages.th4')} <span style={{ background: '#25D366', color: '#fff', padding: '0.1rem 0.4rem', borderRadius: '4px', fontSize: '0.7rem', marginLeft: '0.5rem', fontWeight: 800 }}>50% OFF</span></th>
                      <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)' }}>{t('packages.th5')}</th>
                    </tr>
                  </thead>
@@ -321,7 +349,7 @@ function App() {
                      </td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>฿1,700</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿1,600 / pax</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>฿850 / ฿800</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>฿850</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: '#25D366', fontWeight: 700 }}>FREE</td>
                    </tr>
                    <tr>
@@ -331,7 +359,7 @@ function App() {
                      </td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>฿1,800</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿1,700 / pax</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>฿900 / ฿850</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>฿900</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: '#25D366', fontWeight: 700 }}>FREE</td>
                    </tr>
                    <tr>
@@ -341,7 +369,7 @@ function App() {
                      </td>
                      <td style={{ padding: '1.5rem', fontSize: '1.2rem', fontWeight: 600 }}>฿3,300</td>
                      <td style={{ padding: '1.5rem', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿3,100 / pax</td>
-                     <td style={{ padding: '1.5rem' }}>฿1,650 / ฿1,550</td>
+                     <td style={{ padding: '1.5rem' }}>฿1,650</td>
                      <td style={{ padding: '1.5rem', color: '#25D366', fontWeight: 700 }}>FREE</td>
                    </tr>
                  </tbody>
@@ -415,7 +443,7 @@ function App() {
             <h2 style={{ fontSize: '2.5rem' }}>{t('reviews.title')}</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i => (
               <div key={i} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div style={{ color: 'var(--color-gold)' }}>
                   <Quote size={32} style={{ opacity: 0.3 }} />
@@ -460,7 +488,7 @@ function App() {
         <div className="container" style={{ maxWidth: '850px' }}>
           <h2 style={{ textAlign: 'center', marginBottom: '4rem' }}>{t('faq.title')}</h2>
           <div style={{ display: 'grid', gap: '1.5rem' }}>
-            {[1, 2, 3, 4, 5, 6, 7].map(i => (
+            {[1, 2, 3, 4, 5, 6].map(i => (
               <div key={i} className="card">
                 <h4 style={{ color: 'var(--color-gold)', marginBottom: '0.8rem', fontSize: '1.1rem' }}>{t(`faq.${i}.q`)}</h4>
                 <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{t(`faq.${i}.a`)}</p>
@@ -470,24 +498,7 @@ function App() {
         </div>
       </section>
 
-      {/* Reduced Payment Methods */}
-      <section style={{ padding: '6rem 0', background: 'rgba(10,10,10,0.6)' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '1.1rem' }}>{t('payments.title')}</h2>
-            <p style={{ color: 'var(--color-text-secondary)' }}>Secure and trusted payment options</p>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem' }}>
-            {paymentMethods.map(pm => (
-              <div key={pm.key} className="card" style={{ textAlign: 'center' }}>
-                <div style={{ color: 'var(--color-gold)', marginBottom: '1.2rem' }}>{pm.icon}</div>
-                <h4 style={{ marginBottom: '1rem', fontSize: '1.2rem' }}>{pm.title}</h4>
-                <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{pm.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Reduced Payment Methods (Moved Up) */}
 
       {/* Simplified Footer */}
       <footer style={{ padding: '5rem 0', background: '#050505', borderTop: '1px solid rgba(255,255,255,0.05)' }}>

@@ -250,17 +250,21 @@ function App() {
             <p style={{ color: 'var(--color-text-secondary)', maxWidth: '600px', margin: '0 auto' }}>Official VIP Airport Meet & Assist Services in Phuket since 2013</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem' }}>
-            {['arr', 'dep', 'combo'].map((pkg) => (
+            {['arr', 'dep', 'combo'].map((pkg) => {
+              const iActive = selectedPackage === pkg;
+              const isComboFeatured = pkg === 'combo' && !selectedPackage;
+              return (
               <div 
                 key={pkg} 
                 onClick={() => setSelectedPackage(pkg)}
-                className={`card selectable-card ${selectedPackage === pkg ? 'active' : ''}`}
+                className={`card selectable-card ${iActive ? 'active' : ''}`}
                 style={{ 
                   display: 'flex', flexDirection: 'column', cursor: 'pointer',
-                  border: selectedPackage === pkg ? '2px solid var(--color-gold)' : '1px solid rgba(255,255,255,0.05)',
-                  background: pkg === 'combo' ? 'linear-gradient(180deg, rgba(212, 175, 55, 0.05) 0%, rgba(10,10,10,0.8) 100%)' : 'var(--color-surface)',
-                  transform: selectedPackage === pkg ? 'scale(1.02)' : 'none',
-                  zIndex: selectedPackage === pkg ? 5 : 1
+                  border: iActive || isComboFeatured ? '2px solid var(--color-gold)' : '1px solid rgba(255,255,255,0.05)',
+                  background: pkg === 'combo' ? 'linear-gradient(180deg, rgba(212, 175, 55, 0.08) 0%, rgba(10,10,10,0.85) 100%)' : 'var(--color-surface)',
+                  transform: iActive ? 'scale(1.05)' : (isComboFeatured ? 'scale(1.02)' : 'none'),
+                  zIndex: iActive || isComboFeatured ? 5 : 1,
+                  boxShadow: isComboFeatured ? '0 0 30px rgba(212, 175, 55, 0.15)' : 'none'
                 }}
               >
                 {pkg === 'combo' && (
@@ -296,7 +300,8 @@ function App() {
                   )}
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
         </div>
       </section>
@@ -334,11 +339,25 @@ function App() {
                <table style={{ minWidth: '800px', width: '100%', margin: 0, border: 'none' }}>
                  <thead>
                    <tr>
-                     <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)' }}>{t('packages.th1')}</th>
-                     <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)' }}>{t('packages.th2')}</th>
-                     <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)', color: 'var(--color-gold)' }}>{t('packages.th3')}</th>
-                     <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)' }}>{t('packages.th4')} <span style={{ background: '#25D366', color: '#fff', padding: '0.1rem 0.4rem', borderRadius: '4px', fontSize: '0.7rem', marginLeft: '0.5rem', fontWeight: 800 }}>50% OFF</span></th>
-                     <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)' }}>{t('packages.th5')}</th>
+                     <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)', verticalAlign: 'middle' }}>
+                        {t('packages.th1')}
+                      </th>
+                      <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)', verticalAlign: 'middle' }}>
+                        {t('packages.th2')}
+                      </th>
+                      <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)', color: 'var(--color-gold)', verticalAlign: 'middle' }}>
+                        {t('packages.th3').split('|').map((line: string, i: number) => <div key={i}>{line}</div>)}
+                      </th>
+                      <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)', verticalAlign: 'middle' }}>
+                        {t('packages.th4').split('|').map((line: string, i: number) => (
+                           <div key={i} style={i === 1 ? { background: '#25D366', color: '#fff', padding: '0.1rem 0.4rem', borderRadius: '4px', fontSize: '0.7rem', display: 'inline-block', marginTop: '0.2rem', fontWeight: 800 } : {}}>
+                             {line}
+                           </div>
+                        ))}
+                      </th>
+                      <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)', verticalAlign: 'middle' }}>
+                        {t('packages.th5').split('|').map((line: string, i: number) => <div key={i} style={{ fontSize: i === 1 ? '0.8rem' : 'inherit', opacity: i === 1 ? 0.7 : 1 }}>{line}</div>)}
+                      </th>
                    </tr>
                  </thead>
                  <tbody>
@@ -443,7 +462,7 @@ function App() {
             <h2 style={{ fontSize: '2.5rem' }}>{t('reviews.title')}</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
               <div key={i} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div style={{ color: 'var(--color-gold)' }}>
                   <Quote size={32} style={{ opacity: 0.3 }} />

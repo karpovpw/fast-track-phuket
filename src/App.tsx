@@ -83,17 +83,17 @@ function App() {
     const kids = typeof calcKids === 'number' ? calcKids : 0;
     const totalPayingPax = adults + kids;
     
-    let basePriceStr = 1700;
+    let basePriceStr = 1600;
     let groupPrice = 1600;
     
     if (calcService === 'arr') {
-      basePriceStr = 1700;
+      basePriceStr = 1600;
       groupPrice = 1600;
     } else if (calcService === 'dep') {
-      basePriceStr = 1800;
-      groupPrice = 1700;
+      basePriceStr = 1600;
+      groupPrice = 1600;
     } else if (calcService === 'combo') {
-      basePriceStr = 3300;
+      basePriceStr = 3100;
       groupPrice = 3100;
     }
     
@@ -197,7 +197,7 @@ function App() {
             <h1 style={{ fontSize: 'clamp(3rem, 7vw, 5rem)', lineHeight: 1.1, marginBottom: '2rem' }}>{t('hero.title')}</h1>
             <p style={{ fontSize: '1.4rem', color: 'var(--color-text-secondary)', marginBottom: '3.5rem', lineHeight: 1.6 }}>{t('hero.subtitle')}</p>
             <div className="takeaway-list">
-              {[0, 1, 2, 5].map(i => (
+              {[0, 1, 2, 3, 5].map(i => (
                 <div key={i} className="takeaway-item">
                   <Check size={20} className="text-gold" style={{ flexShrink: 0 }} />
                   <span>{t(`takeaways.${i}`)}</span>
@@ -219,7 +219,7 @@ function App() {
             {['arr', 'dep', 'combo'].map((pkg) => {
               const iActive = selectedPackage === pkg;
               const isComboFeatured = pkg === 'combo' && !selectedPackage;
-              const pkgPrice = pkg === 'arr' ? '1,700' : pkg === 'dep' ? '1,800' : '3,300';
+              const pkgPrice = pkg === 'arr' ? '1,600' : pkg === 'dep' ? '1,600' : '3,100';
               return (
               <div 
                 key={pkg} 
@@ -251,7 +251,7 @@ function App() {
                         {pkg === 'combo' ? (
                           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                             <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.9rem' }}>฿3,500</span>
-                            <span style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>฿3,300</span>
+                            <span style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>฿3,100</span>
                           </div>
                         ) : (
                           <div style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>฿{pkgPrice}</div>
@@ -262,12 +262,16 @@ function App() {
                     
                     <div className="price-grid">
                        <div className="price-col">
-                         <span className="price-label">{t('packages.th3')}</span>
-                         <span className="price-value">฿{pkg === 'arr' ? '1,600' : pkg === 'dep' ? '1,700' : '3,100'}</span>
+                         <span className="price-label">
+                           {t('packages.th3').split('|')[0]}
+                         </span>
+                         <span className="price-value">฿{pkg === 'arr' ? '1,600' : pkg === 'dep' ? '1,600' : '3,100'}</span>
                        </div>
                        <div className="price-col">
-                         <span className="price-label">{t('packages.th4')}</span>
-                         <span className="price-value">฿{pkg === 'arr' ? '850' : pkg === 'dep' ? '900' : '1,650'}</span>
+                         <span className="price-label">
+                           {t('packages.th4').split('|')[0]}
+                         </span>
+                         <span className="price-value">฿{pkg === 'arr' ? '800' : pkg === 'dep' ? '800' : '1,550'}</span>
                        </div>
                        <div className="price-col" style={{ gridColumn: 'span 2', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '0.6rem' }}>
                          <div className="price-free">
@@ -370,9 +374,9 @@ function App() {
                        <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.2rem' }}>{t('packages.arr.title')}</div>
                        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>{t('packages.arr.desc')}</div>
                      </td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>฿1,700</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿1,600 / pax</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>฿850</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>฿1,600</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿1,600</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>฿800</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: '#25D366', fontWeight: 700 }}>FREE</td>
                    </tr>
                    <tr>
@@ -380,9 +384,9 @@ function App() {
                         <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.2rem' }}>{t('packages.dep.title')}</div>
                        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>{t('packages.dep.desc')}</div>
                      </td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>฿1,800</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿1,700 / pax</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>฿900</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>฿1,600</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿1,600</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>฿800</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: '#25D366', fontWeight: 700 }}>FREE</td>
                    </tr>
                    <tr>
@@ -390,9 +394,9 @@ function App() {
                         <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.2rem' }}>{t('packages.combo.title')}</div>
                        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>{t('packages.combo.desc')}</div>
                      </td>
-                     <td style={{ padding: '1.5rem', fontSize: '1.2rem', fontWeight: 600 }}>฿3,300</td>
-                     <td style={{ padding: '1.5rem', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿3,100 / pax</td>
-                     <td style={{ padding: '1.5rem' }}>฿1,650</td>
+                     <td style={{ padding: '1.5rem', fontSize: '1.2rem', fontWeight: 600 }}>฿3,100</td>
+                     <td style={{ padding: '1.5rem', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿3,100</td>
+                     <td style={{ padding: '1.5rem' }}>฿1,550</td>
                      <td style={{ padding: '1.5rem', color: '#25D366', fontWeight: 700 }}>FREE</td>
                    </tr>
                  </tbody>
@@ -421,9 +425,9 @@ function App() {
                   <div style={{ display: 'block', marginBottom: '1.5rem' }}>
                     <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.service')}</label>
                     <select value={calcService} onChange={(e) => setCalcService(e.target.value)} style={{ width: '100%', padding: '1rem', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '4px' }}>
-                      <option value="arr" style={{ color: '#000' }}>{t('packages.arr.title')} (฿1,700)</option>
-                      <option value="dep" style={{ color: '#000' }}>{t('packages.dep.title')} (฿1,800)</option>
-                      <option value="combo" style={{ color: '#000' }}>{t('packages.combo.title')} (฿3,300)</option>
+                      <option value="arr" style={{ color: '#000' }}>{t('packages.arr.title')} (฿1,600)</option>
+                      <option value="dep" style={{ color: '#000' }}>{t('packages.dep.title')} (฿1,600)</option>
+                      <option value="combo" style={{ color: '#000' }}>{t('packages.combo.title')} (฿3,100)</option>
                     </select>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>

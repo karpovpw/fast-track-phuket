@@ -194,9 +194,9 @@ function App() {
                       <option value="combo" style={{ color: '#000' }}>{t('packages.combo.title')} (฿3,300)</option>
                     </select>
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)', gap: '1rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
                     <div>
-                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{t('calc.adults')}</label>
+                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.adults')}</label>
                       <input 
                         type="number" min="0" 
                         value={calcAdults} 
@@ -205,7 +205,7 @@ function App() {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{t('calc.kids')}</label>
+                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.kids')}</label>
                       <input 
                         type="number" min="0" 
                         value={calcKids} 
@@ -214,7 +214,7 @@ function App() {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{t('calc.infants') || 'Infants'}</label>
+                      <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.infants') || 'Infants'}</label>
                       <input 
                         type="number" min="0" 
                         value={calcInfants} 

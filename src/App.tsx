@@ -104,7 +104,7 @@ function App() {
   }, [calcService, calcAdults, calcKids, calcInfants]);
 
   const ctaLinks = {
-    whatsapp: "https://wa.me/66643162330?text=Hello,%20I'd%20like%20to%20inquire%20about%20the%20VIP%20Fast%20Track.",
+    whatsapp: "https://wa.me/79697189210?text=Hello,%20I'd%20like%20to%20inquire%20about%20the%20VIP%20Fast%20Track.",
     telegram: "https://t.me/danilaru",
     phone: "tel:+66643162330"
   };

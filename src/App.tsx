@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Globe, MessageCircle, Star, Building, 
   ChevronDown, Send, X, Check, ArrowRight,
-  Coins, CreditCard, Quote
+  Coins, CreditCard, Quote, Phone
 } from 'lucide-react';
 import Hero3D from './components/Hero3D';
 import './index.css';
@@ -104,8 +104,9 @@ function App() {
   }, [calcService, calcAdults, calcKids, calcInfants]);
 
   const ctaLinks = {
-    whatsapp: "https://wa.me/79697189210?text=Hello,%20I'd%20like%20to%20inquire%20about%20the%20VIP%20Fast%20Track.",
-    telegram: "https://t.me/danilaru"
+    whatsapp: "https://wa.me/66643162330?text=Hello,%20I'd%20like%20to%20inquire%20about%20the%20VIP%20Fast%20Track.",
+    telegram: "https://t.me/danilaru",
+    phone: "tel:+66643162330"
   };
 
   const paymentMethods = [
@@ -166,6 +167,9 @@ function App() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', zIndex: 2 }}>
           {/* Top Bar Chat Buttons (Responsive) */}
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <a href={ctaLinks.phone} className="mobile-hide" style={{ color: 'var(--color-gold)', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
+              <Phone size={18} /> <span>{t('nav.call')}</span>
+            </a>
             <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="mobile-hide" style={{ color: '#2AABEE', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
               <Send size={18} /> <span>Telegram</span>
             </a>
@@ -192,15 +196,11 @@ function App() {
           >
             <h1 style={{ fontSize: 'clamp(3rem, 7vw, 5rem)', lineHeight: 1.1, marginBottom: '2rem' }}>{t('hero.title')}</h1>
             <p style={{ fontSize: '1.4rem', color: 'var(--color-text-secondary)', marginBottom: '3.5rem', lineHeight: 1.6 }}>{t('hero.subtitle')}</p>
-            <div className="takeaway-list" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem' }}>
-              {[1, 2, 5].map(i => (
-                <div key={i} className="takeaway-item" style={{ 
-                  maxWidth: '550px', width: '100%', justifyContent: 'center',
-                  background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)',
-                  padding: '1rem 1.5rem', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '1rem'
-                }}>
-                  <Check size={20} className="text-gold" />
-                  <span style={{ fontSize: '1.05rem' }}>{t(`takeaways.${i}`)}</span>
+            <div className="takeaway-list">
+              {[0, 1, 2, 5].map(i => (
+                <div key={i} className="takeaway-item">
+                  <Check size={20} className="text-gold" style={{ flexShrink: 0 }} />
+                  <span>{t(`takeaways.${i}`)}</span>
                 </div>
               ))}
             </div>
@@ -245,15 +245,36 @@ function App() {
                     }}
                   >
                   <div style={{ marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.25rem', color: pkg === 'combo' ? 'var(--color-gold)' : '#fff' }}>{t(`packages.${pkg}.title`)}</h3>
-                    {pkg === 'combo' ? (
-                      <div style={{ fontSize: '1.2rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <span style={{ textDecoration: 'line-through', opacity: 0.6, color: '#fff' }}>฿3,500</span> 
-                        <span style={{ color: 'var(--color-gold)' }}>→ ฿3,300</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                      <h3 style={{ fontSize: '1.75rem', color: pkg === 'combo' ? 'var(--color-gold)' : '#fff', margin: 0 }}>{t(`packages.${pkg}.title`)}</h3>
+                      <div style={{ textAlign: 'right' }}>
+                        {pkg === 'combo' ? (
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                            <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.9rem' }}>฿3,500</span>
+                            <span style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>฿3,300</span>
+                          </div>
+                        ) : (
+                          <div style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>฿{pkgPrice}</div>
+                        )}
+                        <div style={{ fontSize: '0.7rem', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '1px' }}>{t('packages.th2')}</div>
                       </div>
-                    ) : (
-                      <div style={{ fontSize: '1.2rem', fontWeight: 700, opacity: 0.9 }}>฿{pkgPrice}</div>
-                    )}
+                    </div>
+                    
+                    <div className="price-grid">
+                       <div className="price-col">
+                         <span className="price-label">{t('packages.th3')}</span>
+                         <span className="price-value">฿{pkg === 'arr' ? '1,600' : pkg === 'dep' ? '1,700' : '3,100'}</span>
+                       </div>
+                       <div className="price-col">
+                         <span className="price-label">{t('packages.th4')}</span>
+                         <span className="price-value">฿{pkg === 'arr' ? '850' : pkg === 'dep' ? '900' : '1,650'}</span>
+                       </div>
+                       <div className="price-col" style={{ gridColumn: 'span 2', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '0.6rem' }}>
+                         <div className="price-free">
+                           <Star size={14} fill="var(--color-gold)" /> <span>{t('packages.th5')}: FREE</span>
+                         </div>
+                       </div>
+                    </div>
                   </div>
                   <div style={{ flex: 1, marginBottom: '2.5rem' }}>
                     {(t(`packages.${pkg}.features`) as string).split('|').map((feature, idx) => (
@@ -534,7 +555,7 @@ function App() {
           <div className="compare-container">
             <table>
               <thead>
-                <tr><th>Feature</th><th>Standard Way</th><th style={{ color: 'var(--color-gold)' }}>VIP Fast Track</th></tr>
+                <tr><th>{t('compare.th1')}</th><th>{t('compare.th2')}</th><th style={{ color: 'var(--color-gold)' }}>{t('compare.th3')}</th></tr>
               </thead>
                <tbody>
                  {[1, 2, 3, 4, 5, 6, 7].map(i => (
@@ -574,8 +595,8 @@ function App() {
             FAST<span className="text-gold">TRACK</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', marginBottom: '2.5rem', fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>
-            <button onClick={() => setActiveModal('terms')} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontWeight: 600 }}>TERMS</button>
-            <button onClick={() => setActiveModal('privacy')} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontWeight: 600 }}>PRIVACY</button>
+            <button onClick={() => setActiveModal('terms')} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontWeight: 600 }}>{t('footer.terms')}</button>
+            <button onClick={() => setActiveModal('privacy')} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontWeight: 600 }}>{t('footer.privacy')}</button>
           </div>
           <p style={{ opacity: 0.4, fontSize: '0.75rem', letterSpacing: '1px' }}>{t('footer.legal')}</p>
         </div>
@@ -634,10 +655,19 @@ function App() {
       {/* Floating Chat Buttons */}
       <div style={{ position: 'fixed', bottom: '2rem', right: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', zIndex: 1000 }}>
          <motion.a 
-            href={ctaLinks.whatsapp} target="_blank" rel="noreferrer"
+            href={ctaLinks.phone}
             whileHover={{ scale: 1.1 }}
             animate={{ y: [0, -6, 0] }}
             transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            style={{ width: '60px', height: '60px', background: 'var(--color-gold)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', boxShadow: '0 8px 25px rgba(212, 175, 55, 0.4)', textDecoration: 'none' }}
+         >
+           <Phone size={32} />
+         </motion.a>
+         <motion.a 
+            href={ctaLinks.whatsapp} target="_blank" rel="noreferrer"
+            whileHover={{ scale: 1.1 }}
+            animate={{ y: [0, -6, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 1 }}
             style={{ width: '60px', height: '60px', background: '#25D366', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 25px rgba(37, 211, 102, 0.4)', textDecoration: 'none' }}
          >
            <MessageCircle size={32} />

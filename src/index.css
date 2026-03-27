@@ -257,15 +257,60 @@ td.cross { color: #ef4444; }
 .takeaway-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
+  margin: 0 auto;
+  max-width: 600px;
 }
 .takeaway-item {
   display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  padding: 1.25rem 1.75rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  width: 100%;
+}
+.takeaway-item span {
+  font-size: 1.1rem;
+  text-align: left;
+  line-height: 1.4;
+}
+
+/* Package Price Grid */
+.price-grid {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  align-items: flex-start;
-  padding: 1rem;
-  background: rgba(255,255,255,0.02);
-  border-radius: var(--radius-sm);
+}
+.price-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.price-label {
+  opacity: 0.6;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+.price-value {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.price-free {
+  color: var(--color-gold);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 /* Steps */
@@ -307,9 +352,35 @@ td.cross { color: #ef4444; }
   animation: bounce-soft 3s ease-in-out infinite;
 }
 
+
+
 @media (max-width: 768px) {
   .mobile-hide {
     display: none !important;
   }
 }
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+}
+
+.marquee-content {
+  display: flex;
+  animation: marquee 30s linear infinite;
+  flex-shrink: 0;
+}
+
+.marquee-item {
+  display: inline-block;
+  padding: 0 4rem;
+}
+
 

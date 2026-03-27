@@ -4,13 +4,15 @@ import json
 import time
 
 en_dict = {
-  "nav.badge": "Official VIP partner of Phuket Airport HKT • Since 2013",
+  "nav.badge": "OFFICIAL VIP PARTNER OF PHUKET AIRPORT HKT • SINCE 2013 • CONTACTS AVAILABLE 24/7",
+  "nav.call": "+66 6-4316-2330",
   "hero.title": "Skip the Queues at Phuket Airport",
   "hero.subtitle": "Phuket Airport Fast Track is a VIP service that lets you bypass immigration and customs queues at HKT airport. Arrival processing in under 5 minutes.",
   "hero.cta.wa": "Book Fast Track via WhatsApp",
   "hero.cta.tg": "Book Fast Track via Telegram",
   
   "takeaways.title": "🔑 Key Takeaways",
+  "takeaways.0": "Our contacts available 24/7",
   "takeaways.1": "Skip immigration queues in under 5 minutes with a personal escort.",
   "takeaways.2": "Available for all international flights at HKT daily from 06:00 to midnight.",
   "takeaways.3": "Arrival from ฿1,700/person · Departure from ฿1,800/person.",
@@ -33,6 +35,10 @@ en_dict = {
   "packages.th3": "2+ Passengers (Group)",
   "packages.th4": "Children (under 12)",
   "packages.th5": "Infants (0-2 years)",
+  "packages.price.group": "Group (2+): ฿",
+  "packages.price.kids": "Child (under 12): ฿",
+  "packages.price.infant": "Infant (0-2): FREE",
+
   "packages.arr.title": "Arrival Fast Track",
   "packages.arr.desc": "Meet directly at the gate, skip the long line.",
   "packages.arr.features": "Land and leave in minutes|Personal meet at gate or immigration zone|Express immigration lane (priority window)|Terminal guidance & exit assistance|Flight delay coordination|Chat support until service completion",
@@ -57,6 +63,9 @@ en_dict = {
   
   "compare.title": "VIP Fast Track vs. Regular Phuket Immigration",
   "compare.subtitle": "Compare our VIP meet & assist service with standard airport procedures at HKT.",
+  "compare.th1": "Feature",
+  "compare.th2": "Standard Way",
+  "compare.th3": "VIP Fast Track",
   "compare.f1": "Immigration Wait", "compare.r1.1": "30-60+ Minutes", "compare.r1.2": "Under 5 Minutes",
   "compare.f2": "Personal Assistance", "compare.r2.1": "None (Self-navigation)", "compare.r2.2": "Personal Concierge (Gate-to-Exit)",
   "compare.f3": "Processing Lane", "compare.r3.1": "Standard Public Queues", "compare.r3.2": "Dedicated VIP Fast-Track Lane",
@@ -122,6 +131,8 @@ en_dict = {
   "faq.6.a": "Yes, Fast Track service is available for all international flights at Phuket International Airport (HKT), operating daily from 06:00 to midnight. This covers all major airlines including Thai Airways, Bangkok Airways, AirAsia, Singapore Airlines, Qatar Airways, Emirates, and more.",
 
   "footer.legal": "© 2013-2026 Phuket Airport Fast Track. All rights reserved.",
+  "footer.terms": "TERMS",
+  "footer.privacy": "PRIVACY",
   "modal.close": "Close Window",
 
   "tdac_modal.title": "Thailand Digital Arrival Card Guide",
@@ -166,7 +177,22 @@ for lang in languages:
     lang_dict = {}
     for k, v in en_dict.items():
         if isinstance(v, str) and not k.endswith('.n'):
-            lang_dict[k] = translate_text(v, lang)
+            # Manual overrides for problematic machine translations
+            if k == "pkg_section.book_pre":
+                overrides = {
+                    'ru': 'ЗАБРОНИРОВАТЬ',
+                    'zh-CN': '立即预约',
+                    'hi': 'अभी बुक करें',
+                    'he': 'הזמן עכשיו',
+                    'ar': 'احجز الآن',
+                    'es': 'RESERVAR',
+                    'fr': 'RÉSERVER',
+                    'de': 'BUCHEN',
+                    'it': 'PRENOTA'
+                }
+                lang_dict[k] = overrides.get(lang, 'BOOK')
+            else:
+                lang_dict[k] = translate_text(v, lang)
             time.sleep(0.1) # Be nice to Google
         else:
             lang_dict[k] = v

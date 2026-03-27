@@ -507,7 +507,7 @@ function App() {
           <div className="compare-container">
             <table>
               <thead>
-                <tr><th>Feature</th><th>Standard Way</th><th style={{ color: 'var(--color-gold)' }}>VIP Fast Track ✈</th></tr>
+                <tr><th>Feature</th><th>Standard Way</th><th style={{ color: 'var(--color-gold)' }}>VIP Fast Track</th></tr>
               </thead>
                <tbody>
                  {[1, 2, 3, 4, 5, 6, 7].map(i => (

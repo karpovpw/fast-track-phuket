@@ -166,14 +166,29 @@ function App() {
 
       <section style={{ padding: '8rem 0', position: 'relative' }}>
         <div className="container" style={{ maxWidth: '900px', textAlign: 'center' }}>
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }} 
+            animate={{ opacity: 1, y: 0 }}
+            style={{ 
+              background: 'rgba(5, 5, 5, 0.45)', 
+              backdropFilter: 'blur(20px)', 
+              padding: '4rem 2rem', 
+              borderRadius: '24px', 
+              border: '1px solid rgba(255, 255, 255, 0.05)',
+              boxShadow: '0 20px 50px rgba(0,0,0,0.3)'
+            }}
+          >
             <h1 style={{ fontSize: 'clamp(3rem, 7vw, 5rem)', lineHeight: 1.1, marginBottom: '2rem' }}>{t('hero.title')}</h1>
             <p style={{ fontSize: '1.4rem', color: 'var(--color-text-secondary)', marginBottom: '3.5rem', lineHeight: 1.6 }}>{t('hero.subtitle')}</p>
-            <div className="takeaway-list" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+            <div className="takeaway-list" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem' }}>
               {[1, 2, 5].map(i => (
-                <div key={i} className="takeaway-item" style={{ maxWidth: '600px', width: '100%', justifyContent: 'center' }}>
+                <div key={i} className="takeaway-item" style={{ 
+                  maxWidth: '550px', width: '100%', justifyContent: 'center',
+                  background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)',
+                  padding: '1rem 1.5rem', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '1rem'
+                }}>
                   <Check size={20} className="text-gold" />
-                  <span style={{ fontSize: '1.1rem' }}>{t(`takeaways.${i}`)}</span>
+                  <span style={{ fontSize: '1.05rem' }}>{t(`takeaways.${i}`)}</span>
                 </div>
               ))}
             </div>

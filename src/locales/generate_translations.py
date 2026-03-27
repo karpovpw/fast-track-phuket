@@ -14,7 +14,7 @@ en_dict = {
   "takeaways.title": "🔑 Key Takeaways",
   "takeaways.0": "Our contacts available 24/7",
   "takeaways.1": "Skip immigration queues in under 5 minutes with a personal escort.",
-  "takeaways.2": "Available for all international flights at HKT daily from 06:00 to midnight.",
+  "takeaways.2": "Available for all international flights",
   "takeaways.3": "Arrival from ฿1,700/person · Departure from ฿1,800/person.",
   "takeaways.4": "Free rebooking or full refund for delayed/cancelled flights.",
   "takeaways.5": "Children aged 0-2 travel free; under 12 get 50% off.",
@@ -128,7 +128,7 @@ en_dict = {
   "faq.5.q": "How far in advance should I book?",
   "faq.5.a": "We recommend booking at least 24 hours before your flight for guaranteed availability. Same-day bookings may be available depending on current demand. During peak season in Phuket (November–March), booking 48–72 hours ahead is highly advisable to skip the 2-hour lines.",
   "faq.6.q": "Is Fast Track available for all airlines at Phuket Airport?",
-  "faq.6.a": "Yes, Fast Track service is available for all international flights at Phuket International Airport (HKT), operating daily from 06:00 to midnight. This covers all major airlines including Thai Airways, Bangkok Airways, AirAsia, Singapore Airlines, Qatar Airways, Emirates, and more.",
+  "faq.6.a": "Yes, Fast Track service is available for all international flights at Phuket International Airport (HKT), operating 24/7 daily. This covers all major airlines including Thai Airways, Bangkok Airways, AirAsia, Singapore Airlines, Qatar Airways, Emirates, and more.",
 
   "footer.legal": "© 2013-2026 Phuket Airport Fast Track. All rights reserved.",
   "footer.terms": "TERMS",
@@ -160,14 +160,31 @@ with open('src/locales/en.json', 'w', encoding='utf-8') as f:
 
 languages = ['ru', 'zh-CN', 'hi', 'he', 'ar', 'es', 'fr', 'de', 'it']
 
+import re
+
 def translate_text(text, target_lang):
     if not text: return ""
+    
+    # Protect specific terms
+    protected = ["Fast Track", "FastTrack", "Phuket Immigration", "Fast track"]
+    placeholder_map = {}
+    for i, term in enumerate(protected):
+        placeholder = f"__PT{i}__"
+        if term in text:
+            text = text.replace(term, placeholder)
+            placeholder_map[placeholder] = term
+            
     try:
         url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=" + target_lang + "&dt=t&q=" + urllib.parse.quote(text)
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         response = urllib.request.urlopen(req)
         data = json.loads(response.read().decode('utf-8'))
-        return ''.join([sentence[0] for sentence in data[0] if sentence[0]])
+        translated = ''.join([sentence[0] for sentence in data[0] if sentence[0]])
+        
+        # Restore protected terms
+        for placeholder, term in placeholder_map.items():
+            translated = translated.replace(placeholder, term)
+        return translated
     except Exception as e:
         print(f"Error translating: {text[:20]} -> {e}")
         return text
@@ -191,6 +208,8 @@ for lang in languages:
                     'it': 'PRENOTA'
                 }
                 lang_dict[k] = overrides.get(lang, 'BOOK')
+            elif k == "packages.combo.title" and lang == 'ru':
+                lang_dict[k] = "Комбо пакет"
             else:
                 lang_dict[k] = translate_text(v, lang)
             time.sleep(0.1) # Be nice to Google

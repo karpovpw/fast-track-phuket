@@ -98,7 +98,7 @@ function App() {
     }
     
     const adultPrice = totalPayingPax > 1 ? groupPrice : basePriceStr;
-    const kidPrice = adultPrice * 0.5;
+    const kidPrice = basePriceStr * 0.5;
     
     return (adults * adultPrice) + (kids * kidPrice);
   }, [calcService, calcAdults, calcKids, calcInfants]);
@@ -372,10 +372,9 @@ function App() {
                  </thead>
                  <tbody>
                     <tr>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                       <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.2rem' }}>{t('packages.arr.title')}</div>
-                       <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>{t('packages.arr.desc')}</div>
-                     </td>
+                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{t('packages.arr.title')}</div>
+                      </td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>฿1,700</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿1,600 / pax</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>฿850</td>
@@ -383,8 +382,7 @@ function App() {
                    </tr>
                     <tr>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                        <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.2rem' }}>{t('packages.dep.title')}</div>
-                       <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>{t('packages.dep.desc')}</div>
+                        <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{t('packages.dep.title')}</div>
                      </td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>฿1,800</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿1,700 / pax</td>
@@ -393,8 +391,7 @@ function App() {
                    </tr>
                    <tr>
                      <td style={{ padding: '1.5rem' }}>
-                        <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.2rem' }}>{t('packages.combo.title')}</div>
-                       <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>{t('packages.combo.desc')}</div>
+                        <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{t('packages.combo.title')}</div>
                      </td>
                      <td style={{ padding: '1.5rem', fontSize: '1.2rem', fontWeight: 600 }}>฿3,300</td>
                      <td style={{ padding: '1.5rem', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿3,100 / pax</td>

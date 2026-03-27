@@ -552,11 +552,19 @@ function App() {
       </SimpleModal>
 
       <SimpleModal isOpen={activeModal === 'terms'} onClose={() => setActiveModal(null)} title={t("modal.terms.title")}>
-        <p style={{ lineHeight: 1.7 }}>{t("modal.terms.desc")}</p>
+        <div style={{ color: 'var(--color-text-secondary)', lineHeight: 1.8 }}>
+          {t("modal.terms.desc").split('\n').map((line: string, i: number) => (
+             <p key={i} style={{ marginBottom: line.trim() === "" ? "0.5rem" : "1rem" }}>{line}</p>
+          ))}
+        </div>
       </SimpleModal>
 
       <SimpleModal isOpen={activeModal === 'privacy'} onClose={() => setActiveModal(null)} title={t("modal.privacy.title")}>
-        <p style={{ lineHeight: 1.7 }}>{t("modal.privacy.desc")}</p>
+        <div style={{ color: 'var(--color-text-secondary)', lineHeight: 1.8 }}>
+          {t("modal.privacy.desc").split('\n').map((line: string, i: number) => (
+             <p key={i} style={{ marginBottom: line.trim() === "" ? "0.5rem" : "1rem" }}>{line}</p>
+          ))}
+        </div>
       </SimpleModal>
 
     </div>

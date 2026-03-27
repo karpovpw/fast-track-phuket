@@ -263,7 +263,7 @@ function App() {
       </section>
 
       {/* Reduced Payment Methods */}
-      <section style={{ padding: '6rem 0', background: '#0f0f0f' }}>
+      <section style={{ padding: '6rem 0' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.1rem' }}>{t('payments.title')}</h2>
@@ -282,7 +282,7 @@ function App() {
       </section>
 
       {/* Pricing Table SEO Segment */}
-      <section style={{ padding: '6rem 0', background: '#0a0a0a' }} id="pricing">
+      <section style={{ padding: '6rem 0' }} id="pricing">
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.1rem' }}>{t('packages.title')}</h2>
@@ -363,7 +363,7 @@ function App() {
       </section>
 
       {/* Pricing Calculator Section (Moved Below Prices Table) */}
-      <section style={{ padding: '6rem 0', background: '#0f0f0f' }} id="calculator">
+      <section style={{ padding: '6rem 0' }} id="calculator">
         <div className="container" style={{ maxWidth: '600px' }}>
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="card" style={{ padding: '3rem', border: '1px solid var(--color-gold)', background: 'var(--color-surface)', backdropFilter: 'none' }}>
@@ -477,7 +477,7 @@ function App() {
       </section>
 
       {/* Reviews Section */}
-      <section style={{ padding: '6rem 0', background: '#0f0f0f' }}>
+      <section style={{ padding: '6rem 0' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: '2.5rem' }}>{t('reviews.title')}</h2>
@@ -501,7 +501,7 @@ function App() {
       </section>
 
       {/* Comparison Segment */}
-      <section style={{ padding: '6rem 0', background: '#0a0a0a' }}>
+      <section style={{ padding: '6rem 0' }}>
         <div className="container" style={{ maxWidth: '900px' }}>
           <h2 style={{ textAlign: 'center', marginBottom: '3.5rem' }}>{t('compare.title')}</h2>
           <div className="compare-container">

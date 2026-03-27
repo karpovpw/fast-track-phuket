@@ -295,7 +295,7 @@ td.cross { color: #ef4444; }
   border-color: rgba(212, 175, 55, 0.3) !important;
 }
 .selectable-card.active {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(10,10,10,0.8) 100%) !important;
+  background: linear-gradient(135deg, #1e1b10 0%, #1a1a1a 100%) !important;
 }
 
 /* Animations */

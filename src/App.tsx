@@ -196,51 +196,64 @@ function App() {
               return (
               <div 
                 key={pkg} 
-                onClick={() => setSelectedPackage(pkg)}
-                className={`card selectable-card ${iActive ? 'active' : ''}`}
-                style={{ 
-                  display: 'flex', flexDirection: 'column', cursor: 'pointer',
-                  border: iActive || isComboFeatured ? '2px solid var(--color-gold)' : '1px solid rgba(255,255,255,0.05)',
-                  background: pkg === 'combo' ? 'linear-gradient(180deg, rgba(212, 175, 55, 0.08) 0%, rgba(10,10,10,0.85) 100%)' : 'var(--color-surface)',
-                  transform: iActive ? 'scale(1.05)' : (isComboFeatured ? 'scale(1.02)' : 'none'),
-                  zIndex: iActive || isComboFeatured ? 5 : 1,
-                  boxShadow: isComboFeatured ? '0 0 30px rgba(212, 175, 55, 0.15)' : 'none'
-                }}
+                className="package-card-wrapper"
+                style={{ position: 'relative' }}
               >
                 {pkg === 'combo' && (
-                  <div style={{ background: 'var(--color-gold)', color: '#000', alignSelf: 'center', padding: '0.25rem 1rem', borderRadius: '30px', fontSize: '0.75rem', fontWeight: 800, marginBottom: '1rem' }}>
+                  <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', background: 'var(--color-gold)', color: '#000', padding: '0.25rem 1rem', borderRadius: '30px', fontSize: '0.75rem', fontWeight: 800, zIndex: 10, boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}>
                     {t('packages.combo.badge')}
                   </div>
                 )}
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <h3 style={{ fontSize: '1.75rem', marginBottom: '0.25rem', color: pkg === 'combo' ? 'var(--color-gold)' : '#fff' }}>{t(`packages.${pkg}.title`)}</h3>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 700, opacity: 0.9 }}>฿{pkgPrice}</div>
-                </div>
-                <div style={{ flex: 1, marginBottom: '2.5rem' }}>
-                  {(t(`packages.${pkg}.features`) as string).split('|').map((feature, idx) => (
-                    <div key={idx} style={{ display: 'flex', gap: '0.75rem', marginBottom: '0.75rem', fontSize: '0.95rem', alignItems: 'flex-start' }}>
-                      <Check size={18} className="text-gold" style={{ flexShrink: 0, marginTop: '2px' }} />
-                      <span style={{ color: idx === 0 ? '#fff' : 'var(--color-text-secondary)' }}>{feature}</span>
-                    </div>
-                  ))}
-                </div>
-                
-                <div style={{ marginTop: 'auto' }}>
-                  {selectedPackage === pkg && (
-                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
-                        <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="btn" style={{ background: '#2AABEE', color: '#fff', fontSize: '0.85rem', padding: '0.8rem' }} onClick={(e) => e.stopPropagation()}>
-                          <Send size={18} /> Telegram
-                        </a>
-                        <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', fontSize: '0.85rem', padding: '0.8rem' }} onClick={(e) => e.stopPropagation()}>
-                          <MessageCircle size={18} /> WhatsApp
-                        </a>
+                <div 
+                  onClick={() => setSelectedPackage(pkg)}
+                  className={`card selectable-card ${iActive ? 'active' : ''}`}
+                  style={{ 
+                    display: 'flex', flexDirection: 'column', cursor: 'pointer', height: '100%',
+                    border: iActive || isComboFeatured ? '2px solid var(--color-gold)' : '1px solid rgba(255,255,255,0.05)',
+                    background: pkg === 'combo' ? 'linear-gradient(180deg, rgba(212, 175, 55, 0.08) 0%, rgba(10,10,10,0.85) 100%)' : 'var(--color-surface)',
+                    transform: iActive ? 'scale(1.05)' : (isComboFeatured ? 'scale(1.02)' : 'none'),
+                    zIndex: iActive || isComboFeatured ? 5 : 1,
+                    boxShadow: isComboFeatured ? '0 0 30px rgba(212, 175, 55, 0.15)' : 'none',
+                    padding: '2.5rem'
+                  }}
+                >
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.25rem', color: pkg === 'combo' ? 'var(--color-gold)' : '#fff' }}>{t(`packages.${pkg}.title`)}</h3>
+                    {pkg === 'combo' ? (
+                      <div style={{ fontSize: '1.2rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span style={{ textDecoration: 'line-through', opacity: 0.6, color: '#fff' }}>฿3,500</span> 
+                        <span style={{ color: 'var(--color-gold)' }}>→ ฿3,300</span>
                       </div>
-                      <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.8rem', opacity: 0.5, fontWeight: 600 }}>
-                        {t('pkg_section.book_pre') || 'BOOK'} {t(`packages.${pkg}.btn`)} →
+                    ) : (
+                      <div style={{ fontSize: '1.2rem', fontWeight: 700, opacity: 0.9 }}>฿{pkgPrice}</div>
+                    )}
+                  </div>
+                  <div style={{ flex: 1, marginBottom: '2.5rem' }}>
+                    {(t(`packages.${pkg}.features`) as string).split('|').map((feature, idx) => (
+                      <div key={idx} style={{ display: 'flex', gap: '0.75rem', marginBottom: '0.75rem', fontSize: '0.95rem', alignItems: 'flex-start' }}>
+                        <Check size={18} className="text-gold" style={{ flexShrink: 0, marginTop: '2px' }} />
+                        <span style={{ color: idx === 0 ? '#fff' : 'var(--color-text-secondary)' }}>{feature}</span>
                       </div>
-                    </motion.div>
-                  )}
+                    ))}
+                  </div>
+                  
+                  <div style={{ marginTop: 'auto' }}>
+                    {selectedPackage === pkg && (
+                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                          <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="btn" style={{ background: '#2AABEE', color: '#fff', fontSize: '0.85rem', padding: '0.8rem' }} onClick={(e) => e.stopPropagation()}>
+                            <Send size={18} /> Telegram
+                          </a>
+                          <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', fontSize: '0.85rem', padding: '0.8rem' }} onClick={(e) => e.stopPropagation()}>
+                            <MessageCircle size={18} /> WhatsApp
+                          </a>
+                        </div>
+                        <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.8rem', opacity: 0.5, fontWeight: 600 }}>
+                          {t('pkg_section.book_pre') || 'BOOK'} {t(`packages.${pkg}.btn`)} →
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
                 </div>
               </div>
             );

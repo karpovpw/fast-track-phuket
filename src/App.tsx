@@ -134,10 +134,10 @@ function App() {
           {/* Top Bar Chat Buttons with Text Labels */}
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
             <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="animate-bounce-soft" style={{ color: '#2AABEE', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
-              <Send size={18} /> <span>Telegram</span>
+              <Send size={18} /> <span>{t('nav.telegram') || 'Telegram'}</span>
             </a>
             <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="animate-bounce-soft" style={{ color: '#25D366', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
-              <MessageCircle size={18} /> <span>WhatsApp</span>
+              <MessageCircle size={18} /> <span>{t('nav.whatsapp') || 'WhatsApp'}</span>
             </a>
           </div>
 
@@ -225,7 +225,7 @@ function App() {
                   </div>
                 </div>
                 <div style={{ padding: '1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderRadius: '8px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '0.8rem', opacity: 0.6, marginBottom: '0.25rem' }}>TOTAL ESTIMATE</div>
+                  <div style={{ fontSize: '0.8rem', opacity: 0.6, marginBottom: '0.25rem' }}>{t('calc.estimate')}</div>
                   <span style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--color-gold)' }}>฿{totalPrice.toLocaleString()}</span>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
@@ -246,8 +246,8 @@ function App() {
       <section style={{ padding: '6rem 0' }} id="packages">
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '1.2rem' }}>Choose Your Fast Track Package</h2>
-            <p style={{ color: 'var(--color-text-secondary)', maxWidth: '600px', margin: '0 auto' }}>Official VIP Airport Meet & Assist Services in Phuket since 2013</p>
+            <h2 style={{ fontSize: '2.5rem', marginBottom: '1.2rem' }}>{t('pkg_section.title')}</h2>
+            <p style={{ color: 'var(--color-text-secondary)', maxWidth: '600px', margin: '0 auto' }}>{t('pkg_section.subtitle')}</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem' }}>
             {['arr', 'dep', 'combo'].map((pkg) => {
@@ -294,7 +294,7 @@ function App() {
                         </a>
                       </div>
                       <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.8rem', opacity: 0.5, fontWeight: 600 }}>
-                        BOOK {pkg === 'arr' ? 'ARRIVAL' : pkg === 'dep' ? 'DEPARTURE' : 'COMBO'} →
+                        {t('pkg_section.book_pre') || 'BOOK'} {t(`packages.${pkg}.btn`)} →
                       </div>
                     </motion.div>
                   )}
@@ -311,7 +311,7 @@ function App() {
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.1rem' }}>{t('payments.title')}</h2>
-            <p style={{ color: 'var(--color-text-secondary)' }}>Secure and trusted payment options</p>
+            <p style={{ color: 'var(--color-text-secondary)' }}>{t('payments.subtitle')}</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem' }}>
             {paymentMethods.map(pm => (
@@ -334,7 +334,7 @@ function App() {
           </div>
           
           <div className="card" style={{ padding: 0, overflow: 'hidden', border: '1px solid var(--color-gold)', position: 'relative' }}>
-             <div style={{ position: 'absolute', top: 0, left: 0, background: 'var(--color-gold)', color: '#000', padding: '0.4rem 1rem', borderBottomRightRadius: '8px', fontWeight: 'bold', fontSize: '0.8rem', zIndex: 10 }}>Lowest Price Guarantee</div>
+             <div style={{ position: 'absolute', top: 0, left: 0, background: 'var(--color-gold)', color: '#000', padding: '0.4rem 1rem', borderBottomRightRadius: '8px', fontWeight: 'bold', fontSize: '0.8rem', zIndex: 10 }}>{t('pricing.guarantee')}</div>
              <div style={{ overflowX: 'auto' }}>
                <table style={{ minWidth: '800px', width: '100%', margin: 0, border: 'none' }}>
                  <thead>
@@ -398,7 +398,7 @@ function App() {
                 <p style={{ marginBottom: '1.5rem', fontSize: '0.9rem', color: 'var(--color-text-secondary)', textAlign: 'center' }}>{t('packages.footer')}</p>
                 <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
                     <a href="#packages" className="btn" style={{ background: 'var(--color-gold)', color: '#000', padding: '1rem 2rem', borderRadius: '30px', fontWeight: 700 }}>
-                      Choose Package Above
+                      {t('pricing.cta')}
                     </a>
                 </div>
              </div>
@@ -420,14 +420,14 @@ function App() {
               textAlign: 'center'
             }}
           >
-            <div style={{ background: 'var(--color-gold)', color: 'var(--color-bg)', padding: '0.4rem 1.2rem', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 800, position: 'absolute', top: '2rem', left: '50%', transform: 'translateX(-50%)' }}>MANDATORY FOR 2026</div>
+            <div style={{ background: 'var(--color-gold)', color: 'var(--color-bg)', padding: '0.4rem 1.2rem', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 800, position: 'absolute', top: '2rem', left: '50%', transform: 'translateX(-50%)' }}>{t('guides.tdac.badge')}</div>
             <Star size={48} className="text-gold" style={{ marginTop: '1.5rem', marginBottom: '2rem' }} />
             <h2 style={{ fontSize: '3rem', marginBottom: '1.5rem' }}>{t('guides.tdac.t')}</h2>
             <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.25rem', maxWidth: '800px', margin: '0 auto 2.5rem', lineHeight: 1.6 }}>
               {t('guides.tdac.d')}
             </p>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', color: 'var(--color-gold)', fontWeight: 800, fontSize: '1.2rem', borderBottom: '2px solid' }}>
-              READ THE OFFICIAL GUIDE <ArrowRight size={24} />
+              {t('guides.tdac.cta')} <ArrowRight size={24} />
             </div>
           </div>
         </div>

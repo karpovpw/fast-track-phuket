@@ -13,17 +13,18 @@ en_dict = {
   "takeaways.title": "🔑 Key Takeaways",
   "takeaways.1": "Skip immigration queues in under 5 minutes with a personal escort.",
   "takeaways.2": "Available for all international flights at HKT daily from 06:00 to midnight.",
-  "takeaways.3": "Arrival from ฿1,600/person · Departure from ฿1,700/person.",
+  "takeaways.3": "Arrival from ฿1,700/person · Departure from ฿1,800/person.",
   "takeaways.4": "Free rebooking or full refund for delayed/cancelled flights.",
   "takeaways.5": "Children aged 0-2 travel free; under 12 get 50% off.",
 
-  "calc.title": "Fast Track Pricing Calculator",
+  "calc.title": "Pricing Calculator",
   "calc.subtitle": "Calculate your official VIP Airport Fast Track total. Our agency guarantees the lowest price in Phuket since 2013.",
-  "calc.service": "Select Service",
-  "calc.adults": "Number of Adults",
-  "calc.kids": "Children (under 12, 50% off)",
-  "calc.infants": "Infants (0-2 years, Free)",
+  "calc.service": "SELECT SERVICE",
+  "calc.adults": "NUMBER OF ADULTS",
+  "calc.kids": "CHILDREN (UNDER 12, 50% OFF)",
+  "calc.infants": "INFANTS (0-2 YEARS, FREE)",
   "calc.total": "Total Estimated Cost: ฿",
+  "calc.estimate": "TOTAL ESTIMATE",
 
   "packages.title": "Phuket Airport Fast Track Prices 2026",
   "packages.subtitle": "Operating since 2013, we offer the lowest official price for VIP Fast Track at HKT.",
@@ -43,6 +44,16 @@ en_dict = {
   "packages.combo.badge": "BEST VALUE",
   "packages.combo.features": "Arrival + Departure VIP|Full arrival fast track service|Full departure VIP service|Priority rebooking guarantee|TDAC form assistance|Dedicated WhatsApp support|Flight delay coordination",
   "packages.footer": "* Prices include all official airport fees and taxes.",
+  "packages.arr.btn": "ARRIVAL",
+  "packages.dep.btn": "DEPARTURE",
+  "packages.combo.btn": "COMBO",
+  
+  "pkg_section.title": "Choose Your Fast Track Package",
+  "pkg_section.subtitle": "Official VIP Airport Meet & Assist Services in Phuket since 2013",
+  "pkg_section.book_pre": "BOOK",
+  
+  "pricing.guarantee": "Lowest Price Guarantee",
+  "pricing.cta": "Choose Package Above",
   
   "compare.title": "VIP Fast Track vs. Regular Phuket Immigration",
   "compare.subtitle": "Compare our VIP meet & assist service with standard airport procedures at HKT.",
@@ -90,6 +101,8 @@ en_dict = {
   "guides.subtitle": "Expert tips and practical guides for your Phuket trip.",
   "guides.tdac.t": "Official Thailand Arrival Card (TDAC)",
   "guides.tdac.d": "Complete the official digital arrival form required for all international travelers entering Thailand. Our guide explains how to do it for free in under 5 minutes. Avoid common agency scams.",
+  "guides.tdac.badge": "MANDATORY FOR 2026",
+  "guides.tdac.cta": "READ THE OFFICIAL GUIDE",
   "guides.1.t": "Arrival Guide 2026", "guides.1.d": "Complete guide to arriving at Phuket Airport.",
   "guides.2.t": "What Is Fast Track?", "guides.2.d": "How VIP airport fast track works, what's included.",
   "guides.3.t": "Entry Requirements", "guides.3.d": "Everything you need to enter Thailand in 2026 — visa, TDAC, etc.",
@@ -108,12 +121,11 @@ en_dict = {
   "faq.6.q": "Is Fast Track available for all airlines at Phuket Airport?",
   "faq.6.a": "Yes, Fast Track service is available for all international flights at Phuket International Airport (HKT), operating daily from 06:00 to midnight. This covers all major airlines including Thai Airways, Bangkok Airways, AirAsia, Singapore Airlines, Qatar Airways, Emirates, and more.",
 
-
   "footer.legal": "© 2013-2026 Phuket Airport Fast Track. All rights reserved.",
   "modal.close": "Close Window",
 
   "tdac_modal.title": "Thailand Digital Arrival Card Guide",
-  "tdac_modal.p1": "The official TDAC form is required for 2026 entry.",
+  "tdac_modal.p1": "The official TDAC form (also known as TM6) is required for 2026 entry.",
   "tdac_modal.scam_title": "⚠️ SCAM PROTECTION",
   "tdac_modal.scam_desc": "The official portal is 100% free. Never pay for this form. Use ONLY tdac.immigration.go.th.",
   "tdac_modal.guide_title": "Filing Guide:",
@@ -123,9 +135,13 @@ en_dict = {
   "tdac_modal.step4": "Save the resulting QR code – you MUST show it on your phone.",
 
   "modal.terms.title": "Terms & Conditions",
-  "modal.terms.desc": "Service is non-refundable 24 hours prior to arrival. 100% refund if the airline cancels the flight. We track all delays automatically.",
+  "modal.terms.desc": "1. OVERVIEW OF SERVICES\nPhuket Airport Fast Track (the \"Agency\") provides professional VIP Meet & Assist services at Phuket International Airport (HKT). Our services include Arrival Fast Track, Departure VIP, and Combo Packages designed to minimize wait times and provide seamless airport navigation.\n\n2. BOOKING & CONFIRMATION\n2.1 All bookings must be made at least 24 hours prior to service time.\n2.2 A booking is only confirmed once full prepayment is received and a confirmation voucher is issued via WhatsApp, Telegram, or Email.\n2.3 It is the passenger's responsibility to provide accurate flight numbers and arrival/departure times.\n\n3. PRICING & PAYMENT\n3.1 Prices are quoted in Thai Baht (THB).\n3.2 Children under 12 receive a 50% discount. Infants (0-2 years) are free of charge.\n3.3 Group rates apply for 2 or more paying passengers.\n\n4. CANCELLATION & REFUND POLICY\n4.1 100% Refund: If cancelled at least 24 hours before the scheduled service time.\n4.2 100% Refund: If the airline cancels the flight and a new booking is not required.\n4.3 No Refund: For \"No-Shows\" or cancellations made less than 24 hours before the service.\n4.4 Amendments: Free of charge if requested at least 12 hours before arrival.\n\n5. FLIGHT DELAYS & MONITORING\n5.1 Our team monitors all HKT flight schedules in real-time.\n5.2 If your flight is delayed, your professional escort will adjust their meeting time automatically at no extra cost.\n\n6. PASSENGER CONDUCT & RESPONSIBILITIES\n6.1 Passengers must possess valid travel documents (Passport, Visa, TDAC QR code).\n6.2 Dress Code: Official HKT immigration zones require modest attire. Avoid sleeveless shirts or swimwear during processing.\n6.3 The Agency is not liable for entry denial by Thai Immigration authorities for any reason.\n\n7. LIMITATION OF LIABILITY\nThe Agency acts as a facilitator between the passenger and airport authorities. We are not responsible for delays caused by official government processing, security checks, or airport infrastructure issues.",
+  
   "modal.privacy.title": "Privacy Policy",
-  "modal.privacy.desc": "We securely process your name and flight number only for coordination. Data is wiped after service completion. Conversations via WhatsApp/Telegram are end-to-end encrypted."
+  "modal.privacy.desc": "1. DATA COLLECTION\nWe collect minimal personal data required to fulfill your VIP Fast Track service at HKT. This includes your Full Name, Flight Number, Passport Number (when required for official coordination), and Contact Details (WhatsApp/Telegram).\n\n2. HOW WE USE YOUR INFORMATION\n2.1 To coordinate your meeting point at Phuket Airport with our professional escorts.\n2.2 To monitor your flight status for real-time adjustments.\n2.3 To assist in filling out mandatory entry forms like the Thailand Digital Arrival Card (TDAC).\n\n3. DATA RETENTION & SECURITY\n3.1 All personal data is stored securely and is only accessible by the coordinating team.\n3.2 Data Erasure: All sensitive travel data (flight and passport info) is permanently wiped from our systems 7 days after the service is completed.\n3.3 Encrypted Communication: We exclusively use end-to-end encrypted platforms (WhatsApp and Telegram) for all status updates and personal info exchanges.\n\n4. THIRD-PARTY DISCLOSURE\nWe do not sell or share your data with marketing agencies. We only disclose necessary details to official Phuket Airport authorities and our certified escort partners to ensure your fast-track processing.\n\n5. YOUR RIGHTS\nYou have the right to request a summary of the data we hold or request its immediate deletion at any time prior to or after your service.",
+  
+  "nav.telegram": "Telegram",
+  "nav.whatsapp": "WhatsApp"
 }
 
 with open('src/locales/en.json', 'w', encoding='utf-8') as f:

@@ -1,8 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Globe, MessageCircle, Star, Shield, Luggage, Building, 
+  Globe, MessageCircle, Star, Building, 
   ChevronDown, Send, X, Check, ArrowRight,
   Coins, CreditCard, Quote
 } from 'lucide-react';
@@ -29,12 +29,41 @@ function App() {
   const { t, i18n } = useTranslation();
   const [langOpen, setLangOpen] = useState(false);
   const [activeModal, setActiveModal] = useState<string | null>(null);
-  const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
 
   // Price Calculator State
   const [calcService, setCalcService] = useState('arr');
   const [calcAdults, setCalcAdults] = useState<number | string>(1);
   const [calcKids, setCalcKids] = useState<number | string>(0);
+  const [calcInfants, setCalcInfants] = useState<number | string>(0);
+
+  useEffect(() => {
+    const detectLanguage = async () => {
+      if (localStorage.getItem('langSet')) return;
+      try {
+        const res = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+        const country = data.country;
+        
+        const countryMap: Record<string, string> = {
+          'RU': 'ru', 'BY': 'ru', 'KZ': 'ru',
+          'CN': 'zh', 'HK': 'zh', 'TW': 'zh',
+          'IN': 'hi', 'IL': 'he',
+          'AE': 'ar', 'SA': 'ar', 'QA': 'ar',
+          'ES': 'es', 'MX': 'es', 'AR': 'es',
+          'FR': 'fr', 'DE': 'de', 'AT': 'de', 'CH': 'de',
+          'IT': 'it'
+        };
+        
+        if (country && countryMap[country]) {
+          i18n.changeLanguage(countryMap[country]);
+        }
+        localStorage.setItem('langSet', 'true');
+      } catch (e) {
+        console.error('Loc fetch err', e);
+      }
+    };
+    detectLanguage();
+  }, [i18n]);
 
   const languages = [
     { code: 'en', name: 'English' }, { code: 'ru', name: 'Русский' }, { code: 'zh', name: '中文' }, 
@@ -51,21 +80,27 @@ function App() {
   const totalPrice = useMemo(() => {
     const adults = typeof calcAdults === 'number' ? calcAdults : 0;
     const kids = typeof calcKids === 'number' ? calcKids : 0;
+    const totalPayingPax = adults + kids;
     
-    let adultPrice = 1800;
-    let kidPrice = 900;
+    let basePriceStr = 1700;
+    let groupPrice = 1600;
+    
     if (calcService === 'arr') {
-      adultPrice = (adults >= 2) ? 1650 : 1800;
-      kidPrice = 900;
+      basePriceStr = 1700;
+      groupPrice = 1600;
     } else if (calcService === 'dep') {
-      adultPrice = (adults >= 2) ? 1750 : 1900;
-      kidPrice = 950;
+      basePriceStr = 1800;
+      groupPrice = 1700;
     } else if (calcService === 'combo') {
-      adultPrice = (adults >= 2) ? 3200 : 3500;
-      kidPrice = 1750;
+      basePriceStr = 3300;
+      groupPrice = 3100;
     }
+    
+    const adultPrice = totalPayingPax > 1 ? groupPrice : basePriceStr;
+    const kidPrice = adultPrice * 0.5;
+    
     return (adults * adultPrice) + (kids * kidPrice);
-  }, [calcService, calcAdults, calcKids]);
+  }, [calcService, calcAdults, calcKids, calcInfants]);
 
   const ctaLinks = {
     whatsapp: "https://wa.me/79697189210?text=Hello,%20I'd%20like%20to%20inquire%20about%20the%20VIP%20Fast%20Track.",
@@ -149,15 +184,15 @@ function App() {
             <div className="card" style={{ padding: '2.5rem', border: '1px solid var(--color-gold)', background: 'rgba(10,10,10,0.5)', backdropFilter: 'blur(20px)' }}>
               <h3 style={{ marginBottom: '1.5rem', textAlign: 'center' }}>{t('calc.title')}</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <div>
+                <div style={{ display: 'block', marginBottom: '1rem' }}>
                   <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.service')}</label>
                   <select value={calcService} onChange={(e) => setCalcService(e.target.value)}>
-                    <option value="arr">{t('packages.arr.title')} (฿1,800)</option>
-                    <option value="dep">{t('packages.dep.title')} (฿1,900)</option>
-                    <option value="combo">{t('packages.combo.title')} (฿3,500)</option>
+                    <option value="arr">{t('packages.arr.title')} (฿1,700)</option>
+                    <option value="dep">{t('packages.dep.title')} (฿1,800)</option>
+                    <option value="combo">{t('packages.combo.title')} (฿3,300)</option>
                   </select>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '1rem' }}>
                   <div>
                     <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.adults')}</label>
                     <input 
@@ -172,6 +207,14 @@ function App() {
                       type="number" min="0" 
                       value={calcKids} 
                       onChange={(e) => setCalcKids(e.target.value === '' ? '' : parseInt(e.target.value))} 
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.infants') || 'Infants (Free)'}</label>
+                    <input 
+                      type="number" min="0" 
+                      value={calcInfants} 
+                      onChange={(e) => setCalcInfants(e.target.value === '' ? '' : parseInt(e.target.value))} 
                     />
                   </div>
                 </div>
@@ -193,52 +236,68 @@ function App() {
         </div>
       </section>
 
-      {/* Selectable Packages */}
-      <section style={{ padding: '6rem 0', background: 'rgba(10,10,10,0.6)' }}>
+      {/* Pricing Table SEO Segment */}
+      <section style={{ padding: '6rem 0', background: 'rgba(10,10,10,0.6)' }} id="pricing">
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.1rem' }}>{t('packages.title')}</h2>
-            <p style={{ color: 'var(--color-text-secondary)' }}>{t('packages.subtitle')}</p>
+            <p style={{ color: 'var(--color-text-secondary)', maxWidth: '600px', margin: '0 auto' }}>{t('packages.subtitle')}</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
-            {['arr', 'dep', 'combo'].map((pkg) => (
-              <div 
-                key={pkg} 
-                onClick={() => setSelectedPackage(pkg)}
-                className={`card selectable-card ${selectedPackage === pkg ? 'active' : ''}`}
-                style={{ 
-                  display: 'flex', flexDirection: 'column', cursor: 'pointer', transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  border: selectedPackage === pkg ? '1px solid var(--color-gold)' : '1px solid rgba(255,255,255,0.05)',
-                  backgroundColor: selectedPackage === pkg ? 'rgba(212, 175, 55, 0.05)' : 'var(--color-surface)',
-                  transform: selectedPackage === pkg ? 'translateY(-10px)' : 'none'
-                }}
-              >
-                {pkg === 'arr' && <Luggage size={40} className="text-gold" />}
-                {pkg === 'dep' && <Building size={40} className="text-gold" />}
-                {pkg === 'combo' && <Shield size={40} className="text-gold" />}
-                <h3 style={{ margin: '1.5rem 0 0.8rem' }}>{t(`packages.${pkg}.title`)}</h3>
-                <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, flex: 1 }}>{t(`packages.${pkg}.desc`)}</p>
-                <div style={{ marginTop: '2rem', fontSize: '1.6rem', fontWeight: 800, color: pkg === 'combo' ? 'var(--color-gold)' : '#fff' }}>
-                  ฿{pkg === 'arr' ? '1,800' : pkg === 'dep' ? '1,900' : '3,500'}
+          
+          <div className="card" style={{ padding: 0, overflow: 'hidden', border: '1px solid var(--color-gold)', position: 'relative' }}>
+             <div style={{ position: 'absolute', top: 0, right: 0, background: 'var(--color-gold)', color: '#000', padding: '0.4rem 1rem', borderBottomLeftRadius: '8px', fontWeight: 'bold', fontSize: '0.8rem', zIndex: 10 }}>Lowest Price Guarantee</div>
+             <div style={{ overflowX: 'auto' }}>
+               <table style={{ minWidth: '600px', width: '100%', margin: 0, border: 'none' }}>
+                 <thead>
+                   <tr>
+                     <th style={{ padding: '1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)' }}>{t('packages.th1')}</th>
+                     <th style={{ padding: '1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)' }}>{t('packages.th2')}</th>
+                     <th style={{ padding: '1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)', color: 'var(--color-gold)' }}>{t('packages.th3')}</th>
+                     <th style={{ padding: '1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)' }}>{t('packages.th4')}</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                   <tr>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                       <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.2rem' }}>{t('packages.arr.title')}</div>
+                       <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>{t('packages.arr.desc')}</div>
+                     </td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>฿1,700</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿1,600 / pax</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>50% Off</td>
+                   </tr>
+                   <tr>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.2rem' }}>{t('packages.dep.title')}</div>
+                       <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>{t('packages.dep.desc')}</div>
+                     </td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>฿1,800</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿1,700 / pax</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>50% Off</td>
+                   </tr>
+                   <tr>
+                     <td style={{ padding: '1.5rem' }}>
+                        <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.2rem' }}>{t('packages.combo.title')}</div>
+                       <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>{t('packages.combo.desc')}</div>
+                     </td>
+                     <td style={{ padding: '1.5rem', fontSize: '1.2rem', fontWeight: 600 }}>฿3,300</td>
+                     <td style={{ padding: '1.5rem', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿3,100 / pax</td>
+                     <td style={{ padding: '1.5rem' }}>50% Off</td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+             <div style={{ padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'rgba(20,20,20,0.8)', borderTop: '1px solid rgba(212, 175, 55, 0.2)' }}>
+                <p style={{ marginBottom: '1.5rem', fontSize: '0.9rem', color: 'var(--color-text-secondary)', textAlign: 'center' }}>{t('packages.footer')}</p>
+                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="btn" style={{ background: '#2AABEE', color: '#fff', padding: '1rem 2rem', borderRadius: '30px' }}>
+                      <Send size={18} /> Book via Telegram
+                    </a>
+                    <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', padding: '1rem 2rem', borderRadius: '30px' }}>
+                      <MessageCircle size={18} /> Book via WhatsApp
+                    </a>
                 </div>
-                
-                <AnimatePresence>
-                  {selectedPackage === pkg && (
-                    <motion.div 
-                      initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
-                      style={{ marginTop: '1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', overflow: 'hidden' }}
-                    >
-                      <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="btn" style={{ background: '#2AABEE', color: '#fff', fontSize: '0.8rem', padding: '0.75rem' }} onClick={(e) => e.stopPropagation()}>
-                        <Send size={16} /> Telegram
-                      </a>
-                      <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', fontSize: '0.8rem', padding: '0.75rem' }} onClick={(e) => e.stopPropagation()}>
-                        <MessageCircle size={16} /> WhatsApp
-                      </a>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
+             </div>
           </div>
         </div>
       </section>

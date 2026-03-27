@@ -26,7 +26,7 @@
   "faq.3.a": "Sì, il nostro team ti assiste nella compilazione di tutti i moduli di iscrizione obbligatori.",
   "faq.3.q": "Aiuti con i moduli tailandesi?",
   "faq.title": "Domande frequenti",
-  "footer.legal": "© 2015-2026 Accesso rapido all'aeroporto di Phuket. Tutti i diritti riservati.",
+  "footer.legal": "© 2013-2026 Accesso rapido all'aeroporto di Phuket. Tutti i diritti riservati.",
   "guides.1.d": "Guida completa per arrivare all'aeroporto di Phuket.",
   "guides.1.t": "Guida agli arrivi 2026",
   "guides.2.d": "Come funziona il Fast Track in aeroporto VIP, cosa è incluso.",
@@ -46,7 +46,7 @@
   "modal.privacy.title": "politica sulla riservatezza",
   "modal.terms.desc": "Il servizio non è rimborsabile 24 ore prima dell'arrivo. Rimborso del 100% se la compagnia aerea cancella il volo. Monitoriamo automaticamente tutti i ritardi.",
   "modal.terms.title": "Termini e condizioni",
-  "nav.badge": "Partner VIP ufficiale dell'Aeroporto di Phuket HKT • Dal 2015",
+  "nav.badge": "Partner VIP ufficiale dell'Aeroporto di Phuket HKT • Dal 2013",
   "packages.arr.desc": "Atterra e parti in pochi minuti. Incontro personale al cancello. Corsia preferenziale per l'immigrazione. Supporto via chat.",
   "packages.arr.title": "Arrivo rapido",
   "packages.combo.desc": "Arrivo + Partenza VIP. Servizio completo andata e ritorno. Garanzia di riprenotazione prioritaria. Miglior valore.",
@@ -129,5 +129,14 @@
   "team.w2.r": "Supporto al cliente",
   "team.w3.d": "Collegamento con le autorità ufficiali dell'immigrazione e doganali.",
   "team.w3.n": "Somchai",
-  "team.w3.r": "Operazioni aeroportuali"
+  "team.w3.r": "Operazioni aeroportuali",
+  "calc.infants": "Infants (0-2 years, Free)",
+  "packages.th1": "VIP Package / Service",
+  "packages.th2": "1 Passenger",
+  "packages.th3": "2+ Passengers (Group)",
+  "packages.th4": "Children (under 12)",
+  "packages.footer": "* Infants (0-2 years) always travel completely FREE. Prices include all official airport fees and taxes.",
+  "reviews.10.n": "Emma P.",
+  "reviews.10.t": "Flawless service",
+  "reviews.10.d": "Very polite staff, accurate communication, and delivered exactly what was promised."
 }

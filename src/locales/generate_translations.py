@@ -4,7 +4,7 @@ import json
 import time
 
 en_dict = {
-  "nav.badge": "Official VIP partner of Phuket Airport HKT • Since 2015",
+  "nav.badge": "Official VIP partner of Phuket Airport HKT • Since 2013",
   "hero.title": "Skip the Queues at Phuket Airport",
   "hero.subtitle": "Phuket Airport Fast Track is a VIP service that lets you bypass immigration and customs queues at HKT airport. Arrival processing in under 5 minutes.",
   "hero.cta.wa": "Book Fast Track via WhatsApp",
@@ -13,25 +13,31 @@ en_dict = {
   "takeaways.title": "🔑 Key Takeaways",
   "takeaways.1": "Skip immigration queues in under 5 minutes with a personal escort.",
   "takeaways.2": "Available for all international flights at HKT daily from 06:00 to midnight.",
-  "takeaways.3": "Arrival from ฿1,650/person · Departure from ฿1,750/person.",
+  "takeaways.3": "Arrival from ฿1,600/person · Departure from ฿1,700/person.",
   "takeaways.4": "Free rebooking or full refund for delayed/cancelled flights.",
   "takeaways.5": "Children aged 0-2 travel free; under 12 get 50% off.",
 
-  "calc.title": "Estimate Your Total Cost",
-  "calc.subtitle": "Select your service and number of passengers to see the total price instantly.",
+  "calc.title": "Fast Track Pricing Calculator",
+  "calc.subtitle": "Calculate your official VIP Airport Fast Track total. Our agency guarantees the lowest price in Phuket since 2013.",
   "calc.service": "Select Service",
   "calc.adults": "Number of Adults",
   "calc.kids": "Children (under 12, 50% off)",
+  "calc.infants": "Infants (0-2 years, Free)",
   "calc.total": "Total Estimated Cost: ฿",
 
-  "packages.title": "Choose Your Fast Track Package",
-  "packages.subtitle": "All packages include a personal escort and express immigration processing.",
+  "packages.title": "Phuket Airport Fast Track Prices 2026",
+  "packages.subtitle": "Operating since 2013, we offer the lowest official price for VIP Fast Track at HKT.",
+  "packages.th1": "VIP Package / Service",
+  "packages.th2": "1 Passenger",
+  "packages.th3": "2+ Passengers (Group)",
+  "packages.th4": "Children (under 12)",
   "packages.arr.title": "Arrival Fast Track",
-  "packages.arr.desc": "Land and leave in minutes. Personal meet at gate. Express priority immigration lane. Chat support.",
+  "packages.arr.desc": "Greet at gate, Express Immigration",
   "packages.dep.title": "Departure VIP",
-  "packages.dep.desc": "Breeze through check-in & security. Personal meet at terminal entrance. Priority immigration & escort.",
-  "packages.combo.title": "Combo Package ⭐",
-  "packages.combo.desc": "Arrival + Departure VIP. Full service round-trip. Priority rebooking guarantee. Best value.",
+  "packages.dep.desc": "Meet at terminal, Priority lane",
+  "packages.combo.title": "Combo (Arrival + Departure)",
+  "packages.combo.desc": "Full round-trip premium service",
+  "packages.footer": "* Infants (0-2 years) always travel completely FREE. Prices include all official airport fees and taxes.",
   
   "compare.title": "Fast Track vs Regular Immigration",
   "compare.subtitle": "See exactly what you get with our VIP service compared to the standard process.",
@@ -85,7 +91,7 @@ en_dict = {
   "faq.2.q": "How will I find my concierge?", "faq.2.a": "At the aircraft bridge (Arrival) or Terminal entrance (Departure) holding a sign.",
   "faq.3.q": "Do you help with Thai forms?", "faq.3.a": "Yes, our team assists you in filling out all mandatory entry forms.",
 
-  "footer.legal": "© 2015-2026 Phuket Airport Fast Track. All rights reserved.",
+  "footer.legal": "© 2013-2026 Phuket Airport Fast Track. All rights reserved.",
   "modal.close": "Close Window",
 
   "tdac_modal.title": "Thailand Digital Arrival Card Guide",

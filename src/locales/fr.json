@@ -26,7 +26,7 @@
   "faq.3.a": "Oui, notre équipe vous assiste pour remplir tous les formulaires d’inscription obligatoires.",
   "faq.3.q": "Aidez-vous avec les formulaires thaïlandais ?",
   "faq.title": "Foire aux questions",
-  "footer.legal": "© 2015-2026 Procédure accélérée de l'aéroport de Phuket. Tous droits réservés.",
+  "footer.legal": "© 2013-2026 Procédure accélérée de l'aéroport de Phuket. Tous droits réservés.",
   "guides.1.d": "Guide complet pour arriver à l’aéroport de Phuket.",
   "guides.1.t": "Guide d'arrivée 2026",
   "guides.2.d": "Comment fonctionne la procédure accélérée VIP pour l'aéroport, ce qui est inclus.",
@@ -46,7 +46,7 @@
   "modal.privacy.title": "politique de confidentialité",
   "modal.terms.desc": "Le service n'est pas remboursable 24 heures avant l'arrivée. Remboursement à 100% si la compagnie aérienne annule le vol. Nous suivons automatiquement tous les retards.",
   "modal.terms.title": "Conditions générales",
-  "nav.badge": "Partenaire VIP officiel de l'aéroport de Phuket HKT • Depuis 2015",
+  "nav.badge": "Partenaire VIP officiel de l'aéroport de Phuket HKT • Depuis 2013",
   "packages.arr.desc": "Atterrissez et partez en quelques minutes. Rencontre personnelle à la porte. Voie d'immigration prioritaire express. Assistance par chat.",
   "packages.arr.title": "Arrivée accélérée",
   "packages.combo.desc": "Arrivée + Départ VIP. Service complet aller-retour. Garantie de changement de réservation prioritaire. Meilleur rapport qualité-prix.",
@@ -129,5 +129,14 @@
   "team.w2.r": "Assistance client",
   "team.w3.d": "Liaison avec les autorités officielles de l'immigration et des douanes.",
   "team.w3.n": "Somchai",
-  "team.w3.r": "Opérations aéroportuaires"
+  "team.w3.r": "Opérations aéroportuaires",
+  "calc.infants": "Infants (0-2 years, Free)",
+  "packages.th1": "VIP Package / Service",
+  "packages.th2": "1 Passenger",
+  "packages.th3": "2+ Passengers (Group)",
+  "packages.th4": "Children (under 12)",
+  "packages.footer": "* Infants (0-2 years) always travel completely FREE. Prices include all official airport fees and taxes.",
+  "reviews.10.n": "Emma P.",
+  "reviews.10.t": "Flawless service",
+  "reviews.10.d": "Very polite staff, accurate communication, and delivered exactly what was promised."
 }

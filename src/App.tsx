@@ -204,19 +204,19 @@ function App() {
                     {t('packages.combo.badge')}
                   </div>
                 )}
-                <div 
-                  onClick={() => setSelectedPackage(pkg)}
-                  className={`card selectable-card ${iActive ? 'active' : ''}`}
-                  style={{ 
-                    display: 'flex', flexDirection: 'column', cursor: 'pointer', height: '100%',
-                    border: iActive || isComboFeatured ? '2px solid var(--color-gold)' : '1px solid rgba(255,255,255,0.05)',
-                    background: pkg === 'combo' ? 'linear-gradient(180deg, rgba(212, 175, 55, 0.08) 0%, rgba(10,10,10,0.85) 100%)' : 'var(--color-surface)',
-                    transform: iActive ? 'scale(1.05)' : (isComboFeatured ? 'scale(1.02)' : 'none'),
-                    zIndex: iActive || isComboFeatured ? 5 : 1,
-                    boxShadow: isComboFeatured ? '0 0 30px rgba(212, 175, 55, 0.15)' : 'none',
-                    padding: '2.5rem'
-                  }}
-                >
+                  <div 
+                    onClick={() => setSelectedPackage(pkg)}
+                    className={`card selectable-card ${iActive ? 'active' : ''}`}
+                    style={{ 
+                      display: 'flex', flexDirection: 'column', cursor: 'pointer', height: '100%',
+                      border: iActive || isComboFeatured ? '2px solid var(--color-gold)' : '1px solid rgba(255,255,255,0.05)',
+                      background: pkg === 'combo' ? 'linear-gradient(180deg, #1e1b10 0%, #141414 100%)' : 'var(--color-surface)',
+                      transform: iActive ? 'scale(1.05)' : (isComboFeatured ? 'scale(1.02)' : 'none'),
+                      zIndex: iActive || isComboFeatured ? 5 : 1,
+                      boxShadow: isComboFeatured ? '0 10px 40px rgba(212, 175, 55, 0.2)' : '0 10px 30px rgba(0,0,0,0.4)',
+                      padding: '2.5rem'
+                    }}
+                  >
                   <div style={{ marginBottom: '1.5rem' }}>
                     <h3 style={{ fontSize: '1.75rem', marginBottom: '0.25rem', color: pkg === 'combo' ? 'var(--color-gold)' : '#fff' }}>{t(`packages.${pkg}.title`)}</h3>
                     {pkg === 'combo' ? (
@@ -263,7 +263,7 @@ function App() {
       </section>
 
       {/* Reduced Payment Methods */}
-      <section style={{ padding: '6rem 0', background: 'rgba(20,20,20,0.4)' }}>
+      <section style={{ padding: '6rem 0', background: '#0f0f0f' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.1rem' }}>{t('payments.title')}</h2>
@@ -282,7 +282,7 @@ function App() {
       </section>
 
       {/* Pricing Table SEO Segment */}
-      <section style={{ padding: '6rem 0', background: 'rgba(10,10,10,0.6)' }} id="pricing">
+      <section style={{ padding: '6rem 0', background: '#0a0a0a' }} id="pricing">
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.1rem' }}>{t('packages.title')}</h2>
@@ -363,10 +363,10 @@ function App() {
       </section>
 
       {/* Pricing Calculator Section (Moved Below Prices Table) */}
-      <section style={{ padding: '6rem 0', background: 'rgba(20, 20, 20, 0.5)' }} id="calculator">
+      <section style={{ padding: '6rem 0', background: '#0f0f0f' }} id="calculator">
         <div className="container" style={{ maxWidth: '600px' }}>
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="card" style={{ padding: '3rem', border: '1px solid var(--color-gold)', background: 'rgba(10,10,10,0.6)', backdropFilter: 'blur(20px)' }}>
+            <div className="card" style={{ padding: '3rem', border: '1px solid var(--color-gold)', background: 'var(--color-surface)', backdropFilter: 'none' }}>
               <h3 style={{ marginBottom: '2rem', textAlign: 'center', fontSize: '2rem' }}>{t('calc.title')}</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div>
@@ -432,12 +432,13 @@ function App() {
           <div 
             className="card" onClick={() => setActiveModal('tdac')} 
             style={{ 
-              background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(10,10,10,0.5) 100%)', 
+              background: 'linear-gradient(135deg, #1e1b10 0%, #0a0a0a 100%)', 
               border: '2px solid var(--color-gold)', 
               cursor: 'pointer', 
               position: 'relative',
               padding: '4rem',
-              textAlign: 'center'
+              textAlign: 'center',
+              boxShadow: '0 20px 50px rgba(0,0,0,0.6)'
             }}
           >
             <div style={{ background: 'var(--color-gold)', color: 'var(--color-bg)', padding: '0.4rem 1.2rem', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 800, position: 'absolute', top: '2rem', left: '50%', transform: 'translateX(-50%)' }}>{t('guides.tdac.badge')}</div>
@@ -476,7 +477,7 @@ function App() {
       </section>
 
       {/* Reviews Section */}
-      <section style={{ padding: '6rem 0', background: 'rgba(20,20,20,0.4)' }}>
+      <section style={{ padding: '6rem 0', background: '#0f0f0f' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: '2.5rem' }}>{t('reviews.title')}</h2>
@@ -500,7 +501,7 @@ function App() {
       </section>
 
       {/* Comparison Segment */}
-      <section style={{ padding: '6rem 0', background: 'rgba(20,20,20,0.8)' }}>
+      <section style={{ padding: '6rem 0', background: '#0a0a0a' }}>
         <div className="container" style={{ maxWidth: '900px' }}>
           <h2 style={{ textAlign: 'center', marginBottom: '3.5rem' }}>{t('compare.title')}</h2>
           <div className="compare-container">

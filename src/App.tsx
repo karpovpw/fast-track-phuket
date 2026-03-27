@@ -247,16 +247,18 @@ function App() {
                   <div style={{ marginBottom: '1.5rem' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem' }}>
                       <h3 style={{ fontSize: '1.75rem', color: pkg === 'combo' ? 'var(--color-gold)' : '#fff', margin: 0, lineHeight: 1.2 }}>{t(`packages.${pkg}.title`)}</h3>
-                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
-                        {pkg === 'combo' ? (
-                          <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
-                            <span style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>฿3,300</span>
-                            <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.9rem' }}>฿3,500</span>
-                          </div>
-                        ) : (
-                          <div style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>฿{pkgPrice}</div>
-                        )}
-                        <div style={{ fontSize: '0.7rem', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '1px' }}>{t('packages.th2')}</div>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
+                          {pkg === 'combo' ? (
+                            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
+                              <span style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>฿3,300</span>
+                              <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.9rem' }}>฿3,500</span>
+                            </div>
+                          ) : (
+                            <div style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>฿{pkgPrice}</div>
+                          )}
+                        </div>
+                        <div style={{ fontSize: '0.7rem', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '1px', marginTop: '4px' }}>{t('packages.th2')}</div>
                       </div>
                     </div>
                     

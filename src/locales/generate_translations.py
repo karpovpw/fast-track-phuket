@@ -13,11 +13,11 @@ en_dict = {
   
   "takeaways.title": "🔑 Key Takeaways",
   "takeaways.0": "Our contacts available 24/7",
-  "takeaways.1": "Skip immigration queues in under 5 minutes with a personal escort.",
+  "takeaways.1": "Skip immigration queues in under 5 minutes with a personal escort",
   "takeaways.2": "Available for all international flights",
   "takeaways.3": "Arrival from ฿1,700/person · Departure from ฿1,800/person.",
   "takeaways.4": "Free rebooking or full refund for delayed/cancelled flights.",
-  "takeaways.5": "Children aged 0-2 travel free; under 12 get 50% off.",
+  "takeaways.5": "Children aged 0-2 travel free; under 12 get 50% off",
 
   "calc.title": "Pricing Calculator",
   "calc.subtitle": "Calculate your official VIP Airport Fast Track total. Our agency guarantees the lowest price in Phuket since 2013.",
@@ -186,6 +186,10 @@ def translate_text(text, target_lang):
             # Restore protected terms
             for placeholder, term in placeholder_map.items():
                 translated = translated.replace(placeholder, term)
+            
+            # Dot consistency
+            if not text.strip().endswith('.') and translated.strip().endswith('.'):
+                translated = translated.strip()[:-1]
             return translated
         except Exception as e:
             if attempt < 2:

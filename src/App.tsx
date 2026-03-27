@@ -197,7 +197,7 @@ function App() {
             <h1 style={{ fontSize: 'clamp(3rem, 7vw, 5rem)', lineHeight: 1.1, marginBottom: '2rem' }}>{t('hero.title')}</h1>
             <p style={{ fontSize: '1.4rem', color: 'var(--color-text-secondary)', marginBottom: '3.5rem', lineHeight: 1.6 }}>{t('hero.subtitle')}</p>
             <div className="takeaway-list">
-              {[0, 1, 2, 5].map(i => (
+              {[0, 1, 5, 2].map(i => (
                 <div key={i} className="takeaway-item">
                   <Check size={20} className="text-gold" style={{ flexShrink: 0 }} />
                   <span>{t(`takeaways.${i}`)}</span>

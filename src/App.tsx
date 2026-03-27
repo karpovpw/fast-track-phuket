@@ -119,8 +119,19 @@ function App() {
       
       <Hero3D />
 
-      <div style={{ backgroundColor: 'var(--color-gold)', color: 'var(--color-bg)', textAlign: 'center', padding: '0.5rem', fontWeight: 600, fontSize: '0.85rem', zIndex: 110, position: 'relative' }}>
-        {t('nav.badge')}
+      <div style={{ backgroundColor: 'var(--color-gold)', color: 'var(--color-bg)', padding: '0.6rem 0', fontWeight: 700, fontSize: '0.85rem', zIndex: 110, position: 'relative', letterSpacing: '1px', textTransform: 'uppercase' }}>
+        <div className="marquee-container">
+          <div className="marquee-content">
+            {[...Array(12)].map((_, i) => (
+              <div key={i} className="marquee-item">{t('nav.badge')}</div>
+            ))}
+          </div>
+          <div className="marquee-content">
+            {[...Array(12)].map((_, i) => (
+              <div key={i} className="marquee-item">{t('nav.badge')}</div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Navigation */}
@@ -428,11 +439,11 @@ function App() {
                   <div style={{ fontSize: '0.9rem', opacity: 0.6, marginBottom: '0.25rem', fontWeight: 600 }}>{t('calc.estimate')}</div>
                   <span style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--color-gold)' }}>฿{totalPrice.toLocaleString()}</span>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                   <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="btn" style={{ background: '#2AABEE', color: '#fff', padding: '1.2rem', fontWeight: 700 }}>
+                <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                   <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="btn" style={{ background: '#2AABEE', color: '#fff', padding: '1rem 2rem', fontWeight: 700, minWidth: '160px' }}>
                     <Send size={20} /> Telegram
                   </a>
-                  <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', padding: '1.2rem', fontWeight: 700 }}>
+                  <a href={ctaLinks.whatsapp} target="_blank" rel="noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', padding: '1rem 2rem', fontWeight: 700, minWidth: '160px' }}>
                     <MessageCircle size={20} /> WhatsApp
                   </a>
                 </div>
@@ -569,6 +580,22 @@ function App() {
           <p style={{ opacity: 0.4, fontSize: '0.75rem', letterSpacing: '1px' }}>{t('footer.legal')}</p>
         </div>
       </footer>
+      
+      {/* Bottom Marquee */}
+      <div style={{ backgroundColor: 'var(--color-gold)', color: 'var(--color-bg)', padding: '0.6rem 0', fontWeight: 700, fontSize: '0.85rem', zIndex: 110, position: 'relative', letterSpacing: '1px', textTransform: 'uppercase' }}>
+        <div className="marquee-container">
+          <div className="marquee-content">
+            {[...Array(12)].map((_, i) => (
+              <div key={i} className="marquee-item">{t('nav.badge')}</div>
+            ))}
+          </div>
+          <div className="marquee-content">
+            {[...Array(12)].map((_, i) => (
+              <div key={i} className="marquee-item">{t('nav.badge')}</div>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* Modals */}
       <SimpleModal isOpen={activeModal === 'tdac'} onClose={() => setActiveModal(null)} title={t("tdac_modal.title")} highlight={true}>

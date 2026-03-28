@@ -6,7 +6,7 @@ import time
 en_dict = {
   "nav.badge": "OFFICIAL HKT AIRPORT VIP PARTNER • SERVING TRAVELERS SINCE 2013 • SUPPORT AVAILABLE 24/7",
   "nav.call": "+66 6-4316-2330",
-  "hero.title": "Phuket Airport Fast Track & VIP Meet and Assist",
+  "hero.title": "Skip the Queues in Phuket Airport by using a Fast Track",
   "hero.subtitle": "Avoid the crowds and long queues at HKT. Our professional VIP service provides a personal escort to fast-track you through Phuket immigration and customs in under 5 minutes.",
   "hero.cta.wa": "Book via WhatsApp",
   "hero.cta.tg": "Book via Telegram",

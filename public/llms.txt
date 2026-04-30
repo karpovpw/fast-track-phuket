@@ -12,25 +12,34 @@ Key facts:
 - Multilingual service: English, Russian, Chinese, Hindi, Hebrew, Arabic, Spanish, French, German, Italian
 - Lowest price guarantee: From ฿1,600 per person
 
+## Canonical Pages for Search and AI
+
+- [Homepage](https://fast-track-phuket.com/): Main service overview, packages, reviews, comparison table, and booking links
+- [Arrival Fast Track](https://fast-track-phuket.com/arrival-fast-track/): HKT arrival meet-and-assist, aircraft bridge or immigration-zone meeting, priority immigration, and terminal guidance
+- [Departure VIP](https://fast-track-phuket.com/departure-vip/): HKT departure terminal meeting, check-in help, priority passport control, and gate escort
+- [Prices 2026](https://fast-track-phuket.com/phuket-airport-fast-track-prices/): Current public rates, child discounts, infant policy, and payment methods
+- [TDAC Guide](https://fast-track-phuket.com/tdac-guide/): Thailand Digital Arrival Card checklist for Phuket Airport arrivals
+- [FAQ](https://fast-track-phuket.com/faq/): Direct answers about booking, meeting points, delays, airlines, TDAC, and process time
+
 ## Services & Pricing
 
-- [Arrival Fast Track](https://fast-track-phuket.com/#packages): Personal meet at gate, express immigration lane, terminal guidance — **From ฿1,600 per person**
-- [Departure VIP](https://fast-track-phuket.com/#packages): Meet at terminal, priority check-in, express passport control — **From ฿1,600 per person**
-- [Combo Package (Arrival + Departure)](https://fast-track-phuket.com/#packages): Full round-trip VIP service — **From ฿3,100 per person**
-- [Children under 12](https://fast-track-phuket.com/#pricing): 50% discount on all packages
-- [Infants 0-2 years](https://fast-track-phuket.com/#pricing): Always FREE
+- [Arrival Fast Track](https://fast-track-phuket.com/arrival-fast-track/): Personal meet at gate, express immigration lane, terminal guidance — **From ฿1,600 per person**
+- [Departure VIP](https://fast-track-phuket.com/departure-vip/): Meet at terminal, priority check-in, express passport control — **From ฿1,700 per person**
+- [Combo Package (Arrival + Departure)](https://fast-track-phuket.com/phuket-airport-fast-track-prices/): Full round-trip VIP service — **From ฿3,100 per person**
+- [Children under 12](https://fast-track-phuket.com/phuket-airport-fast-track-prices/): 50% discount on all packages
+- [Infants 0-2 years](https://fast-track-phuket.com/phuket-airport-fast-track-prices/): Always FREE
 
 ## What's Included
 
 - [VIP vs Regular Comparison](https://fast-track-phuket.com/): Under 5 min processing, personal concierge gate-to-exit, dedicated VIP lane, real-time flight tracking, aircraft bridge pickup, mandatory form assistance, 24/7 support
-- [TDAC Guide](https://fast-track-phuket.com/): Free step-by-step guide for Thailand Digital Arrival Card (mandatory for 2026)
+- [TDAC Guide](https://fast-track-phuket.com/tdac-guide/): Free step-by-step guide for Thailand Digital Arrival Card (mandatory for 2026)
 
 ## FAQ
 
-- [Flight delay policy](https://fast-track-phuket.com/): Free automatic rescheduling (we work 24/7), full refund on cancellation
-- [TDAC requirements](https://fast-track-phuket.com/): All travelers must complete TDAC; Combo Package includes assistance
-- [Booking advice](https://fast-track-phuket.com/): Book 24h ahead; 48-72h in peak season (Nov-Mar). Emergency same-day bookings may be possible.
-- [Airline coverage](https://fast-track-phuket.com/): All international flights at HKT, **available 24 hours daily**
+- [Flight delay policy](https://fast-track-phuket.com/faq/): Free automatic rescheduling (we work 24/7), full refund on cancellation
+- [TDAC requirements](https://fast-track-phuket.com/tdac-guide/): All travelers must complete TDAC; Combo Package includes assistance
+- [Booking advice](https://fast-track-phuket.com/faq/): Book 24h ahead; 48-72h in peak season (Nov-Mar). Emergency same-day bookings may be possible.
+- [Airline coverage](https://fast-track-phuket.com/faq/): All international flights at HKT, **available 24 hours daily**
 
 ## Contact & Booking (Available 24/7)
 
@@ -38,6 +47,11 @@ Key facts:
 - [Telegram](https://t.me/fasttrackphuket): Instant response 24/7
 - [Website](https://fast-track-phuket.com/): Full context, booking calculator
 
-## Optional
+## Crawl Files
 
+- [Sitemap](https://fast-track-phuket.com/sitemap.xml): Canonical crawlable URLs
+- [Full AI context](https://fast-track-phuket.com/llms-full.txt): Expanded service, pricing, FAQ, and booking context
+- [AI permissions](https://fast-track-phuket.com/ai.txt): Machine-readable crawler permissions and citation guidance
+
+## Optional
 

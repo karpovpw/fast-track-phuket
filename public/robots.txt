@@ -23,13 +23,31 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
+User-agent: Claude-SearchBot
+Allow: /
+
 User-agent: Google-Extended
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
+User-agent: DuckDuckBot
+Allow: /
+
 User-agent: Googlebot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
 Allow: /
 
 User-agent: anthropic-ai
@@ -42,6 +60,7 @@ User-agent: meta-externalagent
 Allow: /
 
 Sitemap: https://fast-track-phuket.com/sitemap.xml
+Host: fast-track-phuket.com
 
 # AI-friendly content files
 # LLM context: https://fast-track-phuket.com/llms.txt

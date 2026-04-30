@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -9,7 +9,15 @@ import {
 import Hero3D from './components/Hero3D';
 import './index.css';
 
-const SimpleModal = ({ isOpen, onClose, title, children, highlight = false }: any) => {
+type SimpleModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  title: ReactNode;
+  children: ReactNode;
+  highlight?: boolean;
+};
+
+const SimpleModal = ({ isOpen, onClose, title, children, highlight = false }: SimpleModalProps) => {
   if (!isOpen) return null;
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -101,11 +109,11 @@ function App() {
     const kidPrice = basePriceStr * 0.5;
     
     return (adults * adultPrice) + (kids * kidPrice);
-  }, [calcService, calcAdults, calcKids, calcInfants]);
+  }, [calcService, calcAdults, calcKids]);
 
   const ctaLinks = {
     whatsapp: "https://wa.me/79697189210?text=Hello,%20I'd%20like%20to%20inquire%20about%20the%20VIP%20Fast%20Track.",
-    telegram: "https://t.me/danilaru",
+    telegram: "https://t.me/fasttrackphuket",
     phone: "tel:+66643162330"
   };
 
@@ -596,6 +604,13 @@ function App() {
         <div className="container" style={{ textAlign: 'center' }}>
           <div style={{ fontWeight: 700, fontSize: '1.6rem', fontFamily: 'var(--font-heading)', marginBottom: '2rem' }}>
             FAST<span className="text-gold">TRACK</span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem', fontSize: '0.85rem', color: 'var(--color-text-secondary)', flexWrap: 'wrap' }}>
+            <a href="/arrival-fast-track/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>Arrival Fast Track</a>
+            <a href="/departure-vip/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>Departure VIP</a>
+            <a href="/phuket-airport-fast-track-prices/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>Prices</a>
+            <a href="/tdac-guide/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>TDAC Guide</a>
+            <a href="/faq/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>FAQ</a>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', marginBottom: '2.5rem', fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>
             <button onClick={() => setActiveModal('terms')} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontWeight: 600 }}>{t('footer.terms')}</button>

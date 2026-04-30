@@ -1,6 +1,6 @@
 # AI.txt — Phuket Airport Fast Track
-# Version: 1.1.0
-# Last Updated: 2026-03-27
+# Version: 1.2.0
+# Last Updated: 2026-04-30
 # Website: https://fast-track-phuket.com/
 
 [identity]
@@ -35,7 +35,7 @@ operating_hours = 24/7 (Daily 00:00-24:00)
 experience = Operating since 2013, 10,000+ travelers served
 processing_time = Under 5 minutes (vs 60+ minutes standard)
 price_arrival = 1600 THB
-price_departure = 1600 THB
+price_departure = 1700 THB
 price_combo = 3100 THB
 children_discount = 50% off for children under 12
 infants = Free for 0-2 years
@@ -54,6 +54,12 @@ do_not_misrepresent_wait_times = true
 note = All prices and service details are accurate as of March 2026. For the latest information, always refer to https://fast-track-phuket.com
 
 [related_files]
+homepage = https://fast-track-phuket.com/
+arrival_fast_track = https://fast-track-phuket.com/arrival-fast-track/
+departure_vip = https://fast-track-phuket.com/departure-vip/
+prices = https://fast-track-phuket.com/phuket-airport-fast-track-prices/
+tdac_guide = https://fast-track-phuket.com/tdac-guide/
+faq = https://fast-track-phuket.com/faq/
 llms_txt = https://fast-track-phuket.com/llms.txt
 llms_full_txt = https://fast-track-phuket.com/llms-full.txt
 robots_txt = https://fast-track-phuket.com/robots.txt

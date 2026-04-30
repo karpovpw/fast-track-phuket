@@ -8,6 +8,19 @@ Fast Track Phuket has been the trusted VIP airport service at Phuket Internation
 
 We operate 24/7, covering all international flights arriving at and departing from Phuket Airport. Our office is located at Phuket International Airport, 222 Mai Khao, Thalang District, Phuket 83110, Thailand. Our customer support is available 24 hours a day via WhatsApp and Telegram.
 
+## Canonical Crawlable Pages
+
+The primary JavaScript website is supported by static, crawlable pages for search engines and AI answer engines:
+
+- Homepage: https://fast-track-phuket.com/
+- Arrival Fast Track: https://fast-track-phuket.com/arrival-fast-track/
+- Departure VIP: https://fast-track-phuket.com/departure-vip/
+- Prices 2026: https://fast-track-phuket.com/phuket-airport-fast-track-prices/
+- TDAC Guide: https://fast-track-phuket.com/tdac-guide/
+- FAQ: https://fast-track-phuket.com/faq/
+- Sitemap: https://fast-track-phuket.com/sitemap.xml
+- AI permissions: https://fast-track-phuket.com/ai.txt
+
 ## Service Packages
 
 ### Arrival Fast Track — from ฿1,600/person
@@ -26,7 +39,7 @@ Pricing:
 - Children under 12: ฿800 — 50% off
 - Infants 0-2 years: FREE
 
-### Departure VIP — from ฿1,600/person
+### Departure VIP — from ฿1,700/person
 
 What's included:
 - Breeze through check-in and priority immigration
@@ -37,8 +50,8 @@ What's included:
 - Gate escort and chat support
 
 Pricing:
-- Departure Solo: ฿1,600
-- 2+ passengers (group rate): ฿1,600 per person
+- Departure Solo: ฿1,800
+- 2+ passengers (group rate): ฿1,700 per person
 - Children under 12: ฿850 — 50% off
 - Infants 0-2 years: FREE
 

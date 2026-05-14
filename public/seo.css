@@ -4,10 +4,12 @@ html {
   color: #f7f2e8;
   font-family: Arial, sans-serif;
   line-height: 1.65;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
+  overflow-x: hidden;
 }
 
 main {
@@ -30,6 +32,12 @@ nav {
   border-bottom: 1px solid rgba(212, 175, 55, 0.3);
 }
 
+nav a,
+.button {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 a {
   color: #d4af37;
 }
@@ -38,6 +46,8 @@ h1,
 h2,
 h3 {
   line-height: 1.2;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 h1 {
@@ -60,11 +70,12 @@ h2 {
   display: grid;
   gap: 24px;
   align-items: center;
-  grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
+  grid-template-columns: minmax(0, 1.2fr) minmax(min(100%, 240px), 0.8fr);
 }
 
 .hero img {
   width: 100%;
+  max-width: 100%;
   border-radius: 8px;
 }
 
@@ -84,7 +95,7 @@ h2 {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
   gap: 16px;
   margin: 22px 0;
 }
@@ -148,12 +159,48 @@ th {
 }
 
 html[dir='rtl'] th,
-html[dir='rtl'] td {
+html[dir='rtl'] td,
+html[dir='rtl'] nav,
+html[dir='rtl'] .hero,
+html[dir='rtl'] .card {
   text-align: right;
 }
 
 @media (max-width: 760px) {
+  main {
+    padding: 24px 16px 48px;
+  }
+
+  nav,
+  footer {
+    padding: 16px;
+  }
+
   .hero {
     grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: clamp(1.85rem, 10vw, 2.65rem);
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  th,
+  td {
+    min-width: 120px;
+  }
+
+  .cta {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .button {
+    text-align: center;
   }
 }

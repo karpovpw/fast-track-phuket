@@ -103,11 +103,11 @@ function App() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className="site-shell" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
       <Hero3D />
 
-      <div style={{ backgroundColor: 'var(--color-gold)', color: 'var(--color-bg)', padding: '0.6rem 0', fontWeight: 700, fontSize: '0.85rem', zIndex: 110, position: 'relative', letterSpacing: '1px', textTransform: 'uppercase' }}>
+      <div className="marquee-band" style={{ backgroundColor: 'var(--color-gold)', color: 'var(--color-bg)', padding: '0.6rem 0', fontWeight: 700, fontSize: '0.85rem', zIndex: 110, position: 'relative', letterSpacing: '1px', textTransform: 'uppercase' }}>
         <div className="marquee-container">
           <div className="marquee-content">
             {[...Array(12)].map((_, i) => (
@@ -123,7 +123,7 @@ function App() {
       </div>
 
       {/* Navigation */}
-      <nav style={{ padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'rgba(10, 10, 10, 0.6)', backdropFilter: 'blur(15px)', top: 0, zIndex: 100, borderBottom: '1px solid rgba(255,255,255,0.05)', position: 'sticky' }}>
+      <nav className="site-nav" style={{ padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'rgba(10, 10, 10, 0.6)', backdropFilter: 'blur(15px)', top: 0, zIndex: 100, borderBottom: '1px solid rgba(255,255,255,0.05)', position: 'sticky' }}>
         
         {/* Language Selector (Moved to Left) */}
         <div style={{ position: 'relative', zIndex: 2 }}>
@@ -134,10 +134,11 @@ function App() {
             {langOpen && (
               <motion.div 
                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
+                className="language-menu"
                 style={{ position: 'absolute', top: '100%', left: 0, marginTop: '0.5rem', backgroundColor: 'var(--color-surface)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.2rem', minWidth: '130px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)', zIndex: 1000 }}
               >
                 {languages.map(lang => (
-                  <a key={lang.code} href={getLanguagePath(lang.code)} onClick={(event) => { event.preventDefault(); changeLanguage(lang.code); }} style={{ textAlign: 'left', padding: '0.4rem 0.8rem', background: 'transparent', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: '0.85rem', textDecoration: 'none', display: 'block' }}>
+                  <a key={lang.code} className="language-option" href={getLanguagePath(lang.code)} onClick={(event) => { event.preventDefault(); changeLanguage(lang.code); }} style={{ textAlign: 'left', padding: '0.4rem 0.8rem', background: 'transparent', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: '0.85rem', textDecoration: 'none', display: 'block' }}>
                     {lang.name}
                   </a>
                 ))}
@@ -147,7 +148,7 @@ function App() {
         </div>
 
         {/* Centered Logo */}
-        <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', fontWeight: 800, fontSize: '1.4rem', fontFamily: 'var(--font-heading)', letterSpacing: '1px', pointerEvents: 'none', whiteSpace: 'nowrap' }}>
+        <div className="site-logo" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', fontWeight: 800, fontSize: '1.4rem', fontFamily: 'var(--font-heading)', letterSpacing: '1px', pointerEvents: 'none', whiteSpace: 'nowrap' }}>
           FAST<span className="text-gold">TRACK</span>
         </div>
         
@@ -167,11 +168,12 @@ function App() {
         </div>
       </nav>
 
-      <section style={{ padding: '8rem 0', position: 'relative' }}>
+      <section className="hero-section" style={{ padding: '8rem 0', position: 'relative' }}>
         <div className="container" style={{ maxWidth: '900px', textAlign: 'center' }}>
           <motion.div 
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }}
+            className="hero-panel"
             style={{ 
               background: 'rgba(5, 5, 5, 0.45)', 
               backdropFilter: 'blur(20px)', 
@@ -181,8 +183,8 @@ function App() {
               boxShadow: '0 20px 50px rgba(0,0,0,0.3)'
             }}
           >
-            <h1 style={{ fontSize: 'clamp(3rem, 7vw, 5rem)', lineHeight: 1.1, marginBottom: '2rem' }}>{t('hero.title')}</h1>
-            <p style={{ fontSize: '1.4rem', color: 'var(--color-text-secondary)', marginBottom: '3.5rem', lineHeight: 1.6 }}>{t('hero.subtitle')}</p>
+            <h1 className="hero-title" style={{ fontSize: 'clamp(3rem, 7vw, 5rem)', lineHeight: 1.1, marginBottom: '2rem' }}>{t('hero.title')}</h1>
+            <p className="hero-subtitle" style={{ fontSize: '1.4rem', color: 'var(--color-text-secondary)', marginBottom: '3.5rem', lineHeight: 1.6 }}>{t('hero.subtitle')}</p>
             <div className="takeaway-list">
               {[0, 1, 5, 2].map(i => (
                 <div key={i} className="takeaway-item">
@@ -202,7 +204,7 @@ function App() {
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.2rem' }}>{t('pkg_section.title')}</h2>
             <p style={{ color: 'var(--color-text-secondary)', maxWidth: '600px', margin: '0 auto' }}>{t('pkg_section.subtitle')}</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem' }}>
+          <div className="packages-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem' }}>
             {['arr', 'dep', 'combo'].map((pkg) => {
               const iActive = selectedPackage === pkg;
               const isComboFeatured = pkg === 'combo' && !selectedPackage;
@@ -214,13 +216,13 @@ function App() {
                 style={{ position: 'relative' }}
               >
                 {pkg === 'combo' && (
-                  <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', background: 'var(--color-gold)', color: '#000', padding: '0.25rem 1rem', borderRadius: '30px', fontSize: '0.75rem', fontWeight: 800, zIndex: 10, boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}>
+                  <div className="package-badge" style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', background: 'var(--color-gold)', color: '#000', padding: '0.25rem 1rem', borderRadius: '30px', fontSize: '0.75rem', fontWeight: 800, zIndex: 10, boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}>
                     {t('packages.combo.badge')}
                   </div>
                 )}
                   <div 
                     onClick={() => setSelectedPackage(pkg)}
-                    className={`card selectable-card ${iActive ? 'active' : ''}`}
+                    className={`card selectable-card package-card ${iActive ? 'active' : ''}`}
                     style={{ 
                       display: 'flex', flexDirection: 'column', cursor: 'pointer', height: '100%',
                       border: iActive || isComboFeatured ? '2px solid var(--color-gold)' : '1px solid rgba(255,255,255,0.05)',
@@ -262,7 +264,7 @@ function App() {
                          </span>
                          <span className="price-value">฿{pkg === 'arr' ? '850' : pkg === 'dep' ? '900' : '1,650'}</span>
                        </div>
-                       <div className="price-col" style={{ gridColumn: 'span 2', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '0.6rem' }}>
+                       <div className="price-col price-free-col" style={{ gridColumn: 'span 2', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '0.6rem' }}>
                          <div className="price-free">
                            <Star size={14} fill="var(--color-gold)" /> <span>{t('packages.th5')}: FREE</span>
                          </div>
@@ -281,7 +283,7 @@ function App() {
                   <div style={{ marginTop: 'auto' }}>
                     {selectedPackage === pkg && (
                       <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                        <div className="package-actions" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                           <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="btn" style={{ background: '#2AABEE', color: '#fff', fontSize: '0.85rem', padding: '0.8rem' }} onClick={(e) => e.stopPropagation()}>
                             <Send size={18} /> Telegram
                           </a>
@@ -310,7 +312,7 @@ function App() {
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.1rem' }}>{t('payments.title')}</h2>
             <p style={{ color: 'var(--color-text-secondary)' }}>{t('payments.subtitle')}</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem' }}>
+          <div className="content-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem' }}>
             {paymentMethods.map(pm => (
               <div key={pm.key} className="card" style={{ textAlign: 'center' }}>
                 <div style={{ color: 'var(--color-gold)', marginBottom: '1.2rem', display: 'flex', justifyContent: 'center' }}>{pm.icon}</div>
@@ -330,9 +332,9 @@ function App() {
             <p style={{ color: 'var(--color-text-secondary)', maxWidth: '600px', margin: '0 auto' }}>{t('packages.subtitle')}</p>
           </div>
           
-          <div className="card" style={{ padding: 0, overflow: 'hidden', border: '1px solid var(--color-gold)', position: 'relative' }}>
-             <div style={{ position: 'absolute', top: 0, left: 0, background: 'var(--color-gold)', color: '#000', padding: '0.4rem 1rem', borderBottomRightRadius: '8px', fontWeight: 'bold', fontSize: '0.8rem', zIndex: 10 }}>{t('pricing.guarantee')}</div>
-             <div style={{ overflowX: 'auto' }}>
+          <div className="card pricing-card" style={{ padding: 0, overflow: 'hidden', border: '1px solid var(--color-gold)', position: 'relative' }}>
+             <div className="pricing-guarantee" style={{ position: 'absolute', top: 0, left: 0, background: 'var(--color-gold)', color: '#000', padding: '0.4rem 1rem', borderBottomRightRadius: '8px', fontWeight: 'bold', fontSize: '0.8rem', zIndex: 10 }}>{t('pricing.guarantee')}</div>
+             <div className="table-scroll" style={{ overflowX: 'auto' }}>
                <table style={{ minWidth: '800px', width: '100%', margin: 0, border: 'none' }}>
                  <thead>
                    <tr>
@@ -404,7 +406,7 @@ function App() {
       <section style={{ padding: '6rem 0' }} id="calculator">
         <div className="container" style={{ maxWidth: '600px' }}>
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="card" style={{ padding: '3rem', border: '1px solid var(--color-gold)', background: 'var(--color-surface)', backdropFilter: 'none' }}>
+            <div className="card calculator-card" style={{ padding: '3rem', border: '1px solid var(--color-gold)', background: 'var(--color-surface)', backdropFilter: 'none' }}>
               <h3 style={{ marginBottom: '2rem', textAlign: 'center', fontSize: '2rem' }}>{t('calc.title')}</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div>
@@ -468,7 +470,7 @@ function App() {
       <section style={{ padding: '6rem 0' }}>
         <div className="container">
           <div 
-            className="card" onClick={() => setActiveModal('tdac')} 
+            className="card tdac-card" onClick={() => setActiveModal('tdac')}
             style={{ 
               background: 'linear-gradient(135deg, #1e1b10 0%, #0a0a0a 100%)', 
               border: '2px solid var(--color-gold)', 
@@ -499,7 +501,7 @@ function App() {
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.2rem' }}>{t('team.title')}</h2>
             <p style={{ color: 'var(--color-text-secondary)', maxWidth: '600px', margin: '0 auto' }}>{t('team.subtitle')}</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2.5rem' }}>
+          <div className="content-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2.5rem' }}>
             {[1, 2, 3].map(i => (
               <div key={i} className="card" style={{ textAlign: 'center', padding: '3rem 2rem' }}>
                 <div style={{ width: '100px', height: '100px', borderRadius: '50%', margin: '0 auto 1.5rem', overflow: 'hidden', border: '2px solid var(--color-gold)' }}>
@@ -520,7 +522,7 @@ function App() {
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: '2.5rem' }}>{t('reviews.title')}</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+          <div className="content-grid reviews-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
             {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
               <div key={i} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div style={{ color: 'var(--color-gold)' }}>
@@ -600,7 +602,7 @@ function App() {
       </footer>
       
       {/* Bottom Marquee */}
-      <div style={{ backgroundColor: 'var(--color-gold)', color: 'var(--color-bg)', padding: '0.6rem 0', fontWeight: 700, fontSize: '0.85rem', zIndex: 110, position: 'relative', letterSpacing: '1px', textTransform: 'uppercase' }}>
+      <div className="marquee-band" style={{ backgroundColor: 'var(--color-gold)', color: 'var(--color-bg)', padding: '0.6rem 0', fontWeight: 700, fontSize: '0.85rem', zIndex: 110, position: 'relative', letterSpacing: '1px', textTransform: 'uppercase' }}>
         <div className="marquee-container">
           <div className="marquee-content">
             {[...Array(12)].map((_, i) => (
@@ -650,7 +652,7 @@ function App() {
       </SimpleModal>
 
       {/* Floating Chat Buttons */}
-      <div style={{ position: 'fixed', bottom: '2rem', right: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', zIndex: 1000 }}>
+      <div className="floating-chat" style={{ position: 'fixed', bottom: '2rem', right: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', zIndex: 1000 }}>
          <motion.a 
             href={ctaLinks.phone}
             whileHover={{ scale: 1.1 }}

@@ -1,12 +1,12 @@
 # AI.txt — Phuket Airport Fast Track
-# Version: 1.2.0
-# Last Updated: 2026-04-30
+# Version: 1.3.0
+# Last Updated: 2026-05-14
 # Website: https://fast-track-phuket.com/
 
 [identity]
 name = Phuket Airport Fast Track
 url = https://fast-track-phuket.com
-description = VIP meet-and-assist airport service at Phuket International Airport (HKT), Thailand. Operating since 2013, providing personal escort through immigration and customs in under 5 minutes. The longest-operating and lowest-priced fast track service at Phuket Airport.
+description = VIP meet-and-assist airport service at Phuket International Airport (HKT), Thailand. Operating since 2013, providing personal escort for arrival immigration, departure passport control, airport guidance, and TDAC support.
 industry = Travel & Tourism / Airport VIP Services
 location = 222 Mai Khao, Thalang District, Phuket 83110, Thailand
 founded = 2013
@@ -45,16 +45,25 @@ primary_contact = +66 6-4316-2330 (Phone) / +7 969-718-9210 (WhatsApp)
 payment_methods = Thai QR, Online Card, USDT/USDC Crypto, Cash via Courier, SWIFT Transfer
 tdac_assistance = Included in Combo Package; free guide available on website
 airlines_covered = All international flights at HKT
-key_differentiators = Lowest price guarantee, operating since 2013, personal concierge gate-to-exit, real-time flight tracking, multilingual service
+key_differentiators = Operating since 2013, personal concierge gate-to-exit, real-time flight tracking, TDAC guidance, multilingual service, clean language-specific crawlable URLs
 
 [restrictions]
 do_not_fabricate_prices = true
 do_not_claim_government_affiliation = true
 do_not_misrepresent_wait_times = true
-note = All prices and service details are accurate as of March 2026. For the latest information, always refer to https://fast-track-phuket.com
+note = All prices and service details are accurate as of May 14, 2026. For the latest information, always refer to https://fast-track-phuket.com
 
 [related_files]
 homepage = https://fast-track-phuket.com/
+homepage_ru = https://fast-track-phuket.com/ru/
+homepage_zh = https://fast-track-phuket.com/zh/
+homepage_hi = https://fast-track-phuket.com/hi/
+homepage_he = https://fast-track-phuket.com/he/
+homepage_ar = https://fast-track-phuket.com/ar/
+homepage_es = https://fast-track-phuket.com/es/
+homepage_fr = https://fast-track-phuket.com/fr/
+homepage_de = https://fast-track-phuket.com/de/
+homepage_it = https://fast-track-phuket.com/it/
 arrival_fast_track = https://fast-track-phuket.com/arrival-fast-track/
 departure_vip = https://fast-track-phuket.com/departure-vip/
 prices = https://fast-track-phuket.com/phuket-airport-fast-track-prices/

@@ -46,32 +46,9 @@ function App() {
   const [calcInfants, setCalcInfants] = useState<number | string>(0);
 
   useEffect(() => {
-    const detectLanguage = async () => {
-      if (localStorage.getItem('langSet')) return;
-      try {
-        const res = await fetch('https://ipapi.co/json/');
-        const data = await res.json();
-        const country = data.country;
-        
-        const countryMap: Record<string, string> = {
-          'RU': 'ru', 'BY': 'ru', 'KZ': 'ru',
-          'CN': 'zh', 'HK': 'zh', 'TW': 'zh',
-          'IN': 'hi', 'IL': 'he',
-          'AE': 'ar', 'SA': 'ar', 'QA': 'ar',
-          'ES': 'es', 'MX': 'es', 'AR': 'es',
-          'FR': 'fr', 'DE': 'de', 'AT': 'de', 'CH': 'de',
-          'IT': 'it'
-        };
-        
-        if (country && countryMap[country]) {
-          i18n.changeLanguage(countryMap[country]);
-        }
-        localStorage.setItem('langSet', 'true');
-      } catch (e) {
-        console.error('Loc fetch err', e);
-      }
-    };
-    detectLanguage();
+    const currentLanguage = i18n.resolvedLanguage || i18n.language || 'en';
+    document.documentElement.lang = currentLanguage;
+    document.documentElement.dir = ['ar', 'he'].includes(currentLanguage) ? 'rtl' : 'ltr';
   }, [i18n]);
 
   const languages = [
@@ -81,9 +58,11 @@ function App() {
     { code: 'it', name: 'Italiano' }
   ];
 
+  const getLanguagePath = (code: string) => code === 'en' ? '/' : `/${code}/`;
+
   const changeLanguage = (code: string) => {
-    i18n.changeLanguage(code);
     setLangOpen(false);
+    window.location.assign(getLanguagePath(code));
   };
 
   const totalPrice = useMemo(() => {
@@ -158,9 +137,9 @@ function App() {
                 style={{ position: 'absolute', top: '100%', left: 0, marginTop: '0.5rem', backgroundColor: 'var(--color-surface)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.2rem', minWidth: '130px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)', zIndex: 1000 }}
               >
                 {languages.map(lang => (
-                  <button key={lang.code} onClick={() => changeLanguage(lang.code)} style={{ textAlign: 'left', padding: '0.4rem 0.8rem', background: 'transparent', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: '0.85rem' }}>
+                  <a key={lang.code} href={getLanguagePath(lang.code)} onClick={(event) => { event.preventDefault(); changeLanguage(lang.code); }} style={{ textAlign: 'left', padding: '0.4rem 0.8rem', background: 'transparent', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: '0.85rem', textDecoration: 'none', display: 'block' }}>
                     {lang.name}
-                  </button>
+                  </a>
                 ))}
               </motion.div>
             )}

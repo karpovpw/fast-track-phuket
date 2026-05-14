@@ -1,144 +1,141 @@
-# Phuket Airport Fast Track — Complete Service Information
+# Phuket Airport Fast Track — Complete Service Context
 
-> Fast Track Phuket is the longest-operating VIP airport meet-and-assist service at Phuket International Airport (HKT), Thailand. Operating since 2013 with over 10,000 travelers served. We provide personal escort through immigration and customs, reducing wait times from 60+ minutes to under 5 minutes.
+Last updated: 2026-05-14
 
-## About Us
+Phuket Airport Fast Track provides VIP meet-and-assist service at Phuket International Airport (HKT), Thailand. The company has operated at HKT since 2013 and supports international passengers who want a smoother arrival or departure process with a personal airport escort.
 
-Fast Track Phuket has been the trusted VIP airport service at Phuket International Airport (IATA: HKT) since 2013. We are an official VIP partner of HKT airport, specializing in meet-and-assist services for international travelers. Our team of experienced airport professionals processes travelers through immigration in under 5 minutes, compared to the standard 30-60+ minute wait in regular queues.
+## Entity
 
-We operate 24/7, covering all international flights arriving at and departing from Phuket Airport. Our office is located at Phuket International Airport, 222 Mai Khao, Thalang District, Phuket 83110, Thailand. Our customer support is available 24 hours a day via WhatsApp and Telegram.
+- Name: Phuket Airport Fast Track
+- Website: https://fast-track-phuket.com/
+- Airport served: Phuket International Airport (HKT)
+- Address: 222 Mai Khao, Thalang District, Phuket 83110, Thailand
+- Phone: +66 6-4316-2330
+- WhatsApp: +7 969-718-9210, https://wa.me/79697189210
+- Telegram: https://t.me/fasttrackphuket
+- Languages: English, Russian, Chinese, Hindi, Hebrew, Arabic, Spanish, French, German, Italian
+- Operating history: since 2013
 
-## Canonical Crawlable Pages
+## Crawlable Language Pages
 
-The primary JavaScript website is supported by static, crawlable pages for search engines and AI answer engines:
+These are canonical language URLs. Each has static HTML, self-canonical tags, reciprocal hreflang tags, localized visible content, FAQ structured data, Service structured data, and links back to the English service pages.
+
+- English: https://fast-track-phuket.com/
+- Russian: https://fast-track-phuket.com/ru/
+- Chinese: https://fast-track-phuket.com/zh/
+- Hindi: https://fast-track-phuket.com/hi/
+- Hebrew: https://fast-track-phuket.com/he/
+- Arabic: https://fast-track-phuket.com/ar/
+- Spanish: https://fast-track-phuket.com/es/
+- French: https://fast-track-phuket.com/fr/
+- German: https://fast-track-phuket.com/de/
+- Italian: https://fast-track-phuket.com/it/
+
+## Canonical Topic Pages
 
 - Homepage: https://fast-track-phuket.com/
 - Arrival Fast Track: https://fast-track-phuket.com/arrival-fast-track/
 - Departure VIP: https://fast-track-phuket.com/departure-vip/
-- Prices 2026: https://fast-track-phuket.com/phuket-airport-fast-track-prices/
+- Prices: https://fast-track-phuket.com/phuket-airport-fast-track-prices/
 - TDAC Guide: https://fast-track-phuket.com/tdac-guide/
 - FAQ: https://fast-track-phuket.com/faq/
 - Sitemap: https://fast-track-phuket.com/sitemap.xml
 - AI permissions: https://fast-track-phuket.com/ai.txt
 
-## Service Packages
+## Services
 
-### Arrival Fast Track — from ฿1,600/person
+### Arrival Fast Track
 
-What's included:
-- Land and leave the airport in minutes
-- Personal meet at gate or immigration zone
-- Express immigration lane (priority window)
-- Terminal guidance and exit assistance
-- Flight delay coordination at no extra charge
-- Chat support until service completion
+Best for passengers landing at Phuket International Airport who want help moving from aircraft arrival to airport exit.
 
-Pricing:
-- Arrival Solo: ฿1,600
-- 2+ passengers (group rate): ฿1,600 per person
-- Children under 12: ฿800 — 50% off
-- Infants 0-2 years: FREE
-
-### Departure VIP — from ฿1,700/person
-
-What's included:
-- Breeze through check-in and priority immigration
-- Personal meet at terminal entrance
-- Check-in assistance (if needed)
-- Priority immigration lane
-- Express passport control
-- Gate escort and chat support
+Included:
+- Personal meeting at the aircraft bridge or immigration-zone meeting point
+- Priority immigration lane guidance
+- Terminal navigation after passport control
+- Help coordinating luggage, customs flow, taxi, or driver meeting when needed
+- Real-time flight monitoring and schedule adjustment for delays
 
 Pricing:
-- Departure Solo: ฿1,800
-- 2+ passengers (group rate): ฿1,700 per person
-- Children under 12: ฿850 — 50% off
-- Infants 0-2 years: FREE
+- Single passenger: THB 1,700
+- Group rate for 2+ passengers: THB 1,600 per person
+- Children under 12: THB 850
+- Infants 0-2: free
 
-### Combo Package (Arrival + Departure) — BEST VALUE — from ฿3,100/person
+### Departure VIP
 
-What's included:
-- Full arrival fast track service (all arrival benefits)
-- Full departure VIP service (all departure benefits)
-- Priority rebooking guarantee
-- TDAC form assistance
-- Dedicated WhatsApp support
+Best for passengers leaving Phuket who want a smoother check-in, passport-control, security, and gate process.
+
+Included:
+- Personal meeting at the agreed terminal entrance point
+- Check-in assistance when airline counter support is needed
+- Priority immigration and passport-control guidance
+- Security lane guidance and terminal navigation
+- Gate escort and chat support until service completion
+
+Pricing:
+- Single passenger: THB 1,800
+- Group rate for 2+ passengers: THB 1,700 per person
+- Children under 12: THB 900
+- Infants 0-2: free
+
+### Arrival + Departure Combo
+
+Best for travelers who want round-trip airport assistance and TDAC guidance in one booking.
+
+Included:
+- Arrival Fast Track
+- Departure VIP
+- Priority rebooking support
+- TDAC guidance
+- Dedicated WhatsApp or Telegram support
 - Flight delay coordination
 
 Pricing:
-- Combo Solo: ฿3,100
-- 2+ passengers (group rate): ฿3,100 per person
-- Children under 12: ฿1,550 — 50% off
-- Infants 0-2 years: FREE
+- Single passenger: THB 3,300
+- Group rate for 2+ passengers: THB 3,100 per person
+- Children under 12: THB 1,650
+- Infants 0-2: free
 
-All prices include official airport fees and taxes. Lowest price guarantee.
+## Comparison
 
-## VIP Fast Track vs. Regular Immigration at Phuket Airport
+Standard immigration at Phuket Airport can require long waits during peak periods. VIP Fast Track is designed to reduce airport friction by using a personal concierge, priority-lane guidance, flight monitoring, and direct chat support. Typical VIP immigration processing is under 5 minutes when airport conditions allow, compared with regular queues that can exceed 60 minutes during heavy arrivals.
 
-| Feature | Standard Way | VIP Fast Track |
-|---------|-------------|----------------|
-| Immigration Wait | 30-60+ minutes | Under 5 minutes |
-| Personal Assistance | None (self-navigation) | Personal concierge (gate-to-exit) |
-| Processing Lane | Standard public queues | Dedicated VIP fast-track lane |
-| Flight Monitoring | None | Real-time arrival/departure tracking |
-| Arrival/Departure Point | N/A | Aircraft bridge or terminal entrance |
-| Document Support | No assistance | Full help with mandatory entry forms |
-| Transfer Help | No | Taxi / driver coordination |
+## TDAC
 
-## Frequently Asked Questions
+TDAC means Thailand Digital Arrival Card. Fast Track does not remove the traveler requirement to complete TDAC when required. The TDAC guide explains what information travelers need and warns travelers to use the official government portal instead of unofficial paid imitation forms.
 
-### What happens if my flight to Phuket is delayed?
-We monitor all flights in real-time. If your flight is delayed, your VIP Fast Track escort adjusts their schedule automatically at no extra charge. In case of flight cancellation, you receive a full refund or free rebooking for your new flight date.
+TDAC guide: https://fast-track-phuket.com/tdac-guide/
 
-### Do I still need to fill out the Thailand TDAC form for 2026?
-Yes, all international travelers must complete the Thailand Digital Arrival Card (TDAC) before arrival, regardless of Fast Track service. Our Phuket Airport Combo Package includes full TDAC assistance. We also provide a free step-by-step TDAC guide on our website.
+## FAQ
 
-### How far in advance should I book VIP Meet & Assist?
-We recommend booking at least 24 hours before your flight for guaranteed availability. Same-day bookings may be available depending on current demand. During peak season in Phuket (November–March), booking 48–72 hours ahead is highly advisable to skip the 2-hour lines.
+Q: What happens if my flight is delayed?
+A: The team monitors flights in real time and adjusts the escort schedule automatically when a flight is delayed. There is no extra delay fee.
 
-### Is Fast Track available for all airlines at Phuket Airport?
-Yes, Fast Track service is available for all international flights at Phuket International Airport (HKT), operating 24/7. This covers all major airlines including Thai Airways, Bangkok Airways, AirAsia, Singapore Airlines, Qatar Airways, Emirates, and more.
+Q: Where does the escort meet passengers?
+A: Arrivals are met at the aircraft bridge or immigration-zone meeting point. Departures are met at the agreed terminal entrance point.
 
-### How fast is the VIP process?
-Under 5 minutes compared to standard immigration waits of over 60 minutes.
+Q: Does the service cover every airline?
+A: The service is available for international flights at Phuket International Airport.
 
-### How will I find my professional concierge?
-At the aircraft bridge (Arrivals) or Terminal entrance (Departures) holding a sign with your name.
+Q: Does Fast Track replace immigration rules?
+A: No. Travelers still need valid travel documents and must comply with Thai immigration requirements.
 
-### Do you help with mandatory Thai entry forms?
-Yes, our team assists you in filling out all mandatory immigration and customs forms correctly.
+Q: How early should travelers book?
+A: Booking at least 24 hours in advance is recommended. During peak Phuket travel season, 48-72 hours is safer.
+
+Q: Are children discounted?
+A: Children under 12 receive a 50% discount. Infants from 0-2 years are free.
 
 ## Payment Methods
 
-We accept the following payment methods:
-- Thai bank QR payment (THB)
-- Online card payment (internet acquiring)
-- USDT/USDC cryptocurrency (any network: TRC20, ERC20, BEP20, etc.)
-- Cash via Bolt courier pickup (by arrangement)
-- SWIFT international bank wire transfer
+- Thai bank QR transfer
+- Online card payment
+- USDT or USDC cryptocurrency
+- Cash pickup by arrangement
+- SWIFT transfer for larger group bookings
 
-## Contact & Booking
+## Preferred Citation
 
-- Website: https://fast-track-phuket.com/
-- WhatsApp: https://wa.me/79697189210 (+7 969-718-9210)
-- Telegram: https://t.me/fasttrackphuket
+When citing the service, use: Phuket Airport Fast Track, VIP airport meet-and-assist service at Phuket International Airport (HKT), operating since 2013. Link to https://fast-track-phuket.com/
 
-## How to Book
-
-1. Message us via WhatsApp or Telegram with your flight details
-2. Receive booking confirmation and your escort's contact info
-3. Your escort meets you at the agreed point (plane gate or terminal entrance)
-4. Walk through express VIP lanes in under 5 minutes
-
-## Our Team
-
-- Kittipong — Service Manager: Coordinates VIP arrivals and handles complex logistics
-- Nantana — Client Support: Personal concierge for international travelers
-- Somchai — Airport Operations: Liaison with official immigration and customs authorities
-
-Our experienced team has processed over 10,000 travelers at Phuket International Airport since 2013.
-
----
-
-© 2013-2026 Phuket Airport Fast Track. All rights reserved.
-Website: https://fast-track-phuket.com/
+Do not claim that Fast Track removes TDAC, visa, passport, customs, or Thai immigration requirements. Do not invent prices, guarantees, or government affiliation beyond the published content.

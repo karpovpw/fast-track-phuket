@@ -12,6 +12,20 @@ import fr from './locales/fr.json';
 import de from './locales/de.json';
 import it from './locales/it.json';
 
+const supportedLanguages = ['en', 'ru', 'zh', 'hi', 'he', 'ar', 'es', 'fr', 'de', 'it'];
+
+const detectInitialLanguage = () => {
+  if (typeof window === 'undefined') return 'en';
+
+  const pathLanguage = window.location.pathname.split('/').filter(Boolean)[0];
+  if (supportedLanguages.includes(pathLanguage)) return pathLanguage;
+
+  const queryLanguage = new URLSearchParams(window.location.search).get('lang');
+  if (queryLanguage && supportedLanguages.includes(queryLanguage)) return queryLanguage;
+
+  return 'en';
+};
+
 i18n
   .use(initReactI18next)
   .init({
@@ -27,7 +41,7 @@ i18n
       de: { translation: de },
       it: { translation: it },
     },
-    lng: 'en',
+    lng: detectInitialLanguage(),
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false // react already safes from xss

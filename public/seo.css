@@ -48,6 +48,14 @@ h2 {
   margin-top: 2.4rem;
 }
 
+.eyebrow {
+  color: #d4af37;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .hero {
   display: grid;
   gap: 24px;
@@ -72,6 +80,26 @@ h2 {
   border-radius: 8px;
   padding: 14px;
   background: rgba(255, 255, 255, 0.04);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 22px 0;
+}
+
+.card {
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  border-radius: 8px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.price {
+  color: #d4af37;
+  font-size: 1.25rem;
+  font-weight: 700;
 }
 
 table {
@@ -106,6 +134,22 @@ th {
   font-weight: 700;
   padding: 10px 14px;
   text-decoration: none;
+}
+
+.language-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.language-switcher a[aria-current='page'] {
+  color: #f7f2e8;
+  font-weight: 700;
+}
+
+html[dir='rtl'] th,
+html[dir='rtl'] td {
+  text-align: right;
 }
 
 @media (max-width: 760px) {

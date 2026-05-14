@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "generate:seo": "node scripts/generate-seo-pages.mjs",
-    "build": "npm run generate:seo && tsc -b && vite build",
+    "build": "npm run generate:seo && tsc -b && vite build && node scripts/generate-app-language-pages.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

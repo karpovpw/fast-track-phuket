@@ -87,9 +87,9 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.2;
   min-width: 0;
-  overflow-wrap: anywhere;
-  hyphens: auto;
-  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: manual;
+  word-break: normal;
 }
 
 p,
@@ -326,8 +326,8 @@ td.cross { color: #ef4444; }
   text-align: left;
   line-height: 1.4;
   min-width: 0;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 /* Package Price Grid */
@@ -451,8 +451,8 @@ td.cross { color: #ef4444; }
   width: 100%;
   max-width: 100%;
   text-wrap: balance;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .hero-subtitle {
@@ -569,35 +569,22 @@ html[dir='rtl'] .floating-chat {
   }
 
   .hero-title {
-    font-size: clamp(1.85rem, 9vw, 2.75rem) !important;
+    font-size: clamp(2rem, 9vw, 2.75rem) !important;
     line-height: 1.08 !important;
     margin-bottom: 1.25rem !important;
-    max-width: min(100%, 14ch) !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    text-wrap: wrap !important;
-  }
-
-  html[lang='de'] .hero-title,
-  html[lang='fr'] .hero-title,
-  html[lang='es'] .hero-title,
-  html[lang='hi'] .hero-title,
-  html[lang='it'] .hero-title,
-  html[lang='ru'] .hero-title {
-    font-size: clamp(1.5rem, 7.5vw, 2.1rem) !important;
-    line-height: 1.14 !important;
-    max-width: min(100%, 12ch) !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-wrap: balance !important;
   }
 
   .hero-section h2,
   section h2 {
-    font-size: clamp(1.65rem, 7.8vw, 2.25rem) !important;
+    font-size: clamp(1.75rem, 7.8vw, 2.5rem) !important;
     line-height: 1.12 !important;
-    max-width: min(100%, 14ch);
-    margin-left: auto !important;
-    margin-right: auto !important;
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    max-width: none;
+    overflow-wrap: break-word;
+    word-break: normal;
   }
 
   .hero-subtitle {

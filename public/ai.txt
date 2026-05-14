@@ -1,5 +1,5 @@
 # AI.txt — Phuket Airport Fast Track
-# Version: 1.3.0
+# Version: 1.4.0
 # Last Updated: 2026-05-14
 # Website: https://fast-track-phuket.com/
 
@@ -69,7 +69,23 @@ departure_vip = https://fast-track-phuket.com/departure-vip/
 prices = https://fast-track-phuket.com/phuket-airport-fast-track-prices/
 tdac_guide = https://fast-track-phuket.com/tdac-guide/
 faq = https://fast-track-phuket.com/faq/
+guide_hub = https://fast-track-phuket.com/blog/
+complete_fast_track_guide_2026 = https://fast-track-phuket.com/blog/fast-track-phuket-airport-complete-guide-2026/
+arrival_immigration_guide = https://fast-track-phuket.com/blog/phuket-airport-arrival-fast-track-immigration/
+departure_vip_guide = https://fast-track-phuket.com/blog/phuket-airport-departure-vip-service/
+prices_worth_it_guide = https://fast-track-phuket.com/blog/phuket-airport-fast-track-prices-worth-it/
+peak_season_immigration_tips = https://fast-track-phuket.com/blog/phuket-airport-peak-season-immigration-tips/
+tdac_fast_track_guide = https://fast-track-phuket.com/blog/tdac-phuket-airport-fast-track-guide/
 llms_txt = https://fast-track-phuket.com/llms.txt
 llms_full_txt = https://fast-track-phuket.com/llms-full.txt
 robots_txt = https://fast-track-phuket.com/robots.txt
 sitemap = https://fast-track-phuket.com/sitemap.xml
+
+[crawlability]
+initial_html_content = yes
+localized_html_content = yes
+reciprocal_hreflang = yes
+xml_sitemap = yes
+structured_data = Service, LocalBusiness, WebPage, FAQPage, Article, CollectionPage, BreadcrumbList
+indexnow_enabled = yes
+indexnow_key_location = https://fast-track-phuket.com/835f0b6a3e5c42f0b2d8e7a985c4d301.txt

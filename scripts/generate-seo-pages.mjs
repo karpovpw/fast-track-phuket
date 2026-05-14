@@ -23,12 +23,334 @@ const languages = [
   { code: 'it', name: 'Italiano', htmlLang: 'it', dir: 'ltr', ogLocale: 'it_IT' },
 ];
 
+const blogPages = [
+  {
+    slug: 'fast-track-phuket-airport-complete-guide-2026',
+    title: 'Phuket Airport Fast Track Complete Guide 2026',
+    description: 'A practical 2026 guide to Phuket Airport Fast Track at HKT: arrival immigration, departure VIP assistance, prices, TDAC, booking timing, and when VIP escort is worth it.',
+    summary: 'Use this guide if you are comparing regular immigration with VIP meet-and-assist at Phuket International Airport. It explains what the escort does, what still remains the traveler responsibility, and which package fits each trip.',
+    keywords: ['Phuket Airport Fast Track', 'HKT VIP service', 'Phuket airport immigration', 'VIP meet and assist Phuket'],
+    sections: [
+      {
+        heading: 'What Phuket Airport Fast Track means',
+        paragraphs: [
+          'Phuket Airport Fast Track is a VIP meet-and-assist service for international passengers using Phuket International Airport (HKT). Instead of finding the right immigration flow alone, the passenger is met by an airport escort and guided through the airport steps that apply to the booking.',
+          'Fast Track is not a visa, government exemption, or shortcut around Thai immigration requirements. Travelers still need valid documents and must complete any required entry forms. The value is operational: meeting coordination, priority-lane guidance when available, terminal navigation, and support when flight timing changes.',
+        ],
+      },
+      {
+        heading: 'Arrival Fast Track process',
+        paragraphs: [
+          'For arrivals, the team monitors the flight and positions the escort for the actual landing time. The meeting point is normally at the aircraft bridge or the airport-designated immigration-zone meeting area, depending on gate and airport procedure for that flight.',
+          'After meeting the passenger, the escort guides the traveler toward the correct immigration flow, assists with airport navigation after passport control, and helps coordinate the exit, luggage flow, customs route, taxi, or driver meeting when needed.',
+        ],
+      },
+      {
+        heading: 'Departure VIP process',
+        paragraphs: [
+          'For departures, the meeting is arranged at the international terminal entrance. The escort helps the passenger move through the terminal flow, including check-in coordination when useful, passport-control guidance, security navigation, and movement toward the gate area.',
+          'Departure VIP is most useful for families, travelers with tight schedules, business passengers, senior travelers, and anyone leaving during peak Phuket travel windows when terminal pressure is higher.',
+        ],
+      },
+      {
+        heading: 'Prices and package choice',
+        paragraphs: [
+          'Arrival Fast Track starts from THB 1,600 per person for two or more passengers, with a single-passenger rate of THB 1,700. Departure VIP starts from THB 1,700 per person for two or more passengers, with a single-passenger rate of THB 1,800. The arrival plus departure combo starts from THB 3,100 per person for two or more passengers.',
+          'Children under 12 receive a 50% discount and infants from 0 to 2 years are free. For travelers who need both landing and return-flight assistance, the combo is usually the simplest booking because it combines both airport directions and support in one conversation.',
+        ],
+      },
+      {
+        heading: 'TDAC and traveler documents',
+        paragraphs: [
+          'Fast Track does not remove the requirement to complete the Thailand Digital Arrival Card when it applies. The service can provide TDAC guidance, and the website keeps a dedicated TDAC guide for travelers who want to understand the form before arrival.',
+          'Passengers should still travel with a valid passport, visa or visa-exemption eligibility where applicable, onward travel details when required, and any documents requested by Thai immigration or airline staff.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Is Phuket Airport Fast Track available for all international flights?',
+        a: 'The service is available for international flights at Phuket International Airport, subject to booking availability and current airport procedure.',
+      },
+      {
+        q: 'How early should I book Fast Track at HKT?',
+        a: 'Booking at least 24 hours before travel is recommended. During peak season, 48 to 72 hours gives better availability.',
+      },
+      {
+        q: 'Does VIP Fast Track guarantee immigration approval?',
+        a: 'No. Immigration decisions remain with Thai authorities. Fast Track provides meet-and-assist guidance through the airport process.',
+      },
+    ],
+  },
+  {
+    slug: 'phuket-airport-arrival-fast-track-immigration',
+    title: 'Phuket Airport Arrival Fast Track Immigration Guide',
+    description: 'Step-by-step guide to Arrival Fast Track at Phuket Airport: meeting point, immigration guidance, luggage flow, flight delays, TDAC, and who should book.',
+    summary: 'Arrival Fast Track is designed for passengers landing at HKT who want a smoother route from aircraft arrival to airport exit with a personal escort.',
+    keywords: ['Phuket arrival fast track', 'HKT immigration fast track', 'Phuket airport arrival VIP'],
+    sections: [
+      {
+        heading: 'Who Arrival Fast Track is for',
+        paragraphs: [
+          'Arrival Fast Track is most useful when the first hour in Phuket matters. Families with children, senior passengers, travelers arriving after a long-haul flight, guests with a driver waiting outside, and business travelers all benefit from having a clear meeting process and a guided route through the airport.',
+          'The service is also useful during high-arrival periods. Phuket immigration queues can vary sharply by season, time of day, and number of international flights landing together. A personal escort reduces uncertainty even when airport conditions are busy.',
+        ],
+      },
+      {
+        heading: 'Arrival meeting point',
+        paragraphs: [
+          'The team monitors the flight and adjusts for delays. On arrival, the escort meets the passenger at the aircraft bridge or an airport-designated meeting point near the immigration area. The exact meeting process depends on gate assignment and operational rules at HKT that day.',
+          'The passenger should keep phone access available after landing when possible. If the aircraft parks remotely, or if the airport changes the gate, the escort arrangement follows the live flight situation rather than the original timetable alone.',
+        ],
+      },
+      {
+        heading: 'Immigration and terminal flow',
+        paragraphs: [
+          'After meeting, the escort guides the passenger toward the appropriate immigration channel and helps with the airport route. Fast Track does not replace passport checks, visa rules, or immigration decisions, but it helps travelers avoid confusion and unnecessary waiting where priority-lane guidance is available.',
+          'After passport control, the escort can help direct the passenger toward baggage claim, customs flow, the arrival hall, taxi coordination, or a private driver meeting point.',
+        ],
+      },
+      {
+        heading: 'What to prepare before landing',
+        paragraphs: [
+          'Travelers should have passport, boarding pass, arrival details, accommodation address, and TDAC information ready if required. Preparing these details before landing reduces friction at immigration and helps the airport escort keep the process smooth.',
+          'If traveling as a family or group, book everyone under the same flight details and provide passenger names exactly as they appear in passports. That reduces coordination problems at the meeting point.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Where will the escort meet me on arrival?',
+        a: 'Arrivals are usually met at the aircraft bridge or an airport-designated meeting point near immigration, depending on HKT operations for the flight.',
+      },
+      {
+        q: 'What if my flight is delayed?',
+        a: 'Flight status is monitored and the escort schedule is adjusted for the updated arrival time.',
+      },
+      {
+        q: 'Can Arrival Fast Track help with luggage or driver coordination?',
+        a: 'The escort can help with terminal direction, baggage-flow coordination, and finding the agreed exit or driver meeting point when needed.',
+      },
+    ],
+  },
+  {
+    slug: 'phuket-airport-departure-vip-service',
+    title: 'Phuket Airport Departure VIP Service Guide',
+    description: 'Guide to Departure VIP assistance at Phuket Airport: terminal meeting, check-in support, passport control, security, gate escort, timing, and pricing.',
+    summary: 'Departure VIP is built for travelers leaving Phuket who want structured terminal assistance before their international flight.',
+    keywords: ['Phuket departure VIP', 'HKT departure fast track', 'Phuket airport passport control'],
+    sections: [
+      {
+        heading: 'How Departure VIP starts',
+        paragraphs: [
+          'Departure assistance starts at the international terminal entrance at an agreed time. The escort confirms passenger details, reviews the flight, and helps the traveler move into the correct terminal flow.',
+          'The service can help with check-in coordination when useful, but airline rules still apply. Oversized luggage, document checks, special airline requirements, and late passenger arrival remain under airline and airport control.',
+        ],
+      },
+      {
+        heading: 'Passport control and security guidance',
+        paragraphs: [
+          'After check-in, the escort guides the passenger toward the appropriate passport-control and security process. For many travelers, the biggest benefit is not only shorter waiting but also knowing which route to take in a busy international terminal.',
+          'The escort continues guidance toward the gate area after formalities. This is helpful for travelers unfamiliar with HKT, families managing children and cabin bags, or passengers who prefer direct airport support rather than navigating alone.',
+        ],
+      },
+      {
+        heading: 'When to book departure assistance',
+        paragraphs: [
+          'Book Departure VIP if your flight is during a known peak window, if you are traveling with a group, if the passenger needs calm guidance, or if you have a high-value connection after leaving Phuket. The service is also useful when you want a single point of contact for airport timing questions.',
+          'Travelers should still arrive at the airport with enough time for airline check-in, baggage drop, document checks, and boarding. Fast Track improves the airport flow, but it does not make late airport arrival risk-free.',
+        ],
+      },
+      {
+        heading: 'Departure pricing',
+        paragraphs: [
+          'Departure VIP starts from THB 1,700 per person for two or more passengers. A single passenger is THB 1,800. Children under 12 receive a 50% discount and infants from 0 to 2 years are free.',
+          'Travelers booking both arrival and departure should compare the combo package, which starts from THB 3,100 per person for two or more passengers.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Where do I meet the departure escort?',
+        a: 'The departure escort meets passengers at the agreed international terminal entrance point.',
+      },
+      {
+        q: 'Does Departure VIP include airline check-in?',
+        a: 'It includes guidance and coordination when airline counter support is needed, but airline rules and document checks still apply.',
+      },
+      {
+        q: 'Can I book Departure VIP only?',
+        a: 'Yes. Departure VIP can be booked as a standalone service or as part of the arrival plus departure combo.',
+      },
+    ],
+  },
+  {
+    slug: 'phuket-airport-fast-track-prices-worth-it',
+    title: 'Is Phuket Airport Fast Track Worth It? Prices and Use Cases',
+    description: 'Compare Phuket Airport Fast Track prices with regular HKT immigration and learn when VIP meet-and-assist is worth booking for arrivals, departures, families, and groups.',
+    summary: 'Fast Track is worth it when time, certainty, family comfort, or airport support matters more than the lowest possible transfer cost.',
+    keywords: ['Phuket fast track price', 'Phuket airport fast track worth it', 'HKT VIP price'],
+    sections: [
+      {
+        heading: 'Current price anchors',
+        paragraphs: [
+          'The main price anchors are THB 1,600 per person for Arrival Fast Track when booking two or more passengers, THB 1,700 per person for Departure VIP when booking two or more passengers, and THB 3,100 per person for the arrival plus departure combo.',
+          'Single-passenger pricing is THB 1,700 for arrival, THB 1,800 for departure, and THB 3,300 for the combo. Children under 12 receive a 50% discount, and infants from 0 to 2 years are free.',
+        ],
+      },
+      {
+        heading: 'When the value is strongest',
+        paragraphs: [
+          'The value is strongest when standard immigration or terminal navigation could affect the rest of the trip. A tired family arriving after a night flight, a senior passenger who wants direct guidance, a business traveler with a scheduled driver, or a group with several passports can all save stress with a personal escort.',
+          'Fast Track can also be valuable during Phuket peak season. Queue length changes by day and flight wave, but the practical problem is uncertainty: travelers often do not know how busy immigration will be until they arrive.',
+        ],
+      },
+      {
+        heading: 'When regular airport flow may be enough',
+        paragraphs: [
+          'Regular airport flow may be enough for solo travelers with flexible time, light luggage, no onward schedule, and comfort navigating international airports. If a traveler is price-sensitive and not concerned about queue variability, Fast Track may be optional rather than necessary.',
+          'The decision should be based on trip context, not only average waiting time. A short wait on one day does not remove the benefit for passengers who need reliability on another day.',
+        ],
+      },
+      {
+        heading: 'How to choose the package',
+        paragraphs: [
+          'Choose Arrival Fast Track if the main problem is landing smoothly and reaching the hotel, villa, marina, or driver faster. Choose Departure VIP if the stressful part is leaving Phuket, dealing with check-in, and clearing passport control. Choose the combo if you want both directions handled in one booking.',
+          'For families and groups, the group rate and child discount usually make the per-person value clearer than buying separate single-passenger services.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'What is the cheapest Phuket Airport Fast Track option?',
+        a: 'Arrival Fast Track starts from THB 1,600 per person for two or more passengers.',
+      },
+      {
+        q: 'Is Fast Track worth it for families?',
+        a: 'It is often worth it for families because children, luggage, and long-haul fatigue make airport uncertainty more expensive in practice.',
+      },
+      {
+        q: 'Is the combo cheaper than booking arrival and departure separately?',
+        a: 'The combo starts from THB 3,100 per person for two or more passengers and is usually the simplest option for travelers who need both directions.',
+      },
+    ],
+  },
+  {
+    slug: 'phuket-airport-peak-season-immigration-tips',
+    title: 'Phuket Airport Peak Season Immigration Tips',
+    description: 'Practical HKT peak-season immigration tips for international arrivals and departures, including timing, documents, TDAC, Fast Track, and family travel.',
+    summary: 'Peak season at Phuket Airport increases the cost of uncertainty. Prepare documents early, book airport assistance ahead, and avoid relying on last-minute fixes.',
+    keywords: ['Phuket airport peak season', 'HKT immigration queue', 'Phuket airport tips'],
+    sections: [
+      {
+        heading: 'Why peak season changes the airport experience',
+        paragraphs: [
+          'Phuket peak travel periods can place multiple international flight waves close together. When several aircraft arrive near the same time, immigration and baggage areas become more crowded and the airport experience becomes less predictable.',
+          'Departure pressure can also rise when tour groups, families, and long-haul flights overlap. Even travelers who know HKT well can face longer check-in, passport-control, or security movement during busy windows.',
+        ],
+      },
+      {
+        heading: 'Arrival tips',
+        paragraphs: [
+          'Complete TDAC requirements before arrival when applicable, keep passport and accommodation details ready, and make sure the passenger name in any Fast Track booking matches the passport. If a driver is meeting you, share the driver contact or meeting plan with your airport support contact before landing.',
+          'If traveling with children or senior passengers, plan for phone battery, water after landing, and a clear group meeting process. Small preparation reduces stress when the arrival hall is busy.',
+        ],
+      },
+      {
+        heading: 'Departure tips',
+        paragraphs: [
+          'Do not compress airport arrival time just because a VIP service is booked. Airline check-in deadlines and document checks still matter. Fast Track is best used to make a sensible airport schedule smoother, not to rescue an impossible timeline.',
+          'For international departures, confirm terminal, luggage allowance, and any airline-specific document requirements before leaving the hotel or villa. The escort can help with airport flow, but the traveler controls the readiness of documents and baggage.',
+        ],
+      },
+      {
+        heading: 'Booking timing during peak season',
+        paragraphs: [
+          'Book at least 24 hours before travel when possible, and 48 to 72 hours ahead for peak dates. Same-day requests may be possible, but availability is less predictable when airport demand is high.',
+          'Provide flight number, passenger names, contact channel, and service direction at the time of booking. This helps the team monitor the correct flight and avoid unnecessary back-and-forth during busy periods.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'When is Phuket Airport busiest?',
+        a: 'Airport load varies by season and flight wave. Peak leisure travel periods and overlapping international arrivals can create longer immigration queues.',
+      },
+      {
+        q: 'Should I book Fast Track during peak season?',
+        a: 'If queue time, family comfort, or schedule certainty matters, booking Fast Track during peak season is usually more valuable than waiting until arrival.',
+      },
+      {
+        q: 'Can Fast Track fix a late departure arrival?',
+        a: 'No service can override airline check-in deadlines. Departure VIP should be paired with sensible airport arrival timing.',
+      },
+    ],
+  },
+  {
+    slug: 'tdac-phuket-airport-fast-track-guide',
+    title: 'TDAC and Phuket Airport Fast Track Guide',
+    description: 'How TDAC fits with Phuket Airport Fast Track: what travelers still need to complete, how VIP assistance helps, and what to prepare before arriving in Thailand.',
+    summary: 'TDAC and Fast Track solve different problems. TDAC is an entry-information requirement when applicable; Fast Track is airport meet-and-assist support.',
+    keywords: ['TDAC Phuket Airport', 'Thailand Digital Arrival Card Phuket', 'Fast Track TDAC'],
+    sections: [
+      {
+        heading: 'TDAC is separate from Fast Track',
+        paragraphs: [
+          'The Thailand Digital Arrival Card is a traveler information requirement when it applies. Phuket Airport Fast Track does not remove TDAC, visa, passport, customs, or immigration obligations.',
+          'The role of Fast Track is to help the passenger move through the airport process with a personal escort. The role of TDAC is to provide arrival information before entering Thailand. Treat them as separate parts of the same trip preparation.',
+        ],
+      },
+      {
+        heading: 'What travelers should prepare',
+        paragraphs: [
+          'Travelers should prepare passport details, flight details, accommodation address, contact information, and any other entry information requested by the official Thai process. Avoid unofficial paid imitation forms and use the official channel when completing government entry information.',
+          'If you are unsure what to prepare, use the website TDAC guide before travel and contact the Fast Track team through WhatsApp or Telegram for service-specific guidance.',
+        ],
+      },
+      {
+        heading: 'How Fast Track helps around TDAC',
+        paragraphs: [
+          'For combo bookings, TDAC guidance is included as part of the broader arrival and departure support. This helps travelers understand what needs to be done before travel and reduces last-minute confusion after landing.',
+          'Fast Track can make the airport route smoother, but travelers should not wait until the immigration counter to think about TDAC. Completing required information ahead of time is the safer approach.',
+        ],
+      },
+      {
+        heading: 'Best practice before flying to Phuket',
+        paragraphs: [
+          'Complete required entry information before departure, save confirmation details where applicable, keep your passport accessible, and share accurate flight information when booking airport assistance.',
+          'If the flight changes, notify the Fast Track team through the same booking channel so escort timing can be adjusted.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Does Fast Track replace TDAC?',
+        a: 'No. Travelers still need to complete TDAC when it applies.',
+      },
+      {
+        q: 'Can the team help me understand TDAC?',
+        a: 'Yes. TDAC guidance is included with the combo package, and the website has a dedicated TDAC guide.',
+      },
+      {
+        q: 'Should I complete TDAC before arrival?',
+        a: 'Yes. Complete required entry information before travel when applicable to avoid avoidable airport friction.',
+      },
+    ],
+  },
+];
+
 const supportingUrls = [
   { loc: `${BASE_URL}/arrival-fast-track/`, priority: '0.9', changefreq: 'weekly' },
   { loc: `${BASE_URL}/departure-vip/`, priority: '0.9', changefreq: 'weekly' },
   { loc: `${BASE_URL}/phuket-airport-fast-track-prices/`, priority: '0.9', changefreq: 'weekly' },
   { loc: `${BASE_URL}/tdac-guide/`, priority: '0.8', changefreq: 'weekly' },
   { loc: `${BASE_URL}/faq/`, priority: '0.7', changefreq: 'monthly' },
+  { loc: `${BASE_URL}/blog/`, priority: '0.8', changefreq: 'weekly' },
+  ...blogPages.map((page) => ({
+    loc: `${BASE_URL}/blog/${page.slug}/`,
+    priority: '0.8',
+    changefreq: 'monthly',
+  })),
   { loc: `${BASE_URL}/llms.txt`, priority: '0.3', changefreq: 'monthly' },
   { loc: `${BASE_URL}/llms-full.txt`, priority: '0.3', changefreq: 'monthly' },
   { loc: `${BASE_URL}/ai.txt`, priority: '0.3', changefreq: 'monthly' },
@@ -357,6 +679,277 @@ ${languages.map((item) => `          <a href="${item.code === 'en' ? '/' : `/${i
 `;
 };
 
+const renderBlogNav = () => `    <nav aria-label="Primary">
+      <a href="/">Home</a>
+      <a href="/arrival-fast-track/">Arrival Fast Track</a>
+      <a href="/departure-vip/">Departure VIP</a>
+      <a href="/phuket-airport-fast-track-prices/">Prices</a>
+      <a href="/tdac-guide/">TDAC Guide</a>
+      <a href="/faq/">FAQ</a>
+      <a href="/blog/">Guides</a>
+      <a href="/llms.txt">AI summary</a>
+    </nav>`;
+
+const renderBlogStructuredData = (page, url) => JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Article',
+      '@id': `${url}#article`,
+      headline: page.title,
+      description: page.description,
+      image: `${BASE_URL}/hkt-airport.png`,
+      datePublished: LASTMOD,
+      dateModified: LASTMOD,
+      author: {
+        '@type': 'Organization',
+        name: 'Phuket Airport Fast Track',
+        url: `${BASE_URL}/`,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Phuket Airport Fast Track',
+        logo: {
+          '@type': 'ImageObject',
+          url: `${BASE_URL}/favicon.svg`,
+        },
+      },
+      mainEntityOfPage: {
+        '@id': `${url}#webpage`,
+      },
+      about: page.keywords.map((keyword) => ({
+        '@type': 'Thing',
+        name: keyword,
+      })),
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${url}#webpage`,
+      url,
+      name: page.title,
+      description: page.description,
+      inLanguage: 'en',
+      isPartOf: {
+        '@type': 'WebSite',
+        '@id': `${BASE_URL}/#website`,
+        name: 'Phuket Airport Fast Track',
+        url: `${BASE_URL}/`,
+      },
+      about: {
+        '@id': `${BASE_URL}/#service`,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${url}#breadcrumbs`,
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: `${BASE_URL}/`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Guides',
+          item: `${BASE_URL}/blog/`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: page.title,
+          item: url,
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${url}#faq`,
+      mainEntity: page.faq.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.a,
+        },
+      })),
+    },
+  ],
+}, null, 2).replaceAll('<', '\\u003c');
+
+const renderBlogIndexStructuredData = () => {
+  const url = `${BASE_URL}/blog/`;
+
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: 'Phuket Airport Fast Track Guides',
+    description: 'Crawlable guides for Phuket Airport Fast Track, VIP arrival, departure, prices, TDAC, and HKT immigration planning.',
+    inLanguage: 'en',
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': `${BASE_URL}/#website`,
+      name: 'Phuket Airport Fast Track',
+      url: `${BASE_URL}/`,
+    },
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: blogPages.map((page, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `${BASE_URL}/blog/${page.slug}/`,
+        name: page.title,
+      })),
+    },
+  }, null, 2).replaceAll('<', '\\u003c');
+};
+
+const renderBlogIndexPage = () => `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Phuket Airport Fast Track Guides | HKT VIP Travel Advice</title>
+    <meta name="description" content="Guides for Phuket Airport Fast Track, arrival immigration, departure VIP service, HKT prices, TDAC, peak-season airport planning, and VIP meet-and-assist." />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="${BASE_URL}/blog/" />
+    <link rel="stylesheet" href="/seo.css" />
+    <link rel="sitemap" type="application/xml" href="${BASE_URL}/sitemap.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="${BASE_URL}/blog/" />
+    <meta property="og:title" content="Phuket Airport Fast Track Guides" />
+    <meta property="og:description" content="Practical HKT airport VIP guides for arrivals, departures, prices, TDAC, and peak-season immigration planning." />
+    <meta property="og:image" content="${BASE_URL}/hkt-airport.png" />
+    <script type="application/ld+json">
+${renderBlogIndexStructuredData()}
+    </script>
+  </head>
+  <body>
+${renderBlogNav()}
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">HKT airport guides · Updated ${LASTMOD}</p>
+          <h1>Phuket Airport Fast Track Guides</h1>
+          <p>Practical, crawlable guidance for travelers comparing VIP Fast Track, regular immigration, TDAC preparation, departure support, and Phuket Airport peak-season planning.</p>
+          <div class="cta">
+            <a class="button" href="https://wa.me/79697189210">Book on WhatsApp</a>
+            <a class="button" href="https://t.me/fasttrackphuket">Book on Telegram</a>
+          </div>
+        </div>
+        <img src="/hkt-airport.png" alt="Phuket International Airport HKT" />
+      </section>
+
+      <section>
+        <h2>All Guides</h2>
+        <div class="cards">
+${blogPages.map((page) => `          <article class="card">
+            <h3><a href="/blog/${page.slug}/">${escapeHtml(page.title)}</a></h3>
+            <p>${escapeHtml(page.description)}</p>
+          </article>`).join('\n')}
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>Phuket Airport Fast Track · 222 Mai Khao, Thalang District, Phuket 83110, Thailand · <a href="/ai.txt">AI permissions</a> · <a href="/sitemap.xml">Sitemap</a></p>
+    </footer>
+  </body>
+</html>
+`;
+
+const renderBlogPage = (page) => {
+  const url = `${BASE_URL}/blog/${page.slug}/`;
+
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>${escapeHtml(page.title)} | Phuket Airport Fast Track</title>
+    <meta name="description" content="${escapeHtml(page.description)}" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="${url}" />
+    <link rel="stylesheet" href="/seo.css" />
+    <link rel="sitemap" type="application/xml" href="${BASE_URL}/sitemap.xml" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="${url}" />
+    <meta property="og:title" content="${escapeHtml(page.title)}" />
+    <meta property="og:description" content="${escapeHtml(page.description)}" />
+    <meta property="og:image" content="${BASE_URL}/hkt-airport.png" />
+    <meta property="article:published_time" content="${LASTMOD}" />
+    <meta property="article:modified_time" content="${LASTMOD}" />
+    <script type="application/ld+json">
+${renderBlogStructuredData(page, url)}
+    </script>
+  </head>
+  <body>
+${renderBlogNav()}
+    <main>
+      <article>
+        <header class="hero">
+          <div>
+            <p class="eyebrow">Phuket Airport Fast Track guide · Updated ${LASTMOD}</p>
+            <h1>${escapeHtml(page.title)}</h1>
+            <p>${escapeHtml(page.summary)}</p>
+            <div class="cta">
+              <a class="button" href="https://wa.me/79697189210">Ask on WhatsApp</a>
+              <a class="button" href="https://t.me/fasttrackphuket">Ask on Telegram</a>
+            </div>
+          </div>
+          <img src="/hkt-airport.png" alt="${escapeHtml(page.title)}" />
+        </header>
+
+        <section class="fact-grid" aria-label="Guide topics">
+${page.keywords.map((keyword) => `          <div class="fact">${escapeHtml(keyword)}</div>`).join('\n')}
+        </section>
+
+${page.sections.map((section) => `        <section>
+          <h2>${escapeHtml(section.heading)}</h2>
+${section.paragraphs.map((paragraph) => `          <p>${escapeHtml(paragraph)}</p>`).join('\n')}
+        </section>`).join('\n\n')}
+
+        <section>
+          <h2>Common Questions</h2>
+${page.faq.map((item) => `          <article>
+            <h3>${escapeHtml(item.q)}</h3>
+            <p>${escapeHtml(item.a)}</p>
+          </article>`).join('\n')}
+        </section>
+
+        <section>
+          <h2>Related Fast Track Pages</h2>
+          <div class="cards">
+            <article class="card">
+              <h3><a href="/arrival-fast-track/">Arrival Fast Track</a></h3>
+              <p>Meet-and-assist for international arrivals at Phuket Airport.</p>
+            </article>
+            <article class="card">
+              <h3><a href="/departure-vip/">Departure VIP</a></h3>
+              <p>Terminal entrance meeting, passport-control guidance, and gate escort.</p>
+            </article>
+            <article class="card">
+              <h3><a href="/phuket-airport-fast-track-prices/">Prices</a></h3>
+              <p>Current price anchors for arrival, departure, combo, children, and infants.</p>
+            </article>
+            <article class="card">
+              <h3><a href="/tdac-guide/">TDAC Guide</a></h3>
+              <p>Thailand Digital Arrival Card information for HKT travelers.</p>
+            </article>
+          </div>
+        </section>
+      </article>
+    </main>
+    <footer>
+      <p>Phuket Airport Fast Track · 222 Mai Khao, Thalang District, Phuket 83110, Thailand · <a href="/blog/">All guides</a> · <a href="/ai.txt">AI permissions</a> · <a href="/sitemap.xml">Sitemap</a></p>
+    </footer>
+  </body>
+</html>
+`;
+};
+
 const renderSitemap = () => {
   const homeEntries = languages.map((language) => `  <url>
     <loc>${languageUrl(language.code)}</loc>
@@ -387,6 +980,16 @@ for (const language of languages.filter((item) => item.code !== 'en')) {
   fs.writeFileSync(path.join(outputDir, 'index.html'), renderLanguagePage(language, locale));
 }
 
+const blogDir = path.join(publicDir, 'blog');
+fs.mkdirSync(blogDir, { recursive: true });
+fs.writeFileSync(path.join(blogDir, 'index.html'), renderBlogIndexPage());
+
+for (const page of blogPages) {
+  const outputDir = path.join(blogDir, page.slug);
+  fs.mkdirSync(outputDir, { recursive: true });
+  fs.writeFileSync(path.join(outputDir, 'index.html'), renderBlogPage(page));
+}
+
 fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), renderSitemap());
 
-console.log(`Generated ${languages.length - 1} localized SEO pages and sitemap.xml`);
+console.log(`Generated ${languages.length - 1} localized SEO pages, ${blogPages.length + 1} guide pages, and sitemap.xml`);

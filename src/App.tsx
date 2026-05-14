@@ -183,7 +183,7 @@ function App() {
               boxShadow: '0 20px 50px rgba(0,0,0,0.3)'
             }}
           >
-            <h1 className="hero-title" style={{ fontSize: 'clamp(3rem, 7vw, 5rem)', lineHeight: 1.1, marginBottom: '2rem' }}>{t('hero.title')}</h1>
+            <h1 className="hero-title" style={{ fontSize: 'clamp(2.35rem, 5.2vw, 4.25rem)', lineHeight: 1.08, marginBottom: '2rem' }}>{t('hero.title')}</h1>
             <p className="hero-subtitle" style={{ fontSize: '1.4rem', color: 'var(--color-text-secondary)', marginBottom: '3.5rem', lineHeight: 1.6 }}>{t('hero.subtitle')}</p>
             <div className="takeaway-list">
               {[0, 1, 5, 2].map(i => (

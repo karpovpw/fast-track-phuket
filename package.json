@@ -8,6 +8,7 @@
     "generate:seo": "node scripts/generate-seo-pages.mjs",
     "build": "npm run generate:seo && tsc -b && vite build && node scripts/generate-app-language-pages.mjs",
     "lint": "eslint .",
+    "indexnow:submit": "node scripts/submit-indexnow.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

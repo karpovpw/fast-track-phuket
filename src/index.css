@@ -108,6 +108,106 @@ a {
   text-decoration: none;
 }
 
+.seo-app-fallback {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: var(--color-text-primary);
+}
+
+.seo-app-nav,
+.seo-app-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.seo-app-nav {
+  padding: 1rem 0 1.5rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.24);
+}
+
+.seo-app-nav a,
+.seo-app-cta a {
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.75rem;
+  color: var(--color-gold);
+  overflow-wrap: anywhere;
+}
+
+.seo-app-hero {
+  max-width: 880px;
+  padding: 4rem 0 2rem;
+}
+
+.seo-app-hero h1 {
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  margin-bottom: 1.25rem;
+}
+
+.seo-app-hero p {
+  color: var(--color-text-secondary);
+  font-size: 1.18rem;
+}
+
+.seo-app-eyebrow {
+  color: var(--color-gold) !important;
+  font-size: 0.78rem !important;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.seo-app-facts,
+.seo-app-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 3rem;
+}
+
+.seo-app-facts p,
+.seo-app-cards article {
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1.1rem;
+}
+
+.seo-app-price {
+  color: var(--color-gold);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.seo-app-fallback section {
+  margin-bottom: 3rem;
+}
+
+.seo-app-fallback table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.seo-app-fallback th,
+.seo-app-fallback td {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.75rem;
+  text-align: start;
+  vertical-align: top;
+}
+
+.seo-app-fallback th {
+  background: rgba(212, 175, 55, 0.14);
+}
+
+.seo-app-fallback ul {
+  padding-left: 1.1rem;
+}
+
 /* Premium Layout Utilities */
 .container {
   max-width: 1200px;
@@ -607,6 +707,22 @@ html[dir='rtl'] .floating-chat {
   .takeaway-item span {
     font-size: 0.98rem;
     line-height: 1.45;
+  }
+
+  .seo-app-fallback {
+    padding: 1.25rem;
+  }
+
+  .seo-app-nav,
+  .seo-app-cta {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .seo-app-fallback table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .package-card {

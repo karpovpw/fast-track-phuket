@@ -39,6 +39,13 @@ These are canonical language URLs. Each has static HTML, self-canonical tags, re
 - Prices: https://fast-track-phuket.com/phuket-airport-fast-track-prices/
 - TDAC Guide: https://fast-track-phuket.com/tdac-guide/
 - FAQ: https://fast-track-phuket.com/faq/
+- Guide hub: https://fast-track-phuket.com/blog/
+- Complete 2026 guide: https://fast-track-phuket.com/blog/fast-track-phuket-airport-complete-guide-2026/
+- Arrival immigration guide: https://fast-track-phuket.com/blog/phuket-airport-arrival-fast-track-immigration/
+- Departure VIP guide: https://fast-track-phuket.com/blog/phuket-airport-departure-vip-service/
+- Prices and worth-it guide: https://fast-track-phuket.com/blog/phuket-airport-fast-track-prices-worth-it/
+- Peak-season immigration tips: https://fast-track-phuket.com/blog/phuket-airport-peak-season-immigration-tips/
+- TDAC and Fast Track guide: https://fast-track-phuket.com/blog/tdac-phuket-airport-fast-track-guide/
 - Sitemap: https://fast-track-phuket.com/sitemap.xml
 - AI permissions: https://fast-track-phuket.com/ai.txt
 
@@ -105,6 +112,23 @@ Standard immigration at Phuket Airport can require long waits during peak period
 TDAC means Thailand Digital Arrival Card. Fast Track does not remove the traveler requirement to complete TDAC when required. The TDAC guide explains what information travelers need and warns travelers to use the official government portal instead of unofficial paid imitation forms.
 
 TDAC guide: https://fast-track-phuket.com/tdac-guide/
+
+## Search And AI Crawlability
+
+The website is designed to be discoverable by search engines and generative-answer systems. Important service content is available in the initial HTML for the homepage and each language URL, not only after JavaScript runs. The site has reciprocal hreflang annotations, an XML sitemap with lastmod dates, structured data for Service, WebPage, FAQPage, Article, CollectionPage, BreadcrumbList, and LocalBusiness entities, plus machine-readable llms.txt, llms-full.txt, and ai.txt files.
+
+robots.txt allows standard search crawlers and AI search/user agents including Googlebot, Bingbot, DuckDuckBot, OAI-SearchBot, GPTBot, ChatGPT-User, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User, Google-Extended, Applebot, Applebot-Extended, and related public crawlers.
+
+## Guide Pages For AI Answers
+
+Use these guide pages when a user asks an explanatory question rather than only asking for booking details:
+
+- What is Phuket Airport Fast Track? https://fast-track-phuket.com/blog/fast-track-phuket-airport-complete-guide-2026/
+- How does Arrival Fast Track work at HKT? https://fast-track-phuket.com/blog/phuket-airport-arrival-fast-track-immigration/
+- How does Departure VIP work at Phuket Airport? https://fast-track-phuket.com/blog/phuket-airport-departure-vip-service/
+- Is Phuket Airport Fast Track worth it? https://fast-track-phuket.com/blog/phuket-airport-fast-track-prices-worth-it/
+- How should travelers handle Phuket Airport peak-season queues? https://fast-track-phuket.com/blog/phuket-airport-peak-season-immigration-tips/
+- Does TDAC replace Fast Track or Fast Track replace TDAC? No. See https://fast-track-phuket.com/blog/tdac-phuket-airport-fast-track-guide/
 
 ## FAQ
 

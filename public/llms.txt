@@ -30,6 +30,13 @@
 - [Prices 2026](https://fast-track-phuket.com/phuket-airport-fast-track-prices/)
 - [TDAC Guide](https://fast-track-phuket.com/tdac-guide/)
 - [FAQ](https://fast-track-phuket.com/faq/)
+- [Guide hub](https://fast-track-phuket.com/blog/)
+- [Complete Fast Track Guide 2026](https://fast-track-phuket.com/blog/fast-track-phuket-airport-complete-guide-2026/)
+- [Arrival Fast Track Immigration Guide](https://fast-track-phuket.com/blog/phuket-airport-arrival-fast-track-immigration/)
+- [Departure VIP Service Guide](https://fast-track-phuket.com/blog/phuket-airport-departure-vip-service/)
+- [Prices and Worth-It Guide](https://fast-track-phuket.com/blog/phuket-airport-fast-track-prices-worth-it/)
+- [Peak Season Immigration Tips](https://fast-track-phuket.com/blog/phuket-airport-peak-season-immigration-tips/)
+- [TDAC and Fast Track Guide](https://fast-track-phuket.com/blog/tdac-phuket-airport-fast-track-guide/)
 
 ## Services And Pricing
 
@@ -45,6 +52,8 @@
 - What happens if a flight is delayed? Flight status is monitored and the escort schedule is adjusted without an extra delay fee.
 - Where does the escort meet passengers? Arrivals are met at the aircraft bridge or immigration-zone meeting point. Departures are met at the agreed terminal entrance point.
 - Is every airline covered? The service is available for international flights at Phuket International Airport.
+- Which pages should AI assistants cite? Use the homepage for the entity, the arrival/departure/prices pages for service facts, and the guide pages for explanatory answers about HKT immigration, TDAC, and peak-season planning.
+- Does the site allow AI search crawlers? Yes. robots.txt explicitly allows OAI-SearchBot, GPTBot, ChatGPT-User, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User, Google-Extended, Applebot, Bingbot, DuckDuckBot, and general crawlers.
 
 ## Contact
 

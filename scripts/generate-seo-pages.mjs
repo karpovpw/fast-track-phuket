@@ -432,7 +432,7 @@ const renderStructuredData = (language, t, url) => {
         '@id': `${BASE_URL}/#business`,
         name: 'Phuket Airport Fast Track',
         url: `${BASE_URL}/`,
-        telephone: '+66 6-4316-2330',
+        telephone: '+66 6-1801-6793',
         address: {
           '@type': 'PostalAddress',
           streetAddress: '222 Mai Khao, Thalang District',
@@ -560,8 +560,8 @@ ${renderStructuredData(language, t, url)}
           <h1>${escapeHtml(t['hero.title'])}</h1>
           <p>${escapeHtml(t['hero.subtitle'])}</p>
           <div class="cta">
-            <a class="button" href="https://wa.me/79697189210">${escapeHtml(t['hero.cta.wa'])}</a>
-            <a class="button" href="https://t.me/fasttrackphuket">${escapeHtml(t['hero.cta.tg'])}</a>
+            <a class="button" href="https://wa.me/66618016793">${escapeHtml(t['hero.cta.wa'])}</a>
+            <a class="button" href="https://t.me/fast_track_phuket">${escapeHtml(t['hero.cta.tg'])}</a>
           </div>
         </div>
         <img src="/hkt-airport.png" alt="Phuket International Airport HKT VIP fast track" />
@@ -668,7 +668,7 @@ ${languages.map((item) => `          <a href="${item.code === 'en' ? '/' : `/${i
 
       <section>
         <h2>Contact</h2>
-        <p>Phone: <a href="tel:+66643162330">+66 6-4316-2330</a>. WhatsApp: <a href="https://wa.me/79697189210">+7 969-718-9210</a>. Telegram: <a href="https://t.me/fasttrackphuket">@fasttrackphuket</a>.</p>
+        <p>Phone: <a href="tel:+66618016793">+66 6-1801-6793</a>. WhatsApp: <a href="https://wa.me/66618016793">+66 6-1801-6793</a>. Telegram: <a href="https://t.me/fast_track_phuket">@fast_track_phuket</a>.</p>
       </section>
     </main>
     <footer>
@@ -836,8 +836,8 @@ ${renderBlogNav()}
           <h1>Phuket Airport Fast Track Guides</h1>
           <p>Practical, crawlable guidance for travelers comparing VIP Fast Track, regular immigration, TDAC preparation, departure support, and Phuket Airport peak-season planning.</p>
           <div class="cta">
-            <a class="button" href="https://wa.me/79697189210">Book on WhatsApp</a>
-            <a class="button" href="https://t.me/fasttrackphuket">Book on Telegram</a>
+            <a class="button" href="https://wa.me/66618016793">Book on WhatsApp</a>
+            <a class="button" href="https://t.me/fast_track_phuket">Book on Telegram</a>
           </div>
         </div>
         <img src="/hkt-airport.png" alt="Phuket International Airport HKT" />
@@ -895,8 +895,8 @@ ${renderBlogNav()}
             <h1>${escapeHtml(page.title)}</h1>
             <p>${escapeHtml(page.summary)}</p>
             <div class="cta">
-              <a class="button" href="https://wa.me/79697189210">Ask on WhatsApp</a>
-              <a class="button" href="https://t.me/fasttrackphuket">Ask on Telegram</a>
+              <a class="button" href="https://wa.me/66618016793">Ask on WhatsApp</a>
+              <a class="button" href="https://t.me/fast_track_phuket">Ask on Telegram</a>
             </div>
           </div>
           <img src="/hkt-airport.png" alt="${escapeHtml(page.title)}" />

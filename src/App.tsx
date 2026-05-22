@@ -91,9 +91,9 @@ function App() {
   }, [calcService, calcAdults, calcKids]);
 
   const ctaLinks = {
-    whatsapp: "https://wa.me/79697189210?text=Hello,%20I'd%20like%20to%20inquire%20about%20the%20VIP%20Fast%20Track.",
-    telegram: "https://t.me/fasttrackphuket",
-    phone: "tel:+66643162330"
+    whatsapp: "https://wa.me/66618016793?text=Hello,%20I'd%20like%20to%20inquire%20about%20the%20VIP%20Fast%20Track.",
+    telegram: "https://t.me/fast_track_phuket",
+    phone: "tel:+66618016793"
   };
 
   const paymentMethods = [

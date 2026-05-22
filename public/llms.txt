@@ -57,9 +57,9 @@
 
 ## Contact
 
-- Phone: [+66 6-4316-2330](tel:+66643162330)
-- WhatsApp: [+7 969-718-9210](https://wa.me/79697189210)
-- Telegram: [@fasttrackphuket](https://t.me/fasttrackphuket)
+- Phone: [+66 6-1801-6793](tel:+66618016793)
+- WhatsApp: [+66 6-1801-6793](https://wa.me/66618016793)
+- Telegram: [@fast_track_phuket](https://t.me/fast_track_phuket)
 - Sitemap: [sitemap.xml](https://fast-track-phuket.com/sitemap.xml)
 - Full machine-readable context: [llms-full.txt](https://fast-track-phuket.com/llms-full.txt)
 - AI permissions: [ai.txt](https://fast-track-phuket.com/ai.txt)

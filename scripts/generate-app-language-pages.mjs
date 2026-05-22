@@ -83,7 +83,7 @@ const renderStructuredData = (language, t, url) => {
           '@id': `${BASE_URL}/#business`,
           name: 'Phuket Airport Fast Track',
           url: `${BASE_URL}/`,
-          telephone: '+66 6-4316-2330',
+          telephone: '+66 6-1801-6793',
           address: {
             '@type': 'PostalAddress',
             streetAddress: '222 Mai Khao, Thalang District',
@@ -180,9 +180,9 @@ ${topicLinks.map((link) => `          <a href="${link.url}">${escapeHtml(link.la
           <h1>${escapeHtml(t['hero.title'])}</h1>
           <p>${escapeHtml(t['hero.subtitle'])}</p>
           <div class="seo-app-cta">
-            <a href="https://wa.me/79697189210">${escapeHtml(t['hero.cta.wa'])}</a>
-            <a href="https://t.me/fasttrackphuket">${escapeHtml(t['hero.cta.tg'])}</a>
-            <a href="tel:+66643162330">+66 6-4316-2330</a>
+            <a href="https://wa.me/66618016793">${escapeHtml(t['hero.cta.wa'])}</a>
+            <a href="https://t.me/fast_track_phuket">${escapeHtml(t['hero.cta.tg'])}</a>
+            <a href="tel:+66618016793">+66 6-1801-6793</a>
           </div>
         </section>
 

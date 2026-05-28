@@ -1,4 +1,4 @@
-# Welcome all crawlers — Phuket Airport Fast Track
+# Welcome all crawlers — VIP Fast Track Phuket Airport (HKT)
 # https://fast-track-phuket.com
 
 User-agent: *

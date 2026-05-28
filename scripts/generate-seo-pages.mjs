@@ -26,15 +26,15 @@ const languages = [
 const blogPages = [
   {
     slug: 'fast-track-phuket-airport-complete-guide-2026',
-    title: 'Phuket Airport Fast Track Complete Guide 2026',
-    description: 'A practical 2026 guide to Phuket Airport Fast Track at HKT: arrival immigration, departure VIP assistance, prices, TDAC, booking timing, and when VIP escort is worth it.',
+    title: 'VIP Fast Track Phuket Airport (HKT) Complete Guide 2026',
+    description: 'A practical 2026 guide to VIP Fast Track Phuket Airport (HKT): arrival immigration, departure VIP assistance, prices, TDAC, booking timing, and when VIP escort is worth it.',
     summary: 'Use this guide if you are comparing regular immigration with VIP meet-and-assist at Phuket International Airport. It explains what the escort does, what still remains the traveler responsibility, and which package fits each trip.',
-    keywords: ['Phuket Airport Fast Track', 'HKT VIP service', 'Phuket airport immigration', 'VIP meet and assist Phuket'],
+    keywords: ['VIP Fast Track Phuket Airport (HKT)', 'HKT VIP service', 'Phuket airport immigration', 'VIP meet and assist Phuket'],
     sections: [
       {
-        heading: 'What Phuket Airport Fast Track means',
+        heading: 'What VIP Fast Track Phuket Airport (HKT) means',
         paragraphs: [
-          'Phuket Airport Fast Track is a VIP meet-and-assist service for international passengers using Phuket International Airport (HKT). Instead of finding the right immigration flow alone, the passenger is met by an airport escort and guided through the airport steps that apply to the booking.',
+          'VIP Fast Track Phuket Airport (HKT) is a VIP meet-and-assist service for international passengers using Phuket International Airport (HKT). Instead of finding the right immigration flow alone, the passenger is met by an airport escort and guided through the airport steps that apply to the booking.',
           'Fast Track is not a visa, government exemption, or shortcut around Thai immigration requirements. Travelers still need valid documents and must complete any required entry forms. The value is operational: meeting coordination, priority-lane guidance when available, terminal navigation, and support when flight timing changes.',
         ],
       },
@@ -69,7 +69,7 @@ const blogPages = [
     ],
     faq: [
       {
-        q: 'Is Phuket Airport Fast Track available for all international flights?',
+        q: 'Is VIP Fast Track Phuket Airport (HKT) available for all international flights?',
         a: 'The service is available for international flights at Phuket International Airport, subject to booking availability and current airport procedure.',
       },
       {
@@ -186,8 +186,8 @@ const blogPages = [
   },
   {
     slug: 'phuket-airport-fast-track-prices-worth-it',
-    title: 'Is Phuket Airport Fast Track Worth It? Prices and Use Cases',
-    description: 'Compare Phuket Airport Fast Track prices with regular HKT immigration and learn when VIP meet-and-assist is worth booking for arrivals, departures, families, and groups.',
+    title: 'Is VIP Fast Track Phuket Airport (HKT) Worth It? Prices and Use Cases',
+    description: 'Compare VIP Fast Track Phuket Airport (HKT) prices with regular HKT immigration and learn when VIP meet-and-assist is worth booking for arrivals, departures, families, and groups.',
     summary: 'Fast Track is worth it when time, certainty, family comfort, or airport support matters more than the lowest possible transfer cost.',
     keywords: ['Phuket fast track price', 'Phuket airport fast track worth it', 'HKT VIP price'],
     sections: [
@@ -222,7 +222,7 @@ const blogPages = [
     ],
     faq: [
       {
-        q: 'What is the cheapest Phuket Airport Fast Track option?',
+        q: 'What is the cheapest VIP Fast Track Phuket Airport (HKT) option?',
         a: 'Arrival Fast Track starts from THB 1,600 per person for two or more passengers.',
       },
       {
@@ -288,15 +288,15 @@ const blogPages = [
   },
   {
     slug: 'tdac-phuket-airport-fast-track-guide',
-    title: 'TDAC and Phuket Airport Fast Track Guide',
-    description: 'How TDAC fits with Phuket Airport Fast Track: what travelers still need to complete, how VIP assistance helps, and what to prepare before arriving in Thailand.',
+    title: 'TDAC and VIP Fast Track Phuket Airport (HKT) Guide',
+    description: 'How TDAC fits with VIP Fast Track Phuket Airport (HKT): what travelers still need to complete, how VIP assistance helps, and what to prepare before arriving in Thailand.',
     summary: 'TDAC and Fast Track solve different problems. TDAC is an entry-information requirement when applicable; Fast Track is airport meet-and-assist support.',
     keywords: ['TDAC Phuket Airport', 'Thailand Digital Arrival Card Phuket', 'Fast Track TDAC'],
     sections: [
       {
         heading: 'TDAC is separate from Fast Track',
         paragraphs: [
-          'The Thailand Digital Arrival Card is a traveler information requirement when it applies. Phuket Airport Fast Track does not remove TDAC, visa, passport, customs, or immigration obligations.',
+          'The Thailand Digital Arrival Card is a traveler information requirement when it applies. VIP Fast Track Phuket Airport (HKT) does not remove TDAC, visa, passport, customs, or immigration obligations.',
           'The role of Fast Track is to help the passenger move through the airport process with a personal escort. The role of TDAC is to provide arrival information before entering Thailand. Treat them as separate parts of the same trip preparation.',
         ],
       },
@@ -410,7 +410,7 @@ const renderStructuredData = (language, t, url) => {
         '@type': 'WebSite',
         '@id': `${BASE_URL}/#website`,
         url: `${BASE_URL}/`,
-        name: 'Phuket Airport Fast Track',
+        name: 'VIP Fast Track Phuket Airport (HKT)',
       },
       about: {
         '@id': `${BASE_URL}/#service`,
@@ -430,7 +430,7 @@ const renderStructuredData = (language, t, url) => {
       provider: {
         '@type': 'LocalBusiness',
         '@id': `${BASE_URL}/#business`,
-        name: 'Phuket Airport Fast Track',
+        name: 'VIP Fast Track Phuket Airport (HKT)',
         url: `${BASE_URL}/`,
         telephone: '+66 6-1801-6793',
         address: {
@@ -488,7 +488,7 @@ const renderStructuredData = (language, t, url) => {
 
 const renderLanguagePage = (language, t) => {
   const url = languageUrl(language.code);
-  const title = `${t['hero.title']} | Phuket Airport Fast Track`;
+  const title = `${t['hero.title']} | VIP Fast Track Phuket Airport (HKT)`;
   const description = t['hero.subtitle'];
   const facts = [
     t['takeaways.1'],
@@ -537,7 +537,7 @@ ${alternateLinksHtml()}
     <meta property="og:title" content="${escapeHtml(title)}" />
     <meta property="og:description" content="${escapeHtml(description)}" />
     <meta property="og:image" content="${BASE_URL}/hkt-airport.png" />
-    <meta property="og:site_name" content="Phuket Airport Fast Track" />
+    <meta property="og:site_name" content="VIP Fast Track Phuket Airport (HKT)" />
     <meta property="og:locale" content="${language.ogLocale}" />
     <script type="application/ld+json">
 ${renderStructuredData(language, t, url)}
@@ -672,7 +672,7 @@ ${languages.map((item) => `          <a href="${item.code === 'en' ? '/' : `/${i
       </section>
     </main>
     <footer>
-      <p>Phuket Airport Fast Track · 222 Mai Khao, Thalang District, Phuket 83110, Thailand · <a href="/ai.txt">AI permissions</a> · <a href="/sitemap.xml">Sitemap</a></p>
+      <p>VIP Fast Track Phuket Airport (HKT) · 222 Mai Khao, Thalang District, Phuket 83110, Thailand · <a href="/ai.txt">AI permissions</a> · <a href="/sitemap.xml">Sitemap</a></p>
     </footer>
   </body>
 </html>
@@ -703,12 +703,12 @@ const renderBlogStructuredData = (page, url) => JSON.stringify({
       dateModified: LASTMOD,
       author: {
         '@type': 'Organization',
-        name: 'Phuket Airport Fast Track',
+        name: 'VIP Fast Track Phuket Airport (HKT)',
         url: `${BASE_URL}/`,
       },
       publisher: {
         '@type': 'Organization',
-        name: 'Phuket Airport Fast Track',
+        name: 'VIP Fast Track Phuket Airport (HKT)',
         logo: {
           '@type': 'ImageObject',
           url: `${BASE_URL}/favicon.svg`,
@@ -732,7 +732,7 @@ const renderBlogStructuredData = (page, url) => JSON.stringify({
       isPartOf: {
         '@type': 'WebSite',
         '@id': `${BASE_URL}/#website`,
-        name: 'Phuket Airport Fast Track',
+        name: 'VIP Fast Track Phuket Airport (HKT)',
         url: `${BASE_URL}/`,
       },
       about: {
@@ -786,13 +786,13 @@ const renderBlogIndexStructuredData = () => {
     '@type': 'CollectionPage',
     '@id': `${url}#webpage`,
     url,
-    name: 'Phuket Airport Fast Track Guides',
-    description: 'Crawlable guides for Phuket Airport Fast Track, VIP arrival, departure, prices, TDAC, and HKT immigration planning.',
+    name: 'VIP Fast Track Phuket Airport (HKT) Guides',
+    description: 'Crawlable guides for VIP Fast Track Phuket Airport (HKT), VIP arrival, departure, prices, TDAC, and HKT immigration planning.',
     inLanguage: 'en',
     isPartOf: {
       '@type': 'WebSite',
       '@id': `${BASE_URL}/#website`,
-      name: 'Phuket Airport Fast Track',
+      name: 'VIP Fast Track Phuket Airport (HKT)',
       url: `${BASE_URL}/`,
     },
     mainEntity: {
@@ -812,15 +812,15 @@ const renderBlogIndexPage = () => `<!doctype html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Phuket Airport Fast Track Guides | HKT VIP Travel Advice</title>
-    <meta name="description" content="Guides for Phuket Airport Fast Track, arrival immigration, departure VIP service, HKT prices, TDAC, peak-season airport planning, and VIP meet-and-assist." />
+    <title>VIP Fast Track Phuket Airport (HKT) Guides | HKT VIP Travel Advice</title>
+    <meta name="description" content="Guides for VIP Fast Track Phuket Airport (HKT), arrival immigration, departure VIP service, HKT prices, TDAC, peak-season airport planning, and VIP meet-and-assist." />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href="${BASE_URL}/blog/" />
     <link rel="stylesheet" href="/seo.css" />
     <link rel="sitemap" type="application/xml" href="${BASE_URL}/sitemap.xml" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="${BASE_URL}/blog/" />
-    <meta property="og:title" content="Phuket Airport Fast Track Guides" />
+    <meta property="og:title" content="VIP Fast Track Phuket Airport (HKT) Guides" />
     <meta property="og:description" content="Practical HKT airport VIP guides for arrivals, departures, prices, TDAC, and peak-season immigration planning." />
     <meta property="og:image" content="${BASE_URL}/hkt-airport.png" />
     <script type="application/ld+json">
@@ -833,7 +833,7 @@ ${renderBlogNav()}
       <section class="hero">
         <div>
           <p class="eyebrow">HKT airport guides · Updated ${LASTMOD}</p>
-          <h1>Phuket Airport Fast Track Guides</h1>
+          <h1>VIP Fast Track Phuket Airport (HKT) Guides</h1>
           <p>Practical, crawlable guidance for travelers comparing VIP Fast Track, regular immigration, TDAC preparation, departure support, and Phuket Airport peak-season planning.</p>
           <div class="cta">
             <a class="button" href="https://wa.me/66618016793">Book on WhatsApp</a>
@@ -854,7 +854,7 @@ ${blogPages.map((page) => `          <article class="card">
       </section>
     </main>
     <footer>
-      <p>Phuket Airport Fast Track · 222 Mai Khao, Thalang District, Phuket 83110, Thailand · <a href="/ai.txt">AI permissions</a> · <a href="/sitemap.xml">Sitemap</a></p>
+      <p>VIP Fast Track Phuket Airport (HKT) · 222 Mai Khao, Thalang District, Phuket 83110, Thailand · <a href="/ai.txt">AI permissions</a> · <a href="/sitemap.xml">Sitemap</a></p>
     </footer>
   </body>
 </html>
@@ -868,7 +868,7 @@ const renderBlogPage = (page) => {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${escapeHtml(page.title)} | Phuket Airport Fast Track</title>
+    <title>${escapeHtml(page.title)} | VIP Fast Track Phuket Airport (HKT)</title>
     <meta name="description" content="${escapeHtml(page.description)}" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href="${url}" />
@@ -891,7 +891,7 @@ ${renderBlogNav()}
       <article>
         <header class="hero">
           <div>
-            <p class="eyebrow">Phuket Airport Fast Track guide · Updated ${LASTMOD}</p>
+            <p class="eyebrow">VIP Fast Track Phuket Airport (HKT) guide · Updated ${LASTMOD}</p>
             <h1>${escapeHtml(page.title)}</h1>
             <p>${escapeHtml(page.summary)}</p>
             <div class="cta">
@@ -943,7 +943,7 @@ ${page.faq.map((item) => `          <article>
       </article>
     </main>
     <footer>
-      <p>Phuket Airport Fast Track · 222 Mai Khao, Thalang District, Phuket 83110, Thailand · <a href="/blog/">All guides</a> · <a href="/ai.txt">AI permissions</a> · <a href="/sitemap.xml">Sitemap</a></p>
+      <p>VIP Fast Track Phuket Airport (HKT) · 222 Mai Khao, Thalang District, Phuket 83110, Thailand · <a href="/blog/">All guides</a> · <a href="/ai.txt">AI permissions</a> · <a href="/sitemap.xml">Sitemap</a></p>
     </footer>
   </body>
 </html>

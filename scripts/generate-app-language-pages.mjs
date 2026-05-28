@@ -61,7 +61,7 @@ const renderStructuredData = (language, t, url) => {
         isPartOf: {
           '@type': 'WebSite',
           '@id': `${BASE_URL}/#website`,
-          name: 'Phuket Airport Fast Track',
+          name: 'VIP Fast Track Phuket Airport (HKT)',
           url: `${BASE_URL}/`,
         },
         about: {
@@ -81,7 +81,7 @@ const renderStructuredData = (language, t, url) => {
         provider: {
           '@type': 'LocalBusiness',
           '@id': `${BASE_URL}/#business`,
-          name: 'Phuket Airport Fast Track',
+          name: 'VIP Fast Track Phuket Airport (HKT)',
           url: `${BASE_URL}/`,
           telephone: '+66 6-1801-6793',
           address: {
@@ -262,7 +262,7 @@ fs.writeFileSync(appHtmlPath, injectRootFallback(appHtml, englishLanguage, engli
 for (const language of languages.filter((item) => item.code !== 'en')) {
   const locale = JSON.parse(fs.readFileSync(path.join(localeDir, `${language.code}.json`), 'utf8'));
   const url = languageUrl(language.code);
-  const title = `${locale['hero.title']} | Phuket Airport Fast Track`;
+  const title = `${locale['hero.title']} | VIP Fast Track Phuket Airport (HKT)`;
   const description = locale['hero.subtitle'];
 
   let localizedHtml = injectRootFallback(appHtml, language, locale);

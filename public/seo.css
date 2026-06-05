@@ -93,6 +93,79 @@ h2 {
   background: rgba(255, 255, 255, 0.04);
 }
 
+.license-notice {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(min(100%, 340px), 0.92fr);
+  gap: 18px;
+  align-items: stretch;
+  border: 2px solid rgba(212, 175, 55, 0.48);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.16), rgba(255, 255, 255, 0.04) 42%);
+  padding: clamp(18px, 4vw, 28px);
+  margin: 28px 0 34px;
+}
+
+.license-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.license-details div {
+  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px;
+}
+
+.license-details span {
+  display: block;
+  color: #d6cbb2;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.license-details strong {
+  display: block;
+  color: #fff;
+  overflow-wrap: anywhere;
+}
+
+.license-note {
+  color: #f4de8f;
+  font-weight: 700;
+}
+
+.license-warning {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 2px solid rgba(255, 82, 82, 0.72);
+  border-left: 8px solid #ff5252;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255, 82, 82, 0.18), rgba(65, 9, 9, 0.34));
+  padding: clamp(16px, 3vw, 24px);
+}
+
+.license-warning h3 {
+  color: #ffb4a8;
+  font-size: clamp(1.18rem, 3vw, 1.55rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+.license-warning p {
+  color: #fff;
+  font-size: clamp(1.02rem, 2.5vw, 1.2rem);
+  font-weight: 700;
+  margin: 0;
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
@@ -162,8 +235,14 @@ html[dir='rtl'] th,
 html[dir='rtl'] td,
 html[dir='rtl'] nav,
 html[dir='rtl'] .hero,
-html[dir='rtl'] .card {
+html[dir='rtl'] .card,
+html[dir='rtl'] .license-notice {
   text-align: right;
+}
+
+html[dir='rtl'] .license-warning {
+  border-left-width: 2px;
+  border-right: 8px solid #ff5252;
 }
 
 @media (max-width: 760px) {
@@ -177,6 +256,11 @@ html[dir='rtl'] .card {
   }
 
   .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .license-notice,
+  .license-details {
     grid-template-columns: 1fr;
   }
 

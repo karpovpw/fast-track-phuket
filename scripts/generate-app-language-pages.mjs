@@ -38,6 +38,32 @@ const appHtml = fs.readFileSync(appHtmlPath, 'utf8');
 
 const languageUrl = (code) => code === 'en' ? `${BASE_URL}/` : `${BASE_URL}/${code}/`;
 
+const licenseFactKeys = [
+  ['license.number.label', 'license.number.value'],
+  ['license.company.label', 'license.company.value'],
+  ['license.registration.label', 'license.registration.value'],
+  ['license.valid.label', 'license.valid.value'],
+];
+
+const renderLicenseNotice = (t) => `        <section class="license-panel seo-app-license" aria-label="${escapeHtml(t['license.factsLabel'])}">
+          <div class="license-copy">
+            <p class="license-kicker">${escapeHtml(t['license.badge'])}</p>
+            <h2>${escapeHtml(t['license.title'])}</h2>
+            <p>${escapeHtml(t['license.desc'])}</p>
+            <div class="license-facts">
+${licenseFactKeys.map(([labelKey, valueKey]) => `              <div class="license-fact">
+                <span>${escapeHtml(t[labelKey])}</span>
+                <strong>${escapeHtml(t[valueKey])}</strong>
+              </div>`).join('\n')}
+            </div>
+            <p class="license-note">${escapeHtml(t['license.note'])}</p>
+          </div>
+          <div class="license-warning" role="note" aria-label="${escapeHtml(t['license.warning.title'])}">
+            <div class="license-warning-title">${escapeHtml(t['license.warning.title'])}</div>
+            <p>${escapeHtml(t['license.warning.desc'])}</p>
+          </div>
+        </section>`;
+
 const renderStructuredData = (language, t, url) => {
   const faqItems = [1, 2, 3, 4, 5, 6].map((index) => ({
     '@type': 'Question',
@@ -82,8 +108,23 @@ const renderStructuredData = (language, t, url) => {
           '@type': 'LocalBusiness',
           '@id': `${BASE_URL}/#business`,
           name: 'VIP Fast Track Phuket Airport (HKT)',
+          legalName: 'ILVES TOUR CO., LTD.',
           url: `${BASE_URL}/`,
           telephone: '+66 6-1801-6793',
+          taxID: '0205539002570',
+          identifier: 'TAT tourism business license 11/07698',
+          additionalProperty: [
+            {
+              '@type': 'PropertyValue',
+              name: 'TAT tourism business license',
+              value: '11/07698',
+            },
+            {
+              '@type': 'PropertyValue',
+              name: 'License validity',
+              value: '2024-09-11 to 2026-09-10',
+            },
+          ],
           address: {
             '@type': 'PostalAddress',
             streetAddress: '222 Mai Khao, Thalang District',
@@ -189,6 +230,8 @@ ${topicLinks.map((link) => `          <a href="${link.url}">${escapeHtml(link.la
         <section class="seo-app-facts" aria-label="Fast Track facts">
 ${[0, 1, 5, 2].map((index) => `          <p>${escapeHtml(t[`takeaways.${index}`])}</p>`).join('\n')}
         </section>
+
+${renderLicenseNotice(t)}
 
         <section>
           <h2>${escapeHtml(t['pkg_section.title'])}</h2>

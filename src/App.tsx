@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Globe, MessageCircle, Star, Building, 
   ChevronDown, Send, X, Check, ArrowRight,
-  Coins, CreditCard, Quote, Phone
+  Coins, CreditCard, Quote, Phone,
+  FileCheck, ShieldCheck, TriangleAlert
 } from 'lucide-react';
 import Hero3D from './components/Hero3D';
 import './index.css';
@@ -102,6 +103,13 @@ function App() {
     { key: "4", icon: <CreditCard size={24} />, title: t("payments.4.t"), desc: t("payments.4.d") }
   ];
 
+  const licenseFacts = [
+    { label: t('license.number.label'), value: t('license.number.value') },
+    { label: t('license.company.label'), value: t('license.company.value') },
+    { label: t('license.registration.label'), value: t('license.registration.value') },
+    { label: t('license.valid.label'), value: t('license.valid.value') },
+  ];
+
   return (
     <div className="site-shell" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
@@ -192,6 +200,46 @@ function App() {
                   <span>{t(`takeaways.${i}`)}</span>
                 </div>
               ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="license-section" aria-labelledby="license-title">
+        <div className="container">
+          <motion.div
+            className="license-panel"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="license-copy">
+              <div className="license-kicker">
+                <ShieldCheck size={20} />
+                <span>{t('license.badge')}</span>
+              </div>
+              <h2 id="license-title">{t('license.title')}</h2>
+              <p>{t('license.desc')}</p>
+              <div className="license-facts" aria-label={t('license.factsLabel')}>
+                {licenseFacts.map((fact) => (
+                  <div key={fact.label} className="license-fact">
+                    <span>{fact.label}</span>
+                    <strong>{fact.value}</strong>
+                  </div>
+                ))}
+              </div>
+              <div className="license-note">
+                <FileCheck size={18} />
+                <span>{t('license.note')}</span>
+              </div>
+            </div>
+
+            <div className="license-warning" role="note" aria-label={t('license.warning.title')}>
+              <div className="license-warning-title">
+                <TriangleAlert size={28} />
+                <span>{t('license.warning.title')}</span>
+              </div>
+              <p>{t('license.warning.desc')}</p>
             </div>
           </motion.div>
         </div>

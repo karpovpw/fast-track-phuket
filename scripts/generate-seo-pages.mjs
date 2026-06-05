@@ -373,29 +373,18 @@ const loadLocale = (code) => JSON.parse(
 
 const splitList = (value) => String(value || '').split('|').filter(Boolean);
 
-const licenseFactKeys = [
-  ['license.number.label', 'license.number.value'],
-  ['license.company.label', 'license.company.value'],
-  ['license.registration.label', 'license.registration.value'],
-  ['license.valid.label', 'license.valid.value'],
-];
-
-const renderLicenseNotice = (t) => `      <section class="license-notice" aria-label="${escapeHtml(t['license.factsLabel'])}">
-        <div>
-          <p class="eyebrow">${escapeHtml(t['license.badge'])}</p>
-          <h2>${escapeHtml(t['license.title'])}</h2>
-          <p>${escapeHtml(t['license.desc'])}</p>
-          <div class="license-details">
-${licenseFactKeys.map(([labelKey, valueKey]) => `            <div>
-              <span>${escapeHtml(t[labelKey])}</span>
-              <strong>${escapeHtml(t[valueKey])}</strong>
-            </div>`).join('\n')}
-          </div>
-          <p class="license-note">${escapeHtml(t['license.note'])}</p>
-        </div>
+const renderLicenseNotice = (t) => `      <section class="license-notice" aria-labelledby="license-title">
         <div class="license-warning" role="note" aria-label="${escapeHtml(t['license.warning.title'])}">
           <h3>${escapeHtml(t['license.warning.title'])}</h3>
           <p>${escapeHtml(t['license.warning.desc'])}</p>
+        </div>
+        <figure class="license-image-card">
+          <img src="/tat-license.jpeg" alt="${escapeHtml(t['license.imageAlt'])}" loading="lazy" />
+        </figure>
+        <div>
+          <p class="eyebrow">${escapeHtml(t['license.badge'])}</p>
+          <h2 id="license-title">${escapeHtml(t['license.title'])}</h2>
+          <p>${escapeHtml(t['license.desc'])}</p>
         </div>
       </section>`;
 
@@ -459,23 +448,8 @@ const renderStructuredData = (language, t, url) => {
         '@type': 'LocalBusiness',
         '@id': `${BASE_URL}/#business`,
         name: 'VIP Fast Track Phuket Airport (HKT)',
-        legalName: 'ILVES TOUR CO., LTD.',
         url: `${BASE_URL}/`,
         telephone: '+66 6-1801-6793',
-        taxID: '0205539002570',
-        identifier: 'TAT tourism business license 11/07698',
-        additionalProperty: [
-          {
-            '@type': 'PropertyValue',
-            name: 'TAT tourism business license',
-            value: '11/07698',
-          },
-          {
-            '@type': 'PropertyValue',
-            name: 'License validity',
-            value: '2024-09-11 to 2026-09-10',
-          },
-        ],
         address: {
           '@type': 'PostalAddress',
           streetAddress: '222 Mai Khao, Thalang District',

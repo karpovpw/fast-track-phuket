@@ -5,7 +5,7 @@ import {
   Globe, MessageCircle, Star, Building, 
   ChevronDown, Send, X, Check, ArrowRight,
   Coins, CreditCard, Quote, Phone,
-  FileCheck, ShieldCheck, TriangleAlert
+  ShieldCheck, TriangleAlert
 } from 'lucide-react';
 import Hero3D from './components/Hero3D';
 import './index.css';
@@ -101,13 +101,6 @@ function App() {
     { key: "1", icon: <Building size={24} />, title: t("payments.1.t"), desc: t("payments.1.d") },
     { key: "2", icon: <Coins size={24} />, title: t("payments.2.t"), desc: t("payments.2.d") },
     { key: "4", icon: <CreditCard size={24} />, title: t("payments.4.t"), desc: t("payments.4.d") }
-  ];
-
-  const licenseFacts = [
-    { label: t('license.number.label'), value: t('license.number.value') },
-    { label: t('license.company.label'), value: t('license.company.value') },
-    { label: t('license.registration.label'), value: t('license.registration.value') },
-    { label: t('license.valid.label'), value: t('license.valid.value') },
   ];
 
   return (
@@ -213,6 +206,18 @@ function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
+            <div className="license-warning" role="note" aria-label={t('license.warning.title')}>
+              <div className="license-warning-title">
+                <TriangleAlert size={28} />
+                <span>{t('license.warning.title')}</span>
+              </div>
+              <p>{t('license.warning.desc')}</p>
+            </div>
+
+            <figure className="license-image-card">
+              <img src="/tat-license.jpeg" alt={t('license.imageAlt')} loading="lazy" />
+            </figure>
+
             <div className="license-copy">
               <div className="license-kicker">
                 <ShieldCheck size={20} />
@@ -220,26 +225,6 @@ function App() {
               </div>
               <h2 id="license-title">{t('license.title')}</h2>
               <p>{t('license.desc')}</p>
-              <div className="license-facts" aria-label={t('license.factsLabel')}>
-                {licenseFacts.map((fact) => (
-                  <div key={fact.label} className="license-fact">
-                    <span>{fact.label}</span>
-                    <strong>{fact.value}</strong>
-                  </div>
-                ))}
-              </div>
-              <div className="license-note">
-                <FileCheck size={18} />
-                <span>{t('license.note')}</span>
-              </div>
-            </div>
-
-            <div className="license-warning" role="note" aria-label={t('license.warning.title')}>
-              <div className="license-warning-title">
-                <TriangleAlert size={28} />
-                <span>{t('license.warning.title')}</span>
-              </div>
-              <p>{t('license.warning.desc')}</p>
             </div>
           </motion.div>
         </div>

@@ -231,7 +231,7 @@ a {
 
 .license-panel {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(min(100%, 360px), 0.92fr);
+  grid-template-columns: minmax(min(100%, 320px), 0.75fr) minmax(0, 1.25fr);
   gap: clamp(1.25rem, 3vw, 2.5rem);
   align-items: stretch;
   padding: clamp(1.4rem, 3vw, 2.5rem);
@@ -248,7 +248,6 @@ a {
 }
 
 .license-kicker,
-.license-note,
 .license-warning-title {
   display: flex;
   align-items: center;
@@ -275,55 +274,38 @@ a {
   max-width: 64ch;
 }
 
-.license-facts {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.85rem;
-  margin: 1.5rem 0;
-}
-
-.license-fact {
+.license-image-card {
   min-width: 0;
-  padding: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  margin: 0;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.75rem;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.license-image-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.license-fact span {
-  display: block;
-  color: var(--color-text-secondary);
-  font-size: 0.74rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-bottom: 0.3rem;
-}
-
-.license-fact strong {
-  display: block;
-  color: #fff;
-  font-size: clamp(0.98rem, 1.8vw, 1.15rem);
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-}
-
-.license-note {
-  color: #f8e7a2;
-  font-weight: 700;
-  line-height: 1.45;
 }
 
 .license-warning {
+  grid-column: 1 / -1;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
   min-width: 0;
-  padding: clamp(1.3rem, 3vw, 2rem);
+  padding: clamp(1rem, 2vw, 1.35rem) clamp(1.2rem, 3vw, 1.75rem);
   border: 2px solid rgba(255, 82, 82, 0.72);
-  border-inline-start: 8px solid #ff5252;
+  border-block-start: 8px solid #ff5252;
   border-radius: var(--radius-md);
-  background: linear-gradient(180deg, rgba(255, 82, 82, 0.18), rgba(65, 9, 9, 0.34));
+  background: linear-gradient(90deg, rgba(255, 82, 82, 0.2), rgba(65, 9, 9, 0.34));
 }
 
 .license-warning-title {
@@ -335,8 +317,9 @@ a {
 }
 
 .license-warning p {
+  flex: 1;
   color: #fff;
-  font-size: clamp(1.04rem, 2vw, 1.25rem);
+  font-size: clamp(1rem, 1.7vw, 1.18rem);
   font-weight: 700;
   line-height: 1.55;
 }
@@ -638,7 +621,7 @@ td.cross { color: #ef4444; }
   }
 
   .license-panel,
-  .license-facts {
+  .license-warning {
     grid-template-columns: 1fr;
   }
 

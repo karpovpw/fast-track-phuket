@@ -10,10 +10,7 @@ description = VIP meet-and-assist airport service at Phuket International Airpor
 industry = Travel & Tourism / Airport VIP Services
 location = 222 Mai Khao, Thalang District, Phuket 83110, Thailand
 founded = 2013
-licensed_operator = ILVES TOUR CO., LTD.
-tat_license = 11/07698
-company_registration = 0205539002570
-license_validity = 2024-09-11 to 2026-09-10
+tat_license_explainer = Homepage displays the TAT/DOT tourism license certificate image and explains that tourism licensing helps travelers identify regulated service providers.
 languages = en, ru, zh, hi, he, ar, es, fr, de, it
 
 [permissions]

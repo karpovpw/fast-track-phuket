@@ -95,7 +95,7 @@ h2 {
 
 .license-notice {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(min(100%, 340px), 0.92fr);
+  grid-template-columns: minmax(min(100%, 260px), 0.7fr) minmax(0, 1.3fr);
   gap: 18px;
   align-items: stretch;
   border: 2px solid rgba(212, 175, 55, 0.48);
@@ -105,49 +105,35 @@ h2 {
   margin: 28px 0 34px;
 }
 
-.license-details {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin: 18px 0;
-}
-
-.license-details div {
+.license-image-card {
   min-width: 0;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.04);
-  padding: 12px;
+  margin: 0;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 10px;
 }
 
-.license-details span {
+.license-image-card img {
   display: block;
-  color: #d6cbb2;
-  font-size: 0.76rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-
-.license-details strong {
-  display: block;
-  color: #fff;
-  overflow-wrap: anywhere;
-}
-
-.license-note {
-  color: #f4de8f;
-  font-weight: 700;
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  object-fit: contain;
+  border-radius: 4px;
 }
 
 .license-warning {
+  grid-column: 1 / -1;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
   border: 2px solid rgba(255, 82, 82, 0.72);
-  border-left: 8px solid #ff5252;
+  border-top: 8px solid #ff5252;
   border-radius: 8px;
-  background: linear-gradient(180deg, rgba(255, 82, 82, 0.18), rgba(65, 9, 9, 0.34));
+  background: linear-gradient(90deg, rgba(255, 82, 82, 0.18), rgba(65, 9, 9, 0.34));
   padding: clamp(16px, 3vw, 24px);
 }
 
@@ -160,6 +146,7 @@ h2 {
 }
 
 .license-warning p {
+  flex: 1;
   color: #fff;
   font-size: clamp(1.02rem, 2.5vw, 1.2rem);
   font-weight: 700;
@@ -241,8 +228,7 @@ html[dir='rtl'] .license-notice {
 }
 
 html[dir='rtl'] .license-warning {
-  border-left-width: 2px;
-  border-right: 8px solid #ff5252;
+  border-right-width: 2px;
 }
 
 @media (max-width: 760px) {
@@ -259,8 +245,7 @@ html[dir='rtl'] .license-warning {
     grid-template-columns: 1fr;
   }
 
-  .license-notice,
-  .license-details {
+  .license-notice {
     grid-template-columns: 1fr;
   }
 

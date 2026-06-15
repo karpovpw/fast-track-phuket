@@ -5,6 +5,19 @@
   "observability": {
     "enabled": true
   },
+  // Future release note:
+  // Keep these routes in config so `npm run deploy` updates production,
+  // not only the workers.dev preview URL.
+  "routes": [
+    {
+      "pattern": "fast-track-phuket.com/*",
+      "zone_name": "fast-track-phuket.com"
+    },
+    {
+      "pattern": "www.fast-track-phuket.com/*",
+      "zone_name": "fast-track-phuket.com"
+    }
+  ],
   "assets": {
     "directory": "./dist",
     "not_found_handling": "single-page-application"

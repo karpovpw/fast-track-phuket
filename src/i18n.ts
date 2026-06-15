@@ -14,6 +14,26 @@ import it from './locales/it.json';
 
 const supportedLanguages = ['en', 'ru', 'zh', 'hi', 'he', 'ar', 'es', 'fr', 'de', 'it'];
 
+const normalizeLanguage = (language: string) => {
+  const normalized = language.toLowerCase();
+  if (normalized === 'iw') return 'he';
+  return normalized.split('-')[0];
+};
+
+const detectBrowserLanguage = () => {
+  if (typeof window === 'undefined') return 'en';
+
+  const browserLanguages = window.navigator.languages?.length
+    ? window.navigator.languages
+    : [window.navigator.language];
+
+  const detectedLanguage = browserLanguages
+    .map((language) => normalizeLanguage(language))
+    .find((language) => supportedLanguages.includes(language));
+
+  return detectedLanguage || 'en';
+};
+
 const detectInitialLanguage = () => {
   if (typeof window === 'undefined') return 'en';
 
@@ -23,7 +43,7 @@ const detectInitialLanguage = () => {
   const queryLanguage = new URLSearchParams(window.location.search).get('lang');
   if (queryLanguage && supportedLanguages.includes(queryLanguage)) return queryLanguage;
 
-  return 'en';
+  return detectBrowserLanguage();
 };
 
 i18n

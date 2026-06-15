@@ -52,6 +52,29 @@
     <link rel="alternate" hreflang="it" href="https://fast-track-phuket.com/it/" />
     <link rel="alternate" hreflang="x-default" href="https://fast-track-phuket.com/" />
 
+    <script>
+      (function () {
+        var supported = ["en", "ru", "zh", "hi", "he", "ar", "es", "fr", "de", "it"];
+        var pathLanguage = window.location.pathname.split("/").filter(Boolean)[0];
+        if (pathLanguage || window.location.search.indexOf("lang=") !== -1) return;
+
+        var languages = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"];
+        var detected = "en";
+        for (var i = 0; i < languages.length; i += 1) {
+          var language = String(languages[i]).toLowerCase();
+          var code = language === "iw" ? "he" : language.split("-")[0];
+          if (supported.indexOf(code) !== -1) {
+            detected = code;
+            break;
+          }
+        }
+
+        if (detected !== "en") {
+          window.location.replace("/" + detected + "/" + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
+
     <!-- JSON-LD: Website and Organization Schema -->
     <script type="application/ld+json">
     {

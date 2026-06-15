@@ -59,7 +59,7 @@ html {
   overflow-x: clip;
 }
 
-.site-shell > :not(.hero-3d-bg):not(.hero-ambient-bg) {
+.site-shell > :not(.hero-3d-bg):not(.hero-ambient-bg):not(.modal-overlay) {
   position: relative;
   z-index: 1;
 }
@@ -400,11 +400,11 @@ a {
   inset: 0;
   background: rgba(0,0,0,0.85);
   backdrop-filter: blur(8px);
-  z-index: 1000;
+  z-index: 2000;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Better for scrollable content on mobile */
-  padding: 1rem;
+  align-items: center;
+  padding: 1.5rem;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -416,7 +416,8 @@ a {
   padding: var(--space-xl);
   max-width: 600px;
   width: 100%;
-  margin: auto; /* Centers the content if smaller than viewport, allows scroll if larger */
+  max-height: calc(100vh - 3rem);
+  margin: auto;
   position: relative;
   box-shadow: 0 20px 40px rgba(0,0,0,0.5);
 }
@@ -585,7 +586,7 @@ td.cross { color: #ef4444; }
 /* Modal Inner Scroll */
 .modal-body {
   overflow-y: auto;
-  max-height: 60vh;
+  max-height: min(60vh, calc(100vh - 13rem));
 }
 
 /* Selectable Cards */

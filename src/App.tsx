@@ -631,6 +631,7 @@ function App() {
             <button onClick={() => setActiveModal('privacy')} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontWeight: 600 }}>{t('footer.privacy')}</button>
           </div>
           <p style={{ opacity: 0.4, fontSize: '0.75rem', letterSpacing: '1px' }}>{t('footer.legal')}</p>
+          <p style={{ opacity: 0.5, fontSize: '0.8rem', lineHeight: 1.7, marginTop: '1rem', whiteSpace: 'pre-line' }}>{t('footer.requisites')}</p>
         </div>
       </footer>
       

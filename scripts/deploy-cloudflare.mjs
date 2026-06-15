@@ -1,4 +1,5 @@
 import { execFileSync, spawnSync } from 'node:child_process';
+import { writeFileSync } from 'node:fs';
 
 // Future release note:
 // Keep deploy credentials out of the repo. Prefer a scoped API token in
@@ -78,6 +79,13 @@ const run = (command, args, options = {}) => {
 };
 
 run('npm', ['run', 'build']);
+
+writeFileSync('dist/.assetsignore', [
+  '**/.DS_Store',
+  '**/.git',
+  '**/node_modules',
+  '',
+].join('\n'));
 
 // Next deploy note: this command intentionally relies on wrangler.jsonc for
 // the Worker name, dist asset directory, and SPA fallback behavior. Update

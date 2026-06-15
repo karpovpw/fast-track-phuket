@@ -1,20 +1,25 @@
 import { execFileSync, spawnSync } from 'node:child_process';
 
 // Future release note:
-// Keep deploy credentials out of the repo. Store the Cloudflare token in
-// macOS Keychain under this service/account, or pass CLOUDFLARE_API_TOKEN
-// in CI. This lets `npm run deploy` work locally without committing secrets.
-const KEYCHAIN_SERVICE = 'fast-track-phuket-cloudflare-api-token';
-const KEYCHAIN_ACCOUNT = 'CLOUDFLARE_API_TOKEN';
+// Keep deploy credentials out of the repo. Prefer a scoped API token in
+// macOS Keychain, or pass CLOUDFLARE_API_TOKEN in CI. If Cloudflare only
+// provides a Global API Key, store it with CLOUDFLARE_EMAIL in Keychain too.
+// This lets `npm run deploy` work locally without committing secrets.
+const TOKEN_KEYCHAIN_SERVICE = 'fast-track-phuket-cloudflare-api-token';
+const TOKEN_KEYCHAIN_ACCOUNT = 'CLOUDFLARE_API_TOKEN';
+const GLOBAL_KEYCHAIN_SERVICE = 'fast-track-phuket-cloudflare-global-api-key';
+const GLOBAL_KEYCHAIN_ACCOUNT = 'CLOUDFLARE_API_KEY';
+const EMAIL_KEYCHAIN_SERVICE = 'fast-track-phuket-cloudflare-email';
+const EMAIL_KEYCHAIN_ACCOUNT = 'CLOUDFLARE_EMAIL';
 
-const readTokenFromKeychain = () => {
+const readSecretFromKeychain = (service, account) => {
   try {
     return execFileSync('security', [
       'find-generic-password',
       '-s',
-      KEYCHAIN_SERVICE,
+      service,
       '-a',
-      KEYCHAIN_ACCOUNT,
+      account,
       '-w',
     ], { encoding: 'utf8' }).trim();
   } catch {
@@ -22,17 +27,38 @@ const readTokenFromKeychain = () => {
   }
 };
 
-const token = process.env.CLOUDFLARE_API_TOKEN || readTokenFromKeychain();
+const token = process.env.CLOUDFLARE_API_TOKEN
+  || readSecretFromKeychain(TOKEN_KEYCHAIN_SERVICE, TOKEN_KEYCHAIN_ACCOUNT);
+const globalApiKey = process.env.CLOUDFLARE_API_KEY
+  || readSecretFromKeychain(GLOBAL_KEYCHAIN_SERVICE, GLOBAL_KEYCHAIN_ACCOUNT);
+const email = process.env.CLOUDFLARE_EMAIL
+  || readSecretFromKeychain(EMAIL_KEYCHAIN_SERVICE, EMAIL_KEYCHAIN_ACCOUNT);
 
-if (!token) {
-  console.error(`Cloudflare API token not found.
+const cloudflareEnv = globalApiKey && email
+  ? { CLOUDFLARE_API_KEY: globalApiKey, CLOUDFLARE_EMAIL: email }
+  : { CLOUDFLARE_API_TOKEN: token };
+
+if (!token && (!globalApiKey || !email)) {
+  console.error(`Cloudflare credentials not found.
 
 Create a Cloudflare API token with Workers Scripts edit/deploy permissions, then store it:
 
 security add-generic-password -U \\
-  -s ${KEYCHAIN_SERVICE} \\
-  -a ${KEYCHAIN_ACCOUNT} \\
+  -s ${TOKEN_KEYCHAIN_SERVICE} \\
+  -a ${TOKEN_KEYCHAIN_ACCOUNT} \\
   -w '<token>'
+
+Or store a Global API Key and account email:
+
+security add-generic-password -U \\
+  -s ${GLOBAL_KEYCHAIN_SERVICE} \\
+  -a ${GLOBAL_KEYCHAIN_ACCOUNT} \\
+  -w '<global-api-key>'
+
+security add-generic-password -U \\
+  -s ${EMAIL_KEYCHAIN_SERVICE} \\
+  -a ${EMAIL_KEYCHAIN_ACCOUNT} \\
+  -w '<cloudflare-email>'
 
 After that, run: npm run deploy
 `);
@@ -42,7 +68,7 @@ After that, run: npm run deploy
 const run = (command, args, options = {}) => {
   const result = spawnSync(command, args, {
     stdio: 'inherit',
-    env: { ...process.env, CLOUDFLARE_API_TOKEN: token },
+    env: { ...process.env, ...cloudflareEnv },
     ...options,
   });
 

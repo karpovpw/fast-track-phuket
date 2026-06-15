@@ -1,5 +1,9 @@
 import { execFileSync, spawnSync } from 'node:child_process';
 
+// Future release note:
+// Keep deploy credentials out of the repo. Store the Cloudflare token in
+// macOS Keychain under this service/account, or pass CLOUDFLARE_API_TOKEN
+// in CI. This lets `npm run deploy` work locally without committing secrets.
 const KEYCHAIN_SERVICE = 'fast-track-phuket-cloudflare-api-token';
 const KEYCHAIN_ACCOUNT = 'CLOUDFLARE_API_TOKEN';
 
@@ -50,5 +54,6 @@ const run = (command, args, options = {}) => {
 run('npm', ['run', 'build']);
 
 // Next deploy note: this command intentionally relies on wrangler.jsonc for
-// the Worker name, dist asset directory, and SPA fallback behavior.
+// the Worker name, dist asset directory, and SPA fallback behavior. Update
+// wrangler.jsonc for release-target changes instead of adding CLI flags here.
 run('npx', ['wrangler', 'deploy']);

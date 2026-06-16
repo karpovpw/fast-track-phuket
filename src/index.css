@@ -562,6 +562,7 @@ td.cross { color: #ef4444; }
   color: #fff;
   font-weight: 700;
   font-size: 1rem;
+  overflow-wrap: anywhere;
 }
 .price-free {
   color: var(--color-gold);
@@ -569,6 +570,11 @@ td.cross { color: #ef4444; }
   display: flex;
   align-items: center;
   gap: 0.4rem;
+}
+
+.package-main-price,
+.calculator-total-price {
+  overflow-wrap: anywhere;
 }
 
 /* Steps */
@@ -855,6 +861,14 @@ html[dir='rtl'] .floating-chat {
 
   .price-free-col {
     grid-column: 1 / -1 !important;
+  }
+
+  .package-main-price {
+    font-size: clamp(1.75rem, 9vw, 2.2rem) !important;
+  }
+
+  .calculator-total-price {
+    font-size: clamp(2rem, 10vw, 3rem) !important;
   }
 
   .package-actions {

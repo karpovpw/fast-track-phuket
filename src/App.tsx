@@ -18,6 +18,44 @@ type SimpleModalProps = {
   highlight?: boolean;
 };
 
+const packageCodes = ['arr', 'dep', 'combo'] as const;
+type PackageCode = typeof packageCodes[number];
+
+const thbPrices: Record<PackageCode, { single: number; group: number; child: number; original?: number }> = {
+  arr: { single: 1700, group: 1600, child: 850 },
+  dep: { single: 1800, group: 1700, child: 900 },
+  combo: { single: 3300, group: 3100, child: 1650, original: 3500 },
+};
+
+const languageCurrency = {
+  en: { locale: 'en-US', currency: 'USD', rate: 0.03078, increment: 5 },
+  ru: { locale: 'ru-RU', currency: 'RUB', rate: 2.23, increment: 500 },
+  zh: { locale: 'zh-CN', currency: 'CNY', rate: 0.208, increment: 50 },
+  hi: { locale: 'hi-IN', currency: 'INR', rate: 2.91, increment: 500 },
+  he: { locale: 'he-IL', currency: 'ILS', rate: 0.0898, increment: 25 },
+  ar: { locale: 'ar-AE', currency: 'AED', rate: 0.113, increment: 25 },
+  es: { locale: 'es-ES', currency: 'EUR', rate: 0.0265, increment: 5 },
+  fr: { locale: 'fr-FR', currency: 'EUR', rate: 0.0265, increment: 5 },
+  de: { locale: 'de-DE', currency: 'EUR', rate: 0.0265, increment: 5 },
+  it: { locale: 'it-IT', currency: 'EUR', rate: 0.0265, increment: 5 },
+} as const;
+
+const getCurrencyConfig = (language: string) => {
+  const languageCode = language.toLowerCase().split('-')[0] as keyof typeof languageCurrency;
+  return languageCurrency[languageCode] || languageCurrency.en;
+};
+
+const formatLocalizedPrice = (thbAmount: number, language: string) => {
+  const config = getCurrencyConfig(language);
+  const roundedAmount = Math.ceil((thbAmount * config.rate) / config.increment) * config.increment;
+
+  return new Intl.NumberFormat(config.locale, {
+    style: 'currency',
+    currency: config.currency,
+    maximumFractionDigits: 0,
+  }).format(roundedAmount);
+};
+
 const SimpleModal = ({ isOpen, onClose, title, children, highlight = false }: SimpleModalProps) => {
   if (!isOpen) return null;
   return (
@@ -66,29 +104,20 @@ function App() {
     window.location.assign(getLanguagePath(code));
   };
 
+  const currentLanguage = i18n.resolvedLanguage || i18n.language || 'en';
+
+  const priceFor = (amount: number) => formatLocalizedPrice(amount, currentLanguage);
+
   const totalPrice = useMemo(() => {
     const adults = typeof calcAdults === 'number' ? calcAdults : 0;
     const kids = typeof calcKids === 'number' ? calcKids : 0;
     const totalPayingPax = adults + kids;
     
-    let basePriceStr = 1700;
-    let groupPrice = 1600;
+    const packagePrice = thbPrices[calcService as PackageCode] || thbPrices.arr;
     
-    if (calcService === 'arr') {
-      basePriceStr = 1700;
-      groupPrice = 1600;
-    } else if (calcService === 'dep') {
-      basePriceStr = 1800;
-      groupPrice = 1700;
-    } else if (calcService === 'combo') {
-      basePriceStr = 3300;
-      groupPrice = 3100;
-    }
+    const adultPrice = totalPayingPax > 1 ? packagePrice.group : packagePrice.single;
     
-    const adultPrice = totalPayingPax > 1 ? groupPrice : basePriceStr;
-    const kidPrice = basePriceStr * 0.5;
-    
-    return (adults * adultPrice) + (kids * kidPrice);
+    return (adults * adultPrice) + (kids * packagePrice.child);
   }, [calcService, calcAdults, calcKids]);
 
   const ctaLinks = {
@@ -238,10 +267,10 @@ function App() {
             <p style={{ color: 'var(--color-text-secondary)', maxWidth: '600px', margin: '0 auto' }}>{t('pkg_section.subtitle')}</p>
           </div>
           <div className="packages-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem' }}>
-            {['arr', 'dep', 'combo'].map((pkg) => {
+            {packageCodes.map((pkg) => {
               const iActive = selectedPackage === pkg;
               const isComboFeatured = pkg === 'combo' && !selectedPackage;
-              const pkgPrice = pkg === 'arr' ? '1,700' : pkg === 'dep' ? '1,800' : '3,300';
+              const packagePrice = thbPrices[pkg];
               return (
               <div 
                 key={pkg} 
@@ -273,11 +302,11 @@ function App() {
                         <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
                           {pkg === 'combo' ? (
                             <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
-                              <span style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>฿3,300</span>
-                              <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.9rem' }}>฿3,500</span>
+                              <span className="package-main-price" style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>{priceFor(packagePrice.single)}</span>
+                              <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.9rem' }}>{priceFor(packagePrice.original || packagePrice.single)}</span>
                             </div>
                           ) : (
-                            <div style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>฿{pkgPrice}</div>
+                            <div className="package-main-price" style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>{priceFor(packagePrice.single)}</div>
                           )}
                         </div>
                         <div style={{ fontSize: '0.7rem', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '1px', marginTop: '4px' }}>{t('packages.th2')}</div>
@@ -289,17 +318,17 @@ function App() {
                          <span className="price-label">
                            {t('packages.th3').split('|')[0]}
                          </span>
-                         <span className="price-value">฿{pkg === 'arr' ? '1,600' : pkg === 'dep' ? '1,700' : '3,100'}</span>
+                         <span className="price-value">{priceFor(packagePrice.group)}</span>
                        </div>
                        <div className="price-col">
                          <span className="price-label">
                            {t('packages.th4').split('|')[0]}
                          </span>
-                         <span className="price-value">฿{pkg === 'arr' ? '850' : pkg === 'dep' ? '900' : '1,650'}</span>
+                         <span className="price-value">{priceFor(packagePrice.child)}</span>
                        </div>
                        <div className="price-col price-free-col" style={{ gridColumn: 'span 2', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '0.6rem' }}>
                          <div className="price-free">
-                           <Star size={14} fill="var(--color-gold)" /> <span>{t('packages.th5')}: FREE</span>
+                           <Star size={14} fill="var(--color-gold)" /> <span>{t('packages.price.infant')}</span>
                          </div>
                        </div>
                     </div>
@@ -397,28 +426,28 @@ function App() {
                       <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                         <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{t('packages.arr.title')}</div>
                       </td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>฿1,700</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿1,600 / pax</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>฿850</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: '#25D366', fontWeight: 700 }}>FREE</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>{priceFor(thbPrices.arr.single)}</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>{priceFor(thbPrices.arr.group)} / pax</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>{priceFor(thbPrices.arr.child)}</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: '#25D366', fontWeight: 700 }}>{t('packages.price.infant')}</td>
                    </tr>
                     <tr>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                         <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{t('packages.dep.title')}</div>
                      </td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>฿1,800</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿1,700 / pax</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>฿900</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: '#25D366', fontWeight: 700 }}>FREE</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>{priceFor(thbPrices.dep.single)}</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>{priceFor(thbPrices.dep.group)} / pax</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>{priceFor(thbPrices.dep.child)}</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: '#25D366', fontWeight: 700 }}>{t('packages.price.infant')}</td>
                    </tr>
                    <tr>
                      <td style={{ padding: '1.5rem' }}>
                         <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{t('packages.combo.title')}</div>
                      </td>
-                     <td style={{ padding: '1.5rem', fontSize: '1.2rem', fontWeight: 600 }}>฿3,300</td>
-                     <td style={{ padding: '1.5rem', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>฿3,100 / pax</td>
-                     <td style={{ padding: '1.5rem' }}>฿1,650</td>
-                     <td style={{ padding: '1.5rem', color: '#25D366', fontWeight: 700 }}>FREE</td>
+                     <td style={{ padding: '1.5rem', fontSize: '1.2rem', fontWeight: 600 }}>{priceFor(thbPrices.combo.single)}</td>
+                     <td style={{ padding: '1.5rem', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>{priceFor(thbPrices.combo.group)} / pax</td>
+                     <td style={{ padding: '1.5rem' }}>{priceFor(thbPrices.combo.child)}</td>
+                     <td style={{ padding: '1.5rem', color: '#25D366', fontWeight: 700 }}>{t('packages.price.infant')}</td>
                    </tr>
                  </tbody>
                </table>
@@ -446,9 +475,9 @@ function App() {
                   <div style={{ display: 'block', marginBottom: '1.5rem' }}>
                     <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.service')}</label>
                     <select value={calcService} onChange={(e) => setCalcService(e.target.value)} style={{ width: '100%', padding: '1rem', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '4px' }}>
-                      <option value="arr" style={{ color: '#000' }}>{t('packages.arr.title')} (฿1,700)</option>
-                      <option value="dep" style={{ color: '#000' }}>{t('packages.dep.title')} (฿1,800)</option>
-                      <option value="combo" style={{ color: '#000' }}>{t('packages.combo.title')} (฿3,300)</option>
+                      <option value="arr" style={{ color: '#000' }}>{t('packages.arr.title')} ({priceFor(thbPrices.arr.single)})</option>
+                      <option value="dep" style={{ color: '#000' }}>{t('packages.dep.title')} ({priceFor(thbPrices.dep.single)})</option>
+                      <option value="combo" style={{ color: '#000' }}>{t('packages.combo.title')} ({priceFor(thbPrices.combo.single)})</option>
                     </select>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
@@ -483,7 +512,7 @@ function App() {
                 </div>
                 <div style={{ padding: '2rem', background: 'rgba(212, 175, 55, 0.15)', borderRadius: '12px', textAlign: 'center' }}>
                   <div style={{ fontSize: '0.9rem', opacity: 0.6, marginBottom: '0.25rem', fontWeight: 600 }}>{t('calc.estimate')}</div>
-                  <span style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--color-gold)' }}>฿{totalPrice.toLocaleString()}</span>
+                  <span className="calculator-total-price" style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--color-gold)' }}>{priceFor(totalPrice)}</span>
                 </div>
                 <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                    <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="btn" style={{ background: '#2AABEE', color: '#fff', padding: '1rem 2rem', fontWeight: 700, minWidth: '160px' }}>

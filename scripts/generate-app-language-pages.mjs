@@ -22,6 +22,41 @@ const languages = [
   { code: 'it', htmlLang: 'it', dir: 'ltr', ogLocale: 'it_IT' },
 ];
 
+const thbPrices = {
+  arr: { single: 1700, group: 1600, child: 850 },
+  dep: { single: 1800, group: 1700, child: 900 },
+  combo: { single: 3300, group: 3100, child: 1650 },
+};
+
+const languageCurrency = {
+  en: { locale: 'en-US', currency: 'USD', rate: 0.03078, increment: 5 },
+  ru: { locale: 'ru-RU', currency: 'RUB', rate: 2.23, increment: 500 },
+  zh: { locale: 'zh-CN', currency: 'CNY', rate: 0.208, increment: 50 },
+  hi: { locale: 'hi-IN', currency: 'INR', rate: 2.91, increment: 500 },
+  he: { locale: 'he-IL', currency: 'ILS', rate: 0.0898, increment: 25 },
+  ar: { locale: 'ar-AE', currency: 'AED', rate: 0.113, increment: 25 },
+  es: { locale: 'es-ES', currency: 'EUR', rate: 0.0265, increment: 5 },
+  fr: { locale: 'fr-FR', currency: 'EUR', rate: 0.0265, increment: 5 },
+  de: { locale: 'de-DE', currency: 'EUR', rate: 0.0265, increment: 5 },
+  it: { locale: 'it-IT', currency: 'EUR', rate: 0.0265, increment: 5 },
+};
+
+const getCurrencyConfig = (languageCode) => languageCurrency[languageCode] || languageCurrency.en;
+
+const roundedLocalizedAmount = (thbAmount, languageCode) => {
+  const config = getCurrencyConfig(languageCode);
+  return Math.ceil((thbAmount * config.rate) / config.increment) * config.increment;
+};
+
+const formatLocalizedPrice = (thbAmount, languageCode) => {
+  const config = getCurrencyConfig(languageCode);
+  return new Intl.NumberFormat(config.locale, {
+    style: 'currency',
+    currency: config.currency,
+    maximumFractionDigits: 0,
+  }).format(roundedLocalizedAmount(thbAmount, languageCode));
+};
+
 const escapeHtml = (value) => String(value)
   .replaceAll('&', '&amp;')
   .replaceAll('<', '&lt;')
@@ -54,6 +89,7 @@ const renderLicenseNotice = (t) => `        <section class="license-panel seo-ap
         </section>`;
 
 const renderStructuredData = (language, t, url) => {
+  const currency = getCurrencyConfig(language.code).currency;
   const faqItems = [1, 2, 3, 4, 5, 6].map((index) => ({
     '@type': 'Question',
     name: t[`faq.${index}.q`],
@@ -117,24 +153,24 @@ const renderStructuredData = (language, t, url) => {
           {
             '@type': 'Offer',
             name: t['packages.arr.title'],
-            price: '1600',
-            priceCurrency: 'THB',
+            price: String(roundedLocalizedAmount(thbPrices.arr.group, language.code)),
+            priceCurrency: currency,
             url: `${BASE_URL}/arrival-fast-track/`,
             availability: 'https://schema.org/InStock',
           },
           {
             '@type': 'Offer',
             name: t['packages.dep.title'],
-            price: '1700',
-            priceCurrency: 'THB',
+            price: String(roundedLocalizedAmount(thbPrices.dep.group, language.code)),
+            priceCurrency: currency,
             url: `${BASE_URL}/departure-vip/`,
             availability: 'https://schema.org/InStock',
           },
           {
             '@type': 'Offer',
             name: t['packages.combo.title'],
-            price: '3100',
-            priceCurrency: 'THB',
+            price: String(roundedLocalizedAmount(thbPrices.combo.group, language.code)),
+            priceCurrency: currency,
             url: `${BASE_URL}/phuket-airport-fast-track-prices/`,
             availability: 'https://schema.org/InStock',
           },
@@ -157,21 +193,21 @@ const renderRootFallback = (language, t) => {
       title: t['packages.arr.title'],
       description: t['packages.arr.desc'],
       features: splitList(t['packages.arr.features']),
-      price: 'THB 1,600',
+      price: formatLocalizedPrice(thbPrices.arr.group, language.code),
       url: '/arrival-fast-track/',
     },
     {
       title: t['packages.dep.title'],
       description: t['packages.dep.desc'],
       features: splitList(t['packages.dep.features']),
-      price: 'THB 1,700',
+      price: formatLocalizedPrice(thbPrices.dep.group, language.code),
       url: '/departure-vip/',
     },
     {
       title: t['packages.combo.title'],
       description: t['packages.combo.desc'],
       features: splitList(t['packages.combo.features']),
-      price: 'THB 3,100',
+      price: formatLocalizedPrice(thbPrices.combo.group, language.code),
       url: '/phuket-airport-fast-track-prices/',
     },
   ];
@@ -272,9 +308,26 @@ const injectRootFallback = (html, language, locale) => html.replace(
   renderRootFallback(language, locale),
 );
 
+const localizeShellPrices = (html, language) => {
+  const currency = getCurrencyConfig(language.code).currency;
+  return html
+    .replaceAll('Arrival from $50', `Arrival from ${formatLocalizedPrice(thbPrices.arr.group, language.code)}`)
+    .replaceAll('Arrival Fast Track from $50', `Arrival Fast Track from ${formatLocalizedPrice(thbPrices.arr.group, language.code)}`)
+    .replaceAll('"priceRange": "$50"', `"priceRange": "${formatLocalizedPrice(thbPrices.arr.group, language.code)}"`)
+    .replaceAll('"currenciesAccepted": "USD"', `"currenciesAccepted": "${currency}"`)
+    .replaceAll('"price": "50"', `"price": "${roundedLocalizedAmount(thbPrices.arr.group, language.code)}"`)
+    .replaceAll('"price": "55"', `"price": "${roundedLocalizedAmount(thbPrices.dep.group, language.code)}"`)
+    .replaceAll('"price": "100"', `"price": "${roundedLocalizedAmount(thbPrices.combo.group, language.code)}"`)
+    .replaceAll('"priceCurrency": "USD"', `"priceCurrency": "${currency}"`)
+    .replaceAll(
+      'arrival from $50 per person, departure from $55 per person, combo from $100 per person.',
+      `arrival from ${formatLocalizedPrice(thbPrices.arr.group, language.code)} per person, departure from ${formatLocalizedPrice(thbPrices.dep.group, language.code)} per person, combo from ${formatLocalizedPrice(thbPrices.combo.group, language.code)} per person.`,
+    );
+};
+
 const englishLanguage = languages.find((language) => language.code === 'en');
 const englishLocale = JSON.parse(fs.readFileSync(path.join(localeDir, 'en.json'), 'utf8'));
-fs.writeFileSync(appHtmlPath, injectRootFallback(appHtml, englishLanguage, englishLocale));
+fs.writeFileSync(appHtmlPath, localizeShellPrices(injectRootFallback(appHtml, englishLanguage, englishLocale), englishLanguage));
 
 for (const language of languages.filter((item) => item.code !== 'en')) {
   const locale = JSON.parse(fs.readFileSync(path.join(localeDir, `${language.code}.json`), 'utf8'));
@@ -282,7 +335,7 @@ for (const language of languages.filter((item) => item.code !== 'en')) {
   const title = `${locale['hero.title']} | VIP Fast Track Phuket Airport (HKT)`;
   const description = locale['hero.subtitle'];
 
-  let localizedHtml = injectRootFallback(appHtml, language, locale);
+  let localizedHtml = localizeShellPrices(injectRootFallback(appHtml, language, locale), language);
 
   localizedHtml = replaceTag(
     localizedHtml,

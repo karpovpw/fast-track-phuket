@@ -23,6 +23,43 @@ const languages = [
   { code: 'it', name: 'Italiano', htmlLang: 'it', dir: 'ltr', ogLocale: 'it_IT' },
 ];
 
+const thbPrices = {
+  arr: { single: 1700, group: 1600, child: 850 },
+  dep: { single: 1800, group: 1700, child: 900 },
+  combo: { single: 3300, group: 3100, child: 1650 },
+};
+
+const languageCurrency = {
+  en: { locale: 'en-US', currency: 'USD', rate: 0.03078, increment: 5 },
+  ru: { locale: 'ru-RU', currency: 'RUB', rate: 2.23, increment: 500 },
+  zh: { locale: 'zh-CN', currency: 'CNY', rate: 0.208, increment: 50 },
+  hi: { locale: 'hi-IN', currency: 'INR', rate: 2.91, increment: 500 },
+  he: { locale: 'he-IL', currency: 'ILS', rate: 0.0898, increment: 25 },
+  ar: { locale: 'ar-AE', currency: 'AED', rate: 0.113, increment: 25 },
+  es: { locale: 'es-ES', currency: 'EUR', rate: 0.0265, increment: 5 },
+  fr: { locale: 'fr-FR', currency: 'EUR', rate: 0.0265, increment: 5 },
+  de: { locale: 'de-DE', currency: 'EUR', rate: 0.0265, increment: 5 },
+  it: { locale: 'it-IT', currency: 'EUR', rate: 0.0265, increment: 5 },
+};
+
+const getCurrencyConfig = (languageCode) => languageCurrency[languageCode] || languageCurrency.en;
+
+const roundedLocalizedAmount = (thbAmount, languageCode = 'en') => {
+  const config = getCurrencyConfig(languageCode);
+  return Math.ceil((thbAmount * config.rate) / config.increment) * config.increment;
+};
+
+const formatLocalizedPrice = (thbAmount, languageCode = 'en') => {
+  const config = getCurrencyConfig(languageCode);
+  return new Intl.NumberFormat(config.locale, {
+    style: 'currency',
+    currency: config.currency,
+    maximumFractionDigits: 0,
+  }).format(roundedLocalizedAmount(thbAmount, languageCode));
+};
+
+const p = (packageCode, priceType, languageCode = 'en') => formatLocalizedPrice(thbPrices[packageCode][priceType], languageCode);
+
 const blogPages = [
   {
     slug: 'fast-track-phuket-airport-complete-guide-2026',
@@ -55,7 +92,7 @@ const blogPages = [
       {
         heading: 'Prices and package choice',
         paragraphs: [
-          'Arrival Fast Track starts from THB 1,600 per person for two or more passengers, with a single-passenger rate of THB 1,700. Departure VIP starts from THB 1,700 per person for two or more passengers, with a single-passenger rate of THB 1,800. The arrival plus departure combo starts from THB 3,100 per person for two or more passengers.',
+          `Arrival Fast Track starts from ${p('arr', 'group')} per person for two or more passengers, with a single-passenger rate of ${p('arr', 'single')}. Departure VIP starts from ${p('dep', 'group')} per person for two or more passengers, with a single-passenger rate of ${p('dep', 'single')}. The arrival plus departure combo starts from ${p('combo', 'group')} per person for two or more passengers.`,
           'Children under 12 receive a 50% discount and infants from 0 to 2 years are free. For travelers who need both landing and return-flight assistance, the combo is usually the simplest booking because it combines both airport directions and support in one conversation.',
         ],
       },
@@ -164,8 +201,8 @@ const blogPages = [
       {
         heading: 'Departure pricing',
         paragraphs: [
-          'Departure VIP starts from THB 1,700 per person for two or more passengers. A single passenger is THB 1,800. Children under 12 receive a 50% discount and infants from 0 to 2 years are free.',
-          'Travelers booking both arrival and departure should compare the combo package, which starts from THB 3,100 per person for two or more passengers.',
+          `Departure VIP starts from ${p('dep', 'group')} per person for two or more passengers. A single passenger is ${p('dep', 'single')}. Children under 12 receive a 50% discount and infants from 0 to 2 years are free.`,
+          `Travelers booking both arrival and departure should compare the combo package, which starts from ${p('combo', 'group')} per person for two or more passengers.`,
         ],
       },
     ],
@@ -194,8 +231,8 @@ const blogPages = [
       {
         heading: 'Current price anchors',
         paragraphs: [
-          'The main price anchors are THB 1,600 per person for Arrival Fast Track when booking two or more passengers, THB 1,700 per person for Departure VIP when booking two or more passengers, and THB 3,100 per person for the arrival plus departure combo.',
-          'Single-passenger pricing is THB 1,700 for arrival, THB 1,800 for departure, and THB 3,300 for the combo. Children under 12 receive a 50% discount, and infants from 0 to 2 years are free.',
+          `The main price anchors are ${p('arr', 'group')} per person for Arrival Fast Track when booking two or more passengers, ${p('dep', 'group')} per person for Departure VIP when booking two or more passengers, and ${p('combo', 'group')} per person for the arrival plus departure combo.`,
+          `Single-passenger pricing is ${p('arr', 'single')} for arrival, ${p('dep', 'single')} for departure, and ${p('combo', 'single')} for the combo. Children under 12 receive a 50% discount, and infants from 0 to 2 years are free.`,
         ],
       },
       {
@@ -223,7 +260,7 @@ const blogPages = [
     faq: [
       {
         q: 'What is the cheapest VIP Fast Track Phuket Airport (HKT) option?',
-        a: 'Arrival Fast Track starts from THB 1,600 per person for two or more passengers.',
+        a: `Arrival Fast Track starts from ${p('arr', 'group')} per person for two or more passengers.`,
       },
       {
         q: 'Is Fast Track worth it for families?',
@@ -231,7 +268,7 @@ const blogPages = [
       },
       {
         q: 'Is the combo cheaper than booking arrival and departure separately?',
-        a: 'The combo starts from THB 3,100 per person for two or more passengers and is usually the simplest option for travelers who need both directions.',
+        a: `The combo starts from ${p('combo', 'group')} per person for two or more passengers and is usually the simplest option for travelers who need both directions.`,
       },
     ],
   },
@@ -405,6 +442,7 @@ const alternateLinksXml = () => [
 ].join('\n');
 
 const renderStructuredData = (language, t, url) => {
+  const currency = getCurrencyConfig(language.code).currency;
   const faqItems = [1, 2, 3, 4, 5, 6].map((index) => ({
     '@type': 'Question',
     name: t[`faq.${index}.q`],
@@ -468,24 +506,24 @@ const renderStructuredData = (language, t, url) => {
         {
           '@type': 'Offer',
           name: t['packages.arr.title'],
-          price: '1600',
-          priceCurrency: 'THB',
+          price: String(roundedLocalizedAmount(thbPrices.arr.group, language.code)),
+          priceCurrency: currency,
           url: `${BASE_URL}/arrival-fast-track/`,
           availability: 'https://schema.org/InStock',
         },
         {
           '@type': 'Offer',
           name: t['packages.dep.title'],
-          price: '1700',
-          priceCurrency: 'THB',
+          price: String(roundedLocalizedAmount(thbPrices.dep.group, language.code)),
+          priceCurrency: currency,
           url: `${BASE_URL}/departure-vip/`,
           availability: 'https://schema.org/InStock',
         },
         {
           '@type': 'Offer',
           name: t['packages.combo.title'],
-          price: '3100',
-          priceCurrency: 'THB',
+          price: String(roundedLocalizedAmount(thbPrices.combo.group, language.code)),
+          priceCurrency: currency,
           url: `${BASE_URL}/phuket-airport-fast-track-prices/`,
           availability: 'https://schema.org/InStock',
         },
@@ -518,21 +556,21 @@ const renderLanguagePage = (language, t) => {
       title: t['packages.arr.title'],
       description: t['packages.arr.desc'],
       features: splitList(t['packages.arr.features']),
-      price: 'THB 1,600',
+      price: formatLocalizedPrice(thbPrices.arr.group, language.code),
       url: '/arrival-fast-track/',
     },
     {
       title: t['packages.dep.title'],
       description: t['packages.dep.desc'],
       features: splitList(t['packages.dep.features']),
-      price: 'THB 1,700',
+      price: formatLocalizedPrice(thbPrices.dep.group, language.code),
       url: '/departure-vip/',
     },
     {
       title: t['packages.combo.title'],
       description: t['packages.combo.desc'],
       features: splitList(t['packages.combo.features']),
-      price: 'THB 3,100',
+      price: formatLocalizedPrice(thbPrices.combo.group, language.code),
       url: '/phuket-airport-fast-track-prices/',
     },
   ];
@@ -621,24 +659,24 @@ ${card.features.map((feature) => `              <li>${escapeHtml(feature)}</li>`
           <tbody>
             <tr>
               <td><a href="/arrival-fast-track/">${escapeHtml(t['packages.arr.title'])}</a></td>
-              <td>THB 1,700</td>
-              <td>THB 1,600</td>
-              <td>THB 850</td>
-              <td>Free</td>
+              <td>${escapeHtml(formatLocalizedPrice(thbPrices.arr.single, language.code))}</td>
+              <td>${escapeHtml(formatLocalizedPrice(thbPrices.arr.group, language.code))}</td>
+              <td>${escapeHtml(formatLocalizedPrice(thbPrices.arr.child, language.code))}</td>
+              <td>${escapeHtml(t['packages.price.infant'])}</td>
             </tr>
             <tr>
               <td><a href="/departure-vip/">${escapeHtml(t['packages.dep.title'])}</a></td>
-              <td>THB 1,800</td>
-              <td>THB 1,700</td>
-              <td>THB 900</td>
-              <td>Free</td>
+              <td>${escapeHtml(formatLocalizedPrice(thbPrices.dep.single, language.code))}</td>
+              <td>${escapeHtml(formatLocalizedPrice(thbPrices.dep.group, language.code))}</td>
+              <td>${escapeHtml(formatLocalizedPrice(thbPrices.dep.child, language.code))}</td>
+              <td>${escapeHtml(t['packages.price.infant'])}</td>
             </tr>
             <tr>
               <td><a href="/phuket-airport-fast-track-prices/">${escapeHtml(t['packages.combo.title'])}</a></td>
-              <td>THB 3,300</td>
-              <td>THB 3,100</td>
-              <td>THB 1,650</td>
-              <td>Free</td>
+              <td>${escapeHtml(formatLocalizedPrice(thbPrices.combo.single, language.code))}</td>
+              <td>${escapeHtml(formatLocalizedPrice(thbPrices.combo.group, language.code))}</td>
+              <td>${escapeHtml(formatLocalizedPrice(thbPrices.combo.child, language.code))}</td>
+              <td>${escapeHtml(t['packages.price.infant'])}</td>
             </tr>
           </tbody>
         </table>

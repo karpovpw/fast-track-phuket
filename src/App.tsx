@@ -40,6 +40,8 @@ const languageCurrency = {
   it: { locale: 'it-IT', currency: 'EUR', rate: 0.0265, increment: 5 },
 } as const;
 
+const selectedLanguageStorageKey = 'fasttrack.selectedLanguage';
+
 const getCurrencyConfig = (language: string) => {
   const languageCode = language.toLowerCase().split('-')[0] as keyof typeof languageCurrency;
   return languageCurrency[languageCode] || languageCurrency.en;
@@ -101,6 +103,11 @@ function App() {
 
   const changeLanguage = (code: string) => {
     setLangOpen(false);
+    try {
+      window.localStorage.setItem(selectedLanguageStorageKey, code);
+    } catch {
+      // Ignore blocked storage; path-based language detection still works.
+    }
     window.location.assign(getLanguagePath(code));
   };
 

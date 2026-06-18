@@ -55,17 +55,31 @@
     <script>
       (function () {
         var supported = ["en", "ru", "zh", "hi", "he", "ar", "es", "fr", "de", "it"];
+        var selectedLanguageStorageKey = "fasttrack.selectedLanguage";
+        var normalizeLanguage = function (value) {
+          var language = String(value || "").toLowerCase();
+          return language === "iw" ? "he" : language.split("-")[0];
+        };
         var pathLanguage = window.location.pathname.split("/").filter(Boolean)[0];
         if (pathLanguage || window.location.search.indexOf("lang=") !== -1) return;
 
+        var stored = "";
+        try {
+          stored = normalizeLanguage(window.localStorage.getItem(selectedLanguageStorageKey));
+        } catch (error) {
+          stored = "";
+        }
+
         var languages = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"];
-        var detected = "en";
-        for (var i = 0; i < languages.length; i += 1) {
-          var language = String(languages[i]).toLowerCase();
-          var code = language === "iw" ? "he" : language.split("-")[0];
-          if (supported.indexOf(code) !== -1) {
-            detected = code;
-            break;
+        var storedIsSupported = supported.indexOf(stored) !== -1;
+        var detected = storedIsSupported ? stored : "en";
+        if (!storedIsSupported) {
+          for (var i = 0; i < languages.length; i += 1) {
+            var code = normalizeLanguage(languages[i]);
+            if (supported.indexOf(code) !== -1) {
+              detected = code;
+              break;
+            }
           }
         }
 

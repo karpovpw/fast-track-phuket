@@ -13,6 +13,7 @@ import de from './locales/de.json';
 import it from './locales/it.json';
 
 const supportedLanguages = ['en', 'ru', 'zh', 'hi', 'he', 'ar', 'es', 'fr', 'de', 'it'];
+const selectedLanguageStorageKey = 'fasttrack.selectedLanguage';
 
 const normalizeLanguage = (language: string) => {
   const normalized = language.toLowerCase();
@@ -37,11 +38,20 @@ const detectBrowserLanguage = () => {
 const detectInitialLanguage = () => {
   if (typeof window === 'undefined') return 'en';
 
-  const pathLanguage = window.location.pathname.split('/').filter(Boolean)[0];
+  const pathLanguage = normalizeLanguage(window.location.pathname.split('/').filter(Boolean)[0] || '');
   if (supportedLanguages.includes(pathLanguage)) return pathLanguage;
 
-  const queryLanguage = new URLSearchParams(window.location.search).get('lang');
+  const queryLanguageValue = new URLSearchParams(window.location.search).get('lang');
+  const queryLanguage = queryLanguageValue ? normalizeLanguage(queryLanguageValue) : '';
   if (queryLanguage && supportedLanguages.includes(queryLanguage)) return queryLanguage;
+
+  try {
+    const storedLanguageValue = window.localStorage.getItem(selectedLanguageStorageKey);
+    const storedLanguage = storedLanguageValue ? normalizeLanguage(storedLanguageValue) : '';
+    if (storedLanguage && supportedLanguages.includes(storedLanguage)) return storedLanguage;
+  } catch {
+    // Ignore blocked storage and fall back to browser language detection.
+  }
 
   return detectBrowserLanguage();
 };

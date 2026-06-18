@@ -1,5 +1,7 @@
-# Canonicalize the www host to the apex domain (matches every canonical tag).
-https://www.fast-track-phuket.com/* https://fast-track-phuket.com/:splat 301
+# Cloudflare Workers Assets _redirects supports RELATIVE paths only — no hostname
+# redirects. www -> apex canonicalization must be a Redirect Rule in the Cloudflare
+# dashboard (Rules > Redirect Rules). Every page's <link rel="canonical"> already
+# points to the apex domain, so search engines consolidate regardless.
 
-# Avoid duplicate index.html URLs.
+# Collapse the explicit index.html URL to the clean root path.
 /index.html / 301

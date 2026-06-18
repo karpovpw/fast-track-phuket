@@ -79,7 +79,7 @@ const renderLicenseNotice = (t) => `        <section class="license-panel seo-ap
             <p>${escapeHtml(t['license.warning.desc'])}</p>
           </div>
           <figure class="license-image-card">
-            <img src="/tat-license.jpeg" alt="${escapeHtml(t['license.imageAlt'])}" loading="lazy" />
+            <img src="/tat-license.jpeg" alt="${escapeHtml(t['license.imageAlt'])}" loading="lazy" width="930" height="1280" decoding="async" />
           </figure>
           <div class="license-copy">
             <p class="license-kicker">${escapeHtml(t['license.badge'])}</p>

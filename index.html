@@ -3,6 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="application-name" content="VIP Fast Track Phuket Airport (HKT)" />
+    <meta name="apple-mobile-web-app-title" content="Fast Track HKT" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a0a0a" />
     <meta name="author" content="VIP Fast Track Phuket Airport (HKT)" />
@@ -30,14 +37,28 @@
     <meta property="og:title" content="VIP Fast Track Phuket Airport (HKT) | Immigration Escort" />
     <meta property="og:description" content="Personal airport meet-and-assist at Phuket International Airport. Arrival Fast Track, Departure VIP, TDAC guidance, and multilingual booking support." />
     <meta property="og:image" content="https://fast-track-phuket.com/hkt-airport.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="640" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:image:alt" content="VIP Fast Track meet-and-assist concierge at Phuket International Airport (HKT)" />
     <meta property="og:site_name" content="VIP Fast Track Phuket Airport (HKT)" />
     <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="ru_RU" />
+    <meta property="og:locale:alternate" content="zh_CN" />
+    <meta property="og:locale:alternate" content="hi_IN" />
+    <meta property="og:locale:alternate" content="he_IL" />
+    <meta property="og:locale:alternate" content="ar_AR" />
+    <meta property="og:locale:alternate" content="es_ES" />
+    <meta property="og:locale:alternate" content="fr_FR" />
+    <meta property="og:locale:alternate" content="de_DE" />
+    <meta property="og:locale:alternate" content="it_IT" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="VIP Fast Track Phuket Airport (HKT) | Immigration Escort" />
     <meta name="twitter:description" content="VIP meet-and-assist at HKT since 2013. Arrival Fast Track from $50, Departure VIP, TDAC guidance, and multilingual support." />
     <meta name="twitter:image" content="https://fast-track-phuket.com/hkt-airport.png" />
+    <meta name="twitter:image:alt" content="VIP Fast Track meet-and-assist concierge at Phuket International Airport (HKT)" />
 
     <!-- Hreflang Tags for Multi-language -->
     <link rel="alternate" hreflang="en" href="https://fast-track-phuket.com/" />
@@ -117,6 +138,12 @@
       "description": "VIP meet-and-assist airport service at Phuket International Airport (HKT). Operating since 2013, providing personal escort through immigration and customs in under 5 minutes.",
       "url": "https://fast-track-phuket.com",
       "image": "https://fast-track-phuket.com/hkt-airport.png",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://fast-track-phuket.com/icon-512.png",
+        "width": 512,
+        "height": 512
+      },
       "telephone": "+66 6-1801-6793",
       "contactPoint": {
         "@type": "ContactPoint",
@@ -304,9 +331,12 @@
     }
     </script>
 
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Outfit:wght@300;400;600;700&display=swap');
-    </style>
+    <!-- Fonts: preconnect + non-blocking load so web fonts never block first paint (Core Web Vitals) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Outfit:wght@300;400;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Outfit:wght@300;400;600;700&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Outfit:wght@300;400;600;700&display=swap" /></noscript>
   </head>
   <body>
     <div id="root"></div>

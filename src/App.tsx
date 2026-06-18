@@ -1,14 +1,17 @@
-import { useState, useMemo, useEffect, type ReactNode } from 'react';
+import { useState, useMemo, useEffect, lazy, Suspense, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Globe, MessageCircle, Star, Building, 
+import {
+  Globe, MessageCircle, Star, Building,
   ChevronDown, Send, X, Check, ArrowRight,
   Coins, CreditCard, Quote, Phone,
   ShieldCheck, TriangleAlert
 } from 'lucide-react';
-import Hero3D from './components/Hero3D';
 import './index.css';
+
+// Lazy-load the decorative WebGL hero so the ~1.2MB three.js/react-three stack
+// is split into a deferred chunk and never blocks first paint or interactivity.
+const Hero3D = lazy(() => import('./components/Hero3D'));
 
 type SimpleModalProps = {
   isOpen: boolean;
@@ -141,8 +144,10 @@ function App() {
 
   return (
     <div className="site-shell" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      
-      <Hero3D />
+
+      <Suspense fallback={<div className="hero-ambient-bg" aria-hidden="true" />}>
+        <Hero3D />
+      </Suspense>
 
       <div className="marquee-band" style={{ backgroundColor: 'var(--color-gold)', color: 'var(--color-bg)', padding: '0.6rem 0', fontWeight: 700, fontSize: '0.85rem', zIndex: 110, position: 'relative', letterSpacing: '1px', textTransform: 'uppercase' }}>
         <div className="marquee-container">
@@ -251,7 +256,7 @@ function App() {
             </div>
 
             <figure className="license-image-card">
-              <img src="/tat-license.jpeg" alt={t('license.imageAlt')} loading="lazy" />
+              <img src="/tat-license.jpeg" alt={t('license.imageAlt')} loading="lazy" width="930" height="1280" decoding="async" />
             </figure>
 
             <div className="license-copy">
@@ -574,7 +579,7 @@ function App() {
             {[1, 2, 3].map(i => (
               <div key={i} className="card" style={{ textAlign: 'center', padding: '3rem 2rem' }}>
                 <div style={{ width: '100px', height: '100px', borderRadius: '50%', margin: '0 auto 1.5rem', overflow: 'hidden', border: '2px solid var(--color-gold)' }}>
-                  <img src={`/w${i}.png`} alt={t(`team.w${i}.n`)} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={`/w${i}.png`} alt={t(`team.w${i}.n`)} width="640" height="640" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>{t(`team.w${i}.n`)}</h4>
                 <div style={{ color: 'var(--color-gold)', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', marginBottom: '1.2rem' }}>{t(`team.w${i}.r`)}</div>

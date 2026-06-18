@@ -3,7 +3,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const BASE_URL = 'https://fast-track-phuket.com';
-const LASTMOD = '2026-06-05';
+// Sitemap lastmod / dateModified track the actual build so freshness is honest;
+// datePublished stays fixed so guide articles keep a stable original publish date.
+const LASTMOD = new Date().toISOString().slice(0, 10);
+const PUBLISHED = '2026-06-05';
+const HERO_IMAGE = `${BASE_URL}/hkt-airport.png`;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..');
@@ -416,7 +420,7 @@ const renderLicenseNotice = (t) => `      <section class="license-notice" aria-l
           <p>${escapeHtml(t['license.warning.desc'])}</p>
         </div>
         <figure class="license-image-card">
-          <img src="/tat-license.jpeg" alt="${escapeHtml(t['license.imageAlt'])}" loading="lazy" />
+          <img src="/tat-license.jpeg" alt="${escapeHtml(t['license.imageAlt'])}" loading="lazy" width="930" height="1280" decoding="async" />
         </figure>
         <div>
           <p class="eyebrow">${escapeHtml(t['license.badge'])}</p>
@@ -619,7 +623,7 @@ ${renderStructuredData(language, t, url)}
             <a class="button" href="https://t.me/fast_track_phuket">${escapeHtml(t['hero.cta.tg'])}</a>
           </div>
         </div>
-        <img src="/hkt-airport.png" alt="Phuket International Airport HKT VIP fast track" />
+        <img src="/hkt-airport.png" alt="Phuket International Airport HKT VIP fast track" width="640" height="640" fetchpriority="high" decoding="async" />
       </section>
 
       <section class="fact-grid" aria-label="Fast Track facts">
@@ -756,7 +760,7 @@ const renderBlogStructuredData = (page, url) => JSON.stringify({
       headline: page.title,
       description: page.description,
       image: `${BASE_URL}/hkt-airport.png`,
-      datePublished: LASTMOD,
+      datePublished: PUBLISHED,
       dateModified: LASTMOD,
       author: {
         '@type': 'Organization',
@@ -897,7 +901,7 @@ ${renderBlogNav()}
             <a class="button" href="https://t.me/fast_track_phuket">Book on Telegram</a>
           </div>
         </div>
-        <img src="/hkt-airport.png" alt="Phuket International Airport HKT" />
+        <img src="/hkt-airport.png" alt="Phuket International Airport HKT" width="640" height="640" fetchpriority="high" decoding="async" />
       </section>
 
 ${renderLicenseNotice(englishLocale)}
@@ -938,7 +942,7 @@ const renderBlogPage = (page) => {
     <meta property="og:title" content="${escapeHtml(page.title)}" />
     <meta property="og:description" content="${escapeHtml(page.description)}" />
     <meta property="og:image" content="${BASE_URL}/hkt-airport.png" />
-    <meta property="article:published_time" content="${LASTMOD}" />
+    <meta property="article:published_time" content="${PUBLISHED}" />
     <meta property="article:modified_time" content="${LASTMOD}" />
     <script type="application/ld+json">
 ${renderBlogStructuredData(page, url)}
@@ -958,7 +962,7 @@ ${renderBlogNav()}
               <a class="button" href="https://t.me/fast_track_phuket">Ask on Telegram</a>
             </div>
           </div>
-          <img src="/hkt-airport.png" alt="${escapeHtml(page.title)}" />
+          <img src="/hkt-airport.png" alt="${escapeHtml(page.title)}" width="640" height="640" fetchpriority="high" decoding="async" />
         </header>
 
         <section class="fact-grid" aria-label="Guide topics">
@@ -1011,6 +1015,10 @@ ${page.faq.map((item) => `          <article>
 `;
 };
 
+const imageBlock = (loc) => `    <image:image>
+      <image:loc>${escapeXml(loc)}</image:loc>
+    </image:image>`;
+
 const renderSitemap = () => {
   const homeEntries = languages.map((language) => `  <url>
     <loc>${languageUrl(language.code)}</loc>
@@ -1018,17 +1026,18 @@ const renderSitemap = () => {
     <changefreq>weekly</changefreq>
     <priority>${language.code === 'en' ? '1.0' : '0.95'}</priority>
 ${alternateLinksXml()}
+${imageBlock(HERO_IMAGE)}
   </url>`);
 
   const supportingEntries = supportingUrls.map((url) => `  <url>
     <loc>${escapeXml(url.loc)}</loc>
     <lastmod>${LASTMOD}</lastmod>
     <changefreq>${url.changefreq}</changefreq>
-    <priority>${url.priority}</priority>
+    <priority>${url.priority}</priority>${url.loc.endsWith('/') ? `\n${imageBlock(HERO_IMAGE)}` : ''}
   </url>`);
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${[...homeEntries, ...supportingEntries].join('\n')}
 </urlset>
 `;

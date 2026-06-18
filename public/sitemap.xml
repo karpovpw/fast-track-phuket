@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://fast-track-phuket.com/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fast-track-phuket.com/" />
@@ -16,10 +16,13 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://fast-track-phuket.com/de/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://fast-track-phuket.com/it/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://fast-track-phuket.com/" />
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/ru/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fast-track-phuket.com/" />
@@ -33,10 +36,13 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://fast-track-phuket.com/de/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://fast-track-phuket.com/it/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://fast-track-phuket.com/" />
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/zh/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fast-track-phuket.com/" />
@@ -50,10 +56,13 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://fast-track-phuket.com/de/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://fast-track-phuket.com/it/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://fast-track-phuket.com/" />
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/hi/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fast-track-phuket.com/" />
@@ -67,10 +76,13 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://fast-track-phuket.com/de/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://fast-track-phuket.com/it/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://fast-track-phuket.com/" />
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/he/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fast-track-phuket.com/" />
@@ -84,10 +96,13 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://fast-track-phuket.com/de/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://fast-track-phuket.com/it/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://fast-track-phuket.com/" />
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/ar/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fast-track-phuket.com/" />
@@ -101,10 +116,13 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://fast-track-phuket.com/de/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://fast-track-phuket.com/it/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://fast-track-phuket.com/" />
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/es/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fast-track-phuket.com/" />
@@ -118,10 +136,13 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://fast-track-phuket.com/de/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://fast-track-phuket.com/it/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://fast-track-phuket.com/" />
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/fr/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fast-track-phuket.com/" />
@@ -135,10 +156,13 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://fast-track-phuket.com/de/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://fast-track-phuket.com/it/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://fast-track-phuket.com/" />
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/de/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fast-track-phuket.com/" />
@@ -152,10 +176,13 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://fast-track-phuket.com/de/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://fast-track-phuket.com/it/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://fast-track-phuket.com/" />
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/it/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fast-track-phuket.com/" />
@@ -169,94 +196,133 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://fast-track-phuket.com/de/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://fast-track-phuket.com/it/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://fast-track-phuket.com/" />
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/arrival-fast-track/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/departure-vip/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/phuket-airport-fast-track-prices/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/tdac-guide/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/faq/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/blog/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/blog/fast-track-phuket-airport-complete-guide-2026/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/blog/phuket-airport-arrival-fast-track-immigration/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/blog/phuket-airport-departure-vip-service/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/blog/phuket-airport-fast-track-prices-worth-it/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/blog/phuket-airport-peak-season-immigration-tips/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/blog/tdac-phuket-airport-fast-track-guide/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://fast-track-phuket.com/hkt-airport.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/llms.txt</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/llms-full.txt</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://fast-track-phuket.com/ai.txt</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>

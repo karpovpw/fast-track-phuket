@@ -1,0 +1,5 @@
+# Canonicalize the www host to the apex domain (matches every canonical tag).
+https://www.fast-track-phuket.com/* https://fast-track-phuket.com/:splat 301
+
+# Avoid duplicate index.html URLs.
+/index.html / 301

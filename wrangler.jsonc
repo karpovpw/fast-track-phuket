@@ -5,6 +5,7 @@
   "observability": {
     "enabled": true
   },
+  "main": "src/worker.js",
   // Future release note:
   // Keep these routes in config so `npm run deploy` updates production,
   // not only the workers.dev preview URL.
@@ -19,7 +20,21 @@
     }
   ],
   "assets": {
+    "binding": "ASSETS",
     "directory": "./dist",
     "not_found_handling": "single-page-application"
-  }
+  },
+  "vars": {
+    "PRODAMUS_FORM_URL": "https://fasttrack-eng.payform.ru/",
+    "PRODAMUS_PRICE_USD": "55",
+    "PRODAMUS_PRODUCT_NAME": "Phuket Airport Fast Track Arrival",
+    "PRODAMUS_PAYMENT_METHOD": "ACUSDKB"
+  },
+  "d1_databases": [
+    {
+      "binding": "PAYMENTS_DB",
+      "database_name": "fasttrack_payments",
+      "database_id": "8148a3de-2008-4ec5-868a-9e7c4d9a07e9"
+    }
+  ]
 }

@@ -33,36 +33,17 @@ const thbPrices = {
   combo: { single: 3300, group: 3100, child: 1650 },
 };
 
-const languageCurrency = {
-  en: { locale: 'en-US', currency: 'USD', rate: 0.03078, increment: 5 },
-  ru: { locale: 'ru-RU', currency: 'RUB', rate: 2.23, increment: 500 },
-  zh: { locale: 'zh-CN', currency: 'CNY', rate: 0.208, increment: 50 },
-  hi: { locale: 'hi-IN', currency: 'INR', rate: 2.91, increment: 500 },
-  he: { locale: 'he-IL', currency: 'ILS', rate: 0.0898, increment: 25 },
-  ar: { locale: 'ar-AE', currency: 'AED', rate: 0.113, increment: 25 },
-  es: { locale: 'es-ES', currency: 'EUR', rate: 0.0265, increment: 5 },
-  fr: { locale: 'fr-FR', currency: 'EUR', rate: 0.0265, increment: 5 },
-  de: { locale: 'de-DE', currency: 'EUR', rate: 0.0265, increment: 5 },
-  it: { locale: 'it-IT', currency: 'EUR', rate: 0.0265, increment: 5 },
-};
+const priceCurrency = 'THB';
 
-const getCurrencyConfig = (languageCode) => languageCurrency[languageCode] || languageCurrency.en;
+const roundedLocalizedAmount = (thbAmount) => thbAmount;
 
-const roundedLocalizedAmount = (thbAmount, languageCode = 'en') => {
-  const config = getCurrencyConfig(languageCode);
-  return Math.ceil((thbAmount * config.rate) / config.increment) * config.increment;
-};
-
-const formatLocalizedPrice = (thbAmount, languageCode = 'en') => {
-  const config = getCurrencyConfig(languageCode);
-  return new Intl.NumberFormat(config.locale, {
-    style: 'currency',
-    currency: config.currency,
+const formatLocalizedPrice = (thbAmount) => {
+  return `THB ${new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 0,
-  }).format(roundedLocalizedAmount(thbAmount, languageCode));
+  }).format(thbAmount)}`;
 };
 
-const p = (packageCode, priceType, languageCode = 'en') => formatLocalizedPrice(thbPrices[packageCode][priceType], languageCode);
+const p = (packageCode, priceType) => formatLocalizedPrice(thbPrices[packageCode][priceType]);
 
 const blogPages = [
   {
@@ -446,7 +427,6 @@ const alternateLinksXml = () => [
 ].join('\n');
 
 const renderStructuredData = (language, t, url) => {
-  const currency = getCurrencyConfig(language.code).currency;
   const faqItems = [1, 2, 3, 4, 5, 6].map((index) => ({
     '@type': 'Question',
     name: t[`faq.${index}.q`],
@@ -511,7 +491,7 @@ const renderStructuredData = (language, t, url) => {
           '@type': 'Offer',
           name: t['packages.arr.title'],
           price: String(roundedLocalizedAmount(thbPrices.arr.group, language.code)),
-          priceCurrency: currency,
+          priceCurrency,
           url: `${BASE_URL}/arrival-fast-track/`,
           availability: 'https://schema.org/InStock',
         },
@@ -519,7 +499,7 @@ const renderStructuredData = (language, t, url) => {
           '@type': 'Offer',
           name: t['packages.dep.title'],
           price: String(roundedLocalizedAmount(thbPrices.dep.group, language.code)),
-          priceCurrency: currency,
+          priceCurrency,
           url: `${BASE_URL}/departure-vip/`,
           availability: 'https://schema.org/InStock',
         },
@@ -527,7 +507,7 @@ const renderStructuredData = (language, t, url) => {
           '@type': 'Offer',
           name: t['packages.combo.title'],
           price: String(roundedLocalizedAmount(thbPrices.combo.group, language.code)),
-          priceCurrency: currency,
+          priceCurrency,
           url: `${BASE_URL}/phuket-airport-fast-track-prices/`,
           availability: 'https://schema.org/InStock',
         },

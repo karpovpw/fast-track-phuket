@@ -8,6 +8,7 @@ import {
   ShieldCheck, TriangleAlert
 } from 'lucide-react';
 import './index.css';
+import PaymentTestPage from './PaymentTestPage';
 
 // Lazy-load the decorative WebGL hero so the ~1.2MB three.js/react-three stack
 // is split into a deferred chunk and never blocks first paint or interactivity.
@@ -30,35 +31,12 @@ const thbPrices: Record<PackageCode, { single: number; group: number; child: num
   combo: { single: 3300, group: 3100, child: 1650, original: 3500 },
 };
 
-const languageCurrency = {
-  en: { locale: 'en-US', currency: 'USD', rate: 0.03078, increment: 5 },
-  ru: { locale: 'ru-RU', currency: 'RUB', rate: 2.23, increment: 500 },
-  zh: { locale: 'zh-CN', currency: 'CNY', rate: 0.208, increment: 50 },
-  hi: { locale: 'hi-IN', currency: 'INR', rate: 2.91, increment: 500 },
-  he: { locale: 'he-IL', currency: 'ILS', rate: 0.0898, increment: 25 },
-  ar: { locale: 'ar-AE', currency: 'AED', rate: 0.113, increment: 25 },
-  es: { locale: 'es-ES', currency: 'EUR', rate: 0.0265, increment: 5 },
-  fr: { locale: 'fr-FR', currency: 'EUR', rate: 0.0265, increment: 5 },
-  de: { locale: 'de-DE', currency: 'EUR', rate: 0.0265, increment: 5 },
-  it: { locale: 'it-IT', currency: 'EUR', rate: 0.0265, increment: 5 },
-} as const;
-
 const selectedLanguageStorageKey = 'fasttrack.selectedLanguage';
 
-const getCurrencyConfig = (language: string) => {
-  const languageCode = language.toLowerCase().split('-')[0] as keyof typeof languageCurrency;
-  return languageCurrency[languageCode] || languageCurrency.en;
-};
-
-const formatLocalizedPrice = (thbAmount: number, language: string) => {
-  const config = getCurrencyConfig(language);
-  const roundedAmount = Math.ceil((thbAmount * config.rate) / config.increment) * config.increment;
-
-  return new Intl.NumberFormat(config.locale, {
-    style: 'currency',
-    currency: config.currency,
+const formatThaiBahtPrice = (thbAmount: number) => {
+  return `THB ${new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 0,
-  }).format(roundedAmount);
+  }).format(thbAmount)}`;
 };
 
 const SimpleModal = ({ isOpen, onClose, title, children, highlight = false }: SimpleModalProps) => {
@@ -77,7 +55,7 @@ const SimpleModal = ({ isOpen, onClose, title, children, highlight = false }: Si
   );
 };
 
-function App() {
+function LandingPage() {
   const { t, i18n } = useTranslation();
   const [langOpen, setLangOpen] = useState(false);
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -114,9 +92,8 @@ function App() {
     window.location.assign(getLanguagePath(code));
   };
 
-  const currentLanguage = i18n.resolvedLanguage || i18n.language || 'en';
-
-  const priceFor = (amount: number) => formatLocalizedPrice(amount, currentLanguage);
+  const priceFor = (amount: number) => formatThaiBahtPrice(amount);
+  const footerRequisites = t('footer.requisites');
 
   const totalPrice = useMemo(() => {
     const adults = typeof calcAdults === 'number' ? calcAdults : 0;
@@ -661,18 +638,20 @@ function App() {
             FAST<span className="text-gold">TRACK</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem', fontSize: '0.85rem', color: 'var(--color-text-secondary)', flexWrap: 'wrap' }}>
-            <a href="/arrival-fast-track/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>Arrival Fast Track</a>
-            <a href="/departure-vip/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>Departure VIP</a>
-            <a href="/phuket-airport-fast-track-prices/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>Prices</a>
-            <a href="/tdac-guide/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>TDAC Guide</a>
-            <a href="/faq/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>FAQ</a>
+            <a href="/arrival-fast-track/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>{t('footer.nav.arrival')}</a>
+            <a href="/departure-vip/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>{t('footer.nav.departure')}</a>
+            <a href="/phuket-airport-fast-track-prices/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>{t('footer.nav.prices')}</a>
+            <a href="/tdac-guide/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>{t('footer.nav.tdac')}</a>
+            <a href="/faq/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>{t('footer.nav.faq')}</a>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', marginBottom: '2.5rem', fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>
             <button onClick={() => setActiveModal('terms')} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontWeight: 600 }}>{t('footer.terms')}</button>
             <button onClick={() => setActiveModal('privacy')} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontWeight: 600 }}>{t('footer.privacy')}</button>
           </div>
           <p style={{ opacity: 0.4, fontSize: '0.75rem', letterSpacing: '1px' }}>{t('footer.legal')}</p>
-          <p style={{ opacity: 0.5, fontSize: '0.8rem', lineHeight: 1.7, marginTop: '1rem', whiteSpace: 'pre-line' }}>{t('footer.requisites')}</p>
+          {footerRequisites && (
+            <p style={{ opacity: 0.5, fontSize: '0.8rem', lineHeight: 1.7, marginTop: '1rem', whiteSpace: 'pre-line' }}>{footerRequisites}</p>
+          )}
         </div>
       </footer>
       
@@ -759,6 +738,16 @@ function App() {
 
     </div>
   );
+}
+
+function App() {
+  const path = window.location.pathname;
+
+  if (path.startsWith('/payment-test') || path.startsWith('/test-payments') || path.startsWith('/payment-result')) {
+    return <PaymentTestPage />;
+  }
+
+  return <LandingPage />;
 }
 
 export default App;

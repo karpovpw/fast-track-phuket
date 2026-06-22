@@ -17,6 +17,15 @@ The test form supports Arrival, Departure, and Combo services. THB is the primar
 
 ## Cloudflare Storage
 
+The production Worker stores order information in D1:
+
+- `payment_orders`: order status, service, passenger counts, flight/date, email, price, payment URLs, and primary file metadata.
+- `payment_uploads`: metadata for every uploaded passport/selfie image.
+- `payment_upload_chunks`: base64 chunks for every uploaded image file.
+- `payment_events`: order creation, payment returns, and Prodamus webhook payloads.
+
+The form accepts up to 5 passport photos and up to 5 selfies. Each image is validated as an image file and capped at 8 MB.
+
 Create the free D1 database:
 
 ```bash

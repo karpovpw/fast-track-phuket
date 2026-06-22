@@ -15,6 +15,7 @@ import {
 const thbToUsdRate = 31.5;
 const maxUploadSizeMb = 8;
 const maxUploadSizeBytes = maxUploadSizeMb * 1024 * 1024;
+const maxUploadFiles = 5;
 
 const paymentServices = {
   arr: {
@@ -54,8 +55,8 @@ type PaymentFormState = {
   passengerCount: number;
   childPassengerCount: number;
   infantPassengerCount: number;
-  passportPhoto: File | null;
-  selfiePhoto: File | null;
+  passportPhoto: File[];
+  selfiePhoto: File[];
 };
 
 type UploadPreview = {
@@ -77,8 +78,8 @@ const initialFormState: PaymentFormState = {
   passengerCount: 1,
   childPassengerCount: 0,
   infantPassengerCount: 0,
-  passportPhoto: null,
-  selfiePhoto: null,
+  passportPhoto: [],
+  selfiePhoto: [],
 };
 
 const todayIso = () => new Date().toISOString().slice(0, 10);
@@ -121,6 +122,19 @@ const getUploadError = (file: File) => {
 
   if (file.size > maxUploadSizeBytes) {
     return `Maximum file size is ${maxUploadSizeMb} MB.`;
+  }
+
+  return '';
+};
+
+const getUploadListError = (files: File[], label: string) => {
+  if (files.length > maxUploadFiles) {
+    return `${label}: upload no more than ${maxUploadFiles} images.`;
+  }
+
+  for (const file of files) {
+    const error = getUploadError(file);
+    if (error) return `${label}: ${file.name}: ${error}`;
   }
 
   return '';
@@ -188,9 +202,9 @@ const PaymentResultPage = () => {
 
 const PaymentTestPage = () => {
   const [form, setForm] = useState<PaymentFormState>(initialFormState);
-  const [previews, setPreviews] = useState<Record<UploadField, UploadPreview | null>>({
-    passportPhoto: null,
-    selfiePhoto: null,
+  const [previews, setPreviews] = useState<Record<UploadField, UploadPreview[]>>({
+    passportPhoto: [],
+    selfiePhoto: [],
   });
   const previewUrlsRef = useRef<string[]>([]);
   const [fieldError, setFieldError] = useState('');
@@ -241,23 +255,22 @@ const PaymentTestPage = () => {
   };
 
   const setUploadField = (field: UploadField, event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.currentTarget.files?.[0] || null;
-    const nextPreview = file ? { name: file.name, url: URL.createObjectURL(file) } : null;
-    if (nextPreview) previewUrlsRef.current.push(nextPreview.url);
+    const files = Array.from(event.currentTarget.files || []);
+    const nextPreviews = files.map((file) => ({ name: file.name, url: URL.createObjectURL(file) }));
+    nextPreviews.forEach((preview) => previewUrlsRef.current.push(preview.url));
     setFieldError('');
     setSubmitState({ type: 'idle' });
 
     setPreviews((current) => {
-      const existing = current[field];
-      if (existing) URL.revokeObjectURL(existing.url);
+      current[field].forEach((existing) => URL.revokeObjectURL(existing.url));
 
       return {
         ...current,
-        [field]: nextPreview,
+        [field]: nextPreviews,
       };
     });
 
-    setForm((current) => ({ ...current, [field]: file }));
+    setForm((current) => ({ ...current, [field]: files }));
   };
 
   const validateForm = () => {
@@ -281,19 +294,19 @@ const PaymentTestPage = () => {
       return 'At least one passenger is required.';
     }
 
-    if (!form.passportPhoto) {
-      return 'Upload the passport photo.';
+    if (form.passportPhoto.length === 0) {
+      return 'Upload at least one passport photo.';
     }
 
-    if (!form.selfiePhoto) {
-      return 'Upload the selfie.';
+    if (form.selfiePhoto.length === 0) {
+      return 'Upload at least one selfie.';
     }
 
-    const passportError = getUploadError(form.passportPhoto);
-    if (passportError) return `Passport photo: ${passportError}`;
+    const passportError = getUploadListError(form.passportPhoto, 'Passport photos');
+    if (passportError) return passportError;
 
-    const selfieError = getUploadError(form.selfiePhoto);
-    if (selfieError) return `Selfie: ${selfieError}`;
+    const selfieError = getUploadListError(form.selfiePhoto, 'Selfies');
+    if (selfieError) return selfieError;
 
     return '';
   };
@@ -319,8 +332,8 @@ const PaymentTestPage = () => {
     payload.set('infantPassengerCount', String(form.infantPassengerCount));
     payload.set('priceUsd', String(paymentPriceUsd));
     payload.set('priceThb', String(paymentPriceThb));
-    if (form.passportPhoto) payload.set('passportPhoto', form.passportPhoto);
-    if (form.selfiePhoto) payload.set('selfiePhoto', form.selfiePhoto);
+    form.passportPhoto.forEach((file) => payload.append('passportPhoto', file));
+    form.selfiePhoto.forEach((file) => payload.append('selfiePhoto', file));
 
     try {
       const response = await fetch('/api/payment-intents', {
@@ -360,6 +373,26 @@ const PaymentTestPage = () => {
             </span>
           </div>
         </div>
+
+        <section className="payment-meeting-guide" aria-labelledby="payment-meeting-title">
+          <div className="payment-meeting-copy">
+            <p className="payment-kicker">Что делать в день оказания услуги</p>
+            <h2 id="payment-meeting-title">Место встречи в аэропорту</h2>
+            <p>
+              После заказа услуги в назначенный день сотрудник иммиграции будет ждать вас у стойки информации,
+              которая находится в главном холе прилета перед стойками иммиграционного контроля
+            </p>
+          </div>
+          <figure className="payment-meeting-image">
+            <img
+              src="/arrival-meeting-point.jpg"
+              alt="Information desk and Meet Here sign at Phuket airport arrival hall"
+              loading="eager"
+              width="1536"
+              height="1152"
+            />
+          </figure>
+        </section>
 
         <div className="payment-layout">
           <form className="payment-widget" onSubmit={submitPayment}>
@@ -477,19 +510,23 @@ const PaymentTestPage = () => {
                   type="file"
                   name="passportPhoto"
                   accept="image/*"
+                  multiple
                   onChange={(event) => setUploadField('passportPhoto', event)}
                   required
                 />
                 <span className="payment-upload-copy">
                   <FileImage size={20} />
-                  Passport photo
+                  Passport photos
                 </span>
-                {previews.passportPhoto && (
-                  <span className="payment-upload-preview">
-                    <img src={previews.passportPhoto.url} alt="" />
-                    {form.passportPhoto && (
-                      <span>{previews.passportPhoto.name} · {formatFileSize(form.passportPhoto)}</span>
-                    )}
+                <span className="payment-upload-help">Upload one or more images, up to {maxUploadFiles} files.</span>
+                {previews.passportPhoto.length > 0 && (
+                  <span className="payment-upload-preview-list">
+                    {previews.passportPhoto.map((preview, index) => (
+                      <span className="payment-upload-preview" key={preview.url}>
+                        <img src={preview.url} alt="" />
+                        <span>{preview.name} · {formatFileSize(form.passportPhoto[index])}</span>
+                      </span>
+                    ))}
                   </span>
                 )}
               </label>
@@ -499,19 +536,23 @@ const PaymentTestPage = () => {
                   type="file"
                   name="selfiePhoto"
                   accept="image/*"
+                  multiple
                   onChange={(event) => setUploadField('selfiePhoto', event)}
                   required
                 />
                 <span className="payment-upload-copy">
                   <FileImage size={20} />
-                  Selfie
+                  Selfies
                 </span>
-                {previews.selfiePhoto && (
-                  <span className="payment-upload-preview">
-                    <img src={previews.selfiePhoto.url} alt="" />
-                    {form.selfiePhoto && (
-                      <span>{previews.selfiePhoto.name} · {formatFileSize(form.selfiePhoto)}</span>
-                    )}
+                <span className="payment-upload-help">Upload one or more images, up to {maxUploadFiles} files.</span>
+                {previews.selfiePhoto.length > 0 && (
+                  <span className="payment-upload-preview-list">
+                    {previews.selfiePhoto.map((preview, index) => (
+                      <span className="payment-upload-preview" key={preview.url}>
+                        <img src={preview.url} alt="" />
+                        <span>{preview.name} · {formatFileSize(form.selfiePhoto[index])}</span>
+                      </span>
+                    ))}
                   </span>
                 )}
               </label>

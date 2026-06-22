@@ -1,6 +1,7 @@
 const defaultThbToUsdRate = 31.5;
 const defaultFormUrl = 'https://fasttrack-eng.payform.ru/';
 const maxUploadSizeBytes = 8 * 1024 * 1024;
+const maxUploadFiles = 5;
 const d1UploadChunkSizeBytes = 1024 * 1024;
 const paymentServices = {
   arr: {
@@ -62,18 +63,35 @@ const requiredInt = (formData, key, minimum) => {
   return value;
 };
 
-const requiredImage = (formData, key) => {
-  const value = formData.get(key);
-  if (!isFileLike(value) || value.size === 0) {
+const requiredImages = (formData, key) => {
+  const values = formData.getAll(key);
+  if (values.length === 0) {
     throw new HttpError(400, `Missing ${key}.`);
   }
-  if (!String(value.type || '').startsWith('image/')) {
-    throw new HttpError(400, `${key} must be an image.`);
+
+  if (values.length > maxUploadFiles) {
+    throw new HttpError(400, `${key} accepts no more than ${maxUploadFiles} images.`);
   }
-  if (value.size > maxUploadSizeBytes) {
-    throw new HttpError(400, `${key} is too large.`);
+
+  const files = values.map((value) => {
+    if (!isFileLike(value) || value.size === 0) {
+      throw new HttpError(400, `Missing ${key}.`);
+    }
+
+    return value;
+  });
+
+  for (const file of files) {
+    if (!String(file.type || '').startsWith('image/')) {
+      throw new HttpError(400, `${key} must be an image.`);
+    }
+
+    if (file.size > maxUploadSizeBytes) {
+      throw new HttpError(400, `${key} is too large.`);
+    }
   }
-  return value;
+
+  return files;
 };
 
 const parseThbToUsdRate = (env) => {
@@ -164,6 +182,19 @@ const prepareCustomerFileStorage = async (env, orderId, field, file, now) => {
   };
 };
 
+const prepareCustomerFilesStorage = async (env, orderId, field, files, now) => {
+  const preparedFiles = [];
+
+  for (const file of files) {
+    preparedFiles.push(await prepareCustomerFileStorage(env, orderId, field, file, now));
+  }
+
+  return {
+    statements: preparedFiles.flatMap((preparedFile) => preparedFile.statements),
+    uploads: preparedFiles.map((preparedFile) => preparedFile.upload),
+  };
+};
+
 const createPaymentEventStatement = (env, orderId, eventType, status, verified, payload) => (
   env.PAYMENTS_DB.prepare(`
     INSERT INTO payment_events (
@@ -188,6 +219,8 @@ const insertPaymentEvent = async (env, orderId, eventType, status, verified, pay
 
 const createPaymentOrderStatement = (env, order, storage, prodamusPaymentUrl, resolvedPayment, now) => {
   const priceCents = Math.round(order.priceUsd * 100);
+  const primaryPassport = storage.passport[0];
+  const primarySelfie = storage.selfie[0];
 
   return env.PAYMENTS_DB.prepare(`
     INSERT INTO payment_orders (
@@ -212,14 +245,14 @@ const createPaymentOrderStatement = (env, order, storage, prodamusPaymentUrl, re
     order.passengerCount,
     order.childPassengerCount,
     order.infantPassengerCount,
-    storage.passport.objectKey,
-    storage.passport.fileName,
-    storage.passport.contentType,
-    storage.passport.size,
-    storage.selfie.objectKey,
-    storage.selfie.fileName,
-    storage.selfie.contentType,
-    storage.selfie.size,
+    primaryPassport.objectKey,
+    primaryPassport.fileName,
+    primaryPassport.contentType,
+    primaryPassport.size,
+    primarySelfie.objectKey,
+    primarySelfie.fileName,
+    primarySelfie.contentType,
+    primarySelfie.size,
     prodamusPaymentUrl,
     resolvedPayment.paymentUrl,
   );
@@ -238,8 +271,8 @@ const createOrderCreatedEventStatement = (env, order, storage, prodamusPaymentUr
     priceThb: order.priceThb,
     priceUsd: order.priceUsd,
     priceCents: Math.round(order.priceUsd * 100),
-    passportUpload: storage.passport,
-    selfieUpload: storage.selfie,
+    passportUploads: storage.passport,
+    selfieUploads: storage.selfie,
     prodamusPaymentUrl,
     resolvedPaymentUrl: resolvedPayment.paymentUrl,
     resolvedInBackground: resolvedPayment.resolvedInBackground,
@@ -457,8 +490,8 @@ const createPaymentIntent = async (request, env) => {
   const passengerCount = requiredInt(formData, 'passengerCount', 1);
   const childPassengerCount = requiredInt(formData, 'childPassengerCount', 0);
   const infantPassengerCount = requiredInt(formData, 'infantPassengerCount', 0);
-  const passportPhoto = requiredImage(formData, 'passportPhoto');
-  const selfiePhoto = requiredImage(formData, 'selfiePhoto');
+  const passportPhotos = requiredImages(formData, 'passportPhoto');
+  const selfiePhotos = requiredImages(formData, 'selfiePhoto');
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     throw new HttpError(400, 'Invalid email.');
@@ -488,11 +521,11 @@ const createPaymentIntent = async (request, env) => {
   const prodamusPaymentUrl = await createPaymentUrl(env, request, order);
   const resolvedPayment = await resolvePaymentUrl(prodamusPaymentUrl);
   const now = new Date().toISOString();
-  const passportStorage = await prepareCustomerFileStorage(env, orderId, 'passport', passportPhoto, now);
-  const selfieStorage = await prepareCustomerFileStorage(env, orderId, 'selfie', selfiePhoto, now);
+  const passportStorage = await prepareCustomerFilesStorage(env, orderId, 'passport', passportPhotos, now);
+  const selfieStorage = await prepareCustomerFilesStorage(env, orderId, 'selfie', selfiePhotos, now);
   const storage = {
-    passport: passportStorage.upload,
-    selfie: selfieStorage.upload,
+    passport: passportStorage.uploads,
+    selfie: selfieStorage.uploads,
   };
 
   await env.PAYMENTS_DB.batch([

@@ -1,7 +1,30 @@
-const defaultPriceUsd = 55;
+const defaultThbToUsdRate = 31.5;
 const defaultFormUrl = 'https://fasttrack-eng.payform.ru/';
 const maxUploadSizeBytes = 8 * 1024 * 1024;
 const d1UploadChunkSizeBytes = 1024 * 1024;
+const paymentServices = {
+  arr: {
+    sku: 'fasttrack-arrival',
+    name: 'Phuket Airport Arrival Fast Track',
+    single: 1700,
+    group: 1600,
+    child: 850,
+  },
+  dep: {
+    sku: 'fasttrack-departure',
+    name: 'Phuket Airport Departure VIP',
+    single: 1800,
+    group: 1700,
+    child: 900,
+  },
+  combo: {
+    sku: 'fasttrack-combo',
+    name: 'Phuket Airport Arrival + Departure VIP Combo',
+    single: 3300,
+    group: 3100,
+    child: 1650,
+  },
+};
 
 class HttpError extends Error {
   constructor(status, message) {
@@ -53,10 +76,32 @@ const requiredImage = (formData, key) => {
   return value;
 };
 
-const parsePriceUsd = (env) => {
-  const parsed = Number(env.PRODAMUS_PRICE_USD || defaultPriceUsd);
-  if (!Number.isFinite(parsed) || parsed <= 0) return defaultPriceUsd;
+const parseThbToUsdRate = (env) => {
+  const parsed = Number(env.PRODAMUS_THB_USD_RATE || defaultThbToUsdRate);
+  if (!Number.isFinite(parsed) || parsed <= 0) return defaultThbToUsdRate;
   return parsed;
+};
+
+const requiredServiceCode = (formData) => {
+  const serviceCode = requiredText(formData, 'serviceCode');
+  if (!Object.hasOwn(paymentServices, serviceCode)) {
+    throw new HttpError(400, 'Invalid serviceCode.');
+  }
+  return serviceCode;
+};
+
+const calculateOrderPricing = (env, serviceCode, passengerCount, childPassengerCount) => {
+  const service = paymentServices[serviceCode];
+  const payingPassengers = passengerCount + childPassengerCount;
+  const adultPrice = payingPassengers > 1 ? service.group : service.single;
+  const priceThb = (passengerCount * adultPrice) + (childPassengerCount * service.child);
+  const priceUsd = Math.max(1, Math.round(priceThb / parseThbToUsdRate(env)));
+
+  return {
+    service,
+    priceThb,
+    priceUsd,
+  };
 };
 
 const createOrderId = () => {
@@ -142,17 +187,16 @@ const insertPaymentEvent = async (env, orderId, eventType, status, verified, pay
 };
 
 const createPaymentOrderStatement = (env, order, storage, prodamusPaymentUrl, resolvedPayment, now) => {
-  const priceUsd = parsePriceUsd(env);
-  const priceCents = Math.round(priceUsd * 100);
+  const priceCents = Math.round(order.priceUsd * 100);
 
   return env.PAYMENTS_DB.prepare(`
     INSERT INTO payment_orders (
       id, created_at, updated_at, status, price_cents, currency, email,
-      arrival_date, flight_number, passenger_count, child_passenger_count,
+      service_code, price_thb, arrival_date, flight_number, passenger_count, child_passenger_count,
       infant_passenger_count, passport_object_key, passport_file_name,
       passport_content_type, passport_size, selfie_object_key, selfie_file_name,
       selfie_content_type, selfie_size, prodamus_payment_url, resolved_payment_url
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).bind(
     order.orderId,
     now,
@@ -161,6 +205,8 @@ const createPaymentOrderStatement = (env, order, storage, prodamusPaymentUrl, re
     priceCents,
     'usd',
     order.email,
+    order.serviceCode,
+    order.priceThb,
     order.arrivalDate,
     order.flightNumber,
     order.passengerCount,
@@ -180,16 +226,18 @@ const createPaymentOrderStatement = (env, order, storage, prodamusPaymentUrl, re
 };
 
 const createOrderCreatedEventStatement = (env, order, storage, prodamusPaymentUrl, resolvedPayment) => {
-  const priceUsd = parsePriceUsd(env);
-
   return createPaymentEventStatement(env, order.orderId, 'order_created', 'created', true, {
+    serviceCode: order.serviceCode,
+    serviceName: order.serviceName,
     email: order.email,
     arrivalDate: order.arrivalDate,
     flightNumber: order.flightNumber,
     passengerCount: order.passengerCount,
     childPassengerCount: order.childPassengerCount,
     infantPassengerCount: order.infantPassengerCount,
-    priceCents: Math.round(priceUsd * 100),
+    priceThb: order.priceThb,
+    priceUsd: order.priceUsd,
+    priceCents: Math.round(order.priceUsd * 100),
     passportUpload: storage.passport,
     selfieUpload: storage.selfie,
     prodamusPaymentUrl,
@@ -275,14 +323,15 @@ const createPaymentUrl = async (env, request, order) => {
 
   const origin = new URL(request.url).origin;
   const formUrl = new URL(env.PRODAMUS_FORM_URL || defaultFormUrl);
-  const priceUsd = parsePriceUsd(env).toFixed(2);
-  const productName = env.PRODAMUS_PRODUCT_NAME || 'Phuket Airport Fast Track Arrival';
+  const priceUsd = order.priceUsd.toFixed(2);
   const customerExtra = [
+    `Service: ${order.serviceName}`,
     `Arrival: ${order.arrivalDate}`,
     `Flight: ${order.flightNumber}`,
     `Passengers: ${order.passengerCount}`,
     `Children: ${order.childPassengerCount}`,
     `Infants: ${order.infantPassengerCount}`,
+    `Price: THB ${order.priceThb} (approx USD ${order.priceUsd})`,
   ].join('; ');
 
   const payload = {
@@ -290,8 +339,8 @@ const createPaymentUrl = async (env, request, order) => {
     customer_email: order.email,
     products: [
       {
-        sku: 'fasttrack-arrival',
-        name: productName,
+        sku: order.serviceSku,
+        name: order.serviceName,
         price: priceUsd,
         quantity: '1',
         type: 'service',
@@ -401,6 +450,7 @@ const createPaymentIntent = async (request, env) => {
   }
 
   const formData = await request.formData();
+  const serviceCode = requiredServiceCode(formData);
   const email = requiredText(formData, 'email').toLowerCase();
   const arrivalDate = requiredText(formData, 'arrivalDate');
   const flightNumber = requiredText(formData, 'flightNumber').toUpperCase();
@@ -419,8 +469,14 @@ const createPaymentIntent = async (request, env) => {
   }
 
   const orderId = createOrderId();
+  const pricing = calculateOrderPricing(env, serviceCode, passengerCount, childPassengerCount);
   const order = {
     orderId,
+    serviceCode,
+    serviceSku: pricing.service.sku,
+    serviceName: pricing.service.name,
+    priceThb: pricing.priceThb,
+    priceUsd: pricing.priceUsd,
     email,
     arrivalDate,
     flightNumber,

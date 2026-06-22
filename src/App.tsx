@@ -5,7 +5,7 @@ import {
   Globe, MessageCircle, Star, Building,
   ChevronDown, Send, X, Check, ArrowRight,
   Coins, CreditCard, Quote, Phone,
-  ShieldCheck, TriangleAlert
+  ShieldCheck
 } from 'lucide-react';
 import './index.css';
 import PaymentTestPage from './PaymentTestPage';
@@ -224,14 +224,6 @@ function LandingPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <div className="license-warning" role="note" aria-label={t('license.warning.title')}>
-              <div className="license-warning-title">
-                <TriangleAlert size={28} />
-                <span>{t('license.warning.title')}</span>
-              </div>
-              <p>{t('license.warning.desc')}</p>
-            </div>
-
             <figure className="license-image-card">
               <img src="/tat-license.jpeg" alt={t('license.imageAlt')} loading="lazy" width="930" height="1280" decoding="async" />
             </figure>

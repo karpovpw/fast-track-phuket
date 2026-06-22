@@ -26,8 +26,7 @@
   },
   "vars": {
     "PRODAMUS_FORM_URL": "https://fasttrack-eng.payform.ru/",
-    "PRODAMUS_PRICE_USD": "55",
-    "PRODAMUS_PRODUCT_NAME": "Phuket Airport Fast Track Arrival",
+    "PRODAMUS_THB_USD_RATE": "31.5",
     "PRODAMUS_PAYMENT_METHOD": "ACUSDKB"
   },
   "d1_databases": [

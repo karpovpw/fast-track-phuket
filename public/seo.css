@@ -123,36 +123,6 @@ h2 {
   border-radius: 4px;
 }
 
-.license-warning {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  border: 2px solid rgba(255, 82, 82, 0.72);
-  border-top: 8px solid #ff5252;
-  border-radius: 8px;
-  background: linear-gradient(90deg, rgba(255, 82, 82, 0.18), rgba(65, 9, 9, 0.34));
-  padding: clamp(16px, 3vw, 24px);
-}
-
-.license-warning h3 {
-  color: #ffb4a8;
-  font-size: clamp(1.18rem, 3vw, 1.55rem);
-  font-weight: 900;
-  text-transform: uppercase;
-  margin: 0 0 10px;
-}
-
-.license-warning p {
-  flex: 1;
-  color: #fff;
-  font-size: clamp(1.02rem, 2.5vw, 1.2rem);
-  font-weight: 700;
-  margin: 0;
-}
-
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
@@ -225,10 +195,6 @@ html[dir='rtl'] .hero,
 html[dir='rtl'] .card,
 html[dir='rtl'] .license-notice {
   text-align: right;
-}
-
-html[dir='rtl'] .license-warning {
-  border-right-width: 2px;
 }
 
 @media (max-width: 760px) {

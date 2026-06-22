@@ -247,8 +247,7 @@ a {
   min-width: 0;
 }
 
-.license-kicker,
-.license-warning-title {
+.license-kicker {
   display: flex;
   align-items: center;
   gap: 0.65rem;
@@ -291,37 +290,6 @@ a {
   max-height: 520px;
   object-fit: contain;
   border-radius: var(--radius-sm);
-}
-
-.license-warning {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem;
-  min-width: 0;
-  padding: clamp(1rem, 2vw, 1.35rem) clamp(1.2rem, 3vw, 1.75rem);
-  border: 2px solid rgba(255, 82, 82, 0.72);
-  border-block-start: 8px solid #ff5252;
-  border-radius: var(--radius-md);
-  background: linear-gradient(90deg, rgba(255, 82, 82, 0.2), rgba(65, 9, 9, 0.34));
-}
-
-.license-warning-title {
-  color: #ffb4a8;
-  font-size: clamp(1.2rem, 2.6vw, 1.7rem);
-  font-weight: 900;
-  line-height: 1.25;
-  text-transform: uppercase;
-}
-
-.license-warning p {
-  flex: 1;
-  color: #fff;
-  font-size: clamp(1rem, 1.7vw, 1.18rem);
-  font-weight: 700;
-  line-height: 1.55;
 }
 
 /* Base button styles */
@@ -627,13 +595,8 @@ td.cross { color: #ef4444; }
     padding-bottom: 4rem;
   }
 
-  .license-panel,
-  .license-warning {
+  .license-panel {
     grid-template-columns: 1fr;
-  }
-
-  .license-warning-title {
-    align-items: flex-start;
   }
 }
 
@@ -952,7 +915,8 @@ html[dir='rtl'] .floating-chat {
 }
 
 .payment-page input,
-.payment-page button {
+.payment-page button,
+.payment-page select {
   font-family: var(--font-body);
 }
 
@@ -1100,7 +1064,8 @@ html[dir='rtl'] .floating-chat {
   font-weight: 700;
 }
 
-.payment-field input {
+.payment-field input,
+.payment-field select {
   width: 100%;
   min-height: 48px;
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -1113,9 +1078,14 @@ html[dir='rtl'] .floating-chat {
 }
 
 .payment-field input:focus,
+.payment-field select:focus,
 .payment-upload:focus-within {
   border-color: rgba(212, 175, 55, 0.72);
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.14);
+}
+
+.payment-field select {
+  appearance: auto;
 }
 
 .payment-upload {

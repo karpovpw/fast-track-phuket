@@ -13,6 +13,8 @@ The page posts customer details and document images to the Worker before redirec
 https://fasttrack-eng.payform.ru/
 ```
 
+The test form supports Arrival, Departure, and Combo services. THB is the primary displayed amount; the Worker converts that total to an approximate USD charge using `PRODAMUS_THB_USD_RATE`.
+
 ## Cloudflare Storage
 
 Create the free D1 database:
@@ -55,4 +57,4 @@ For a temporary manual test with a prebuilt Prodamus URL, set:
 npx wrangler secret put PRODAMUS_PAYMENT_URL_OVERRIDE
 ```
 
-Use this only for testing, because the server cannot verify that an override URL matches the configured `$55` amount.
+Use this only for testing, because an override bypasses the dynamic service/passenger price calculation.

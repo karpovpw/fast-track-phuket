@@ -396,10 +396,6 @@ const loadLocale = (code) => JSON.parse(
 const splitList = (value) => String(value || '').split('|').filter(Boolean);
 
 const renderLicenseNotice = (t) => `      <section class="license-notice" aria-labelledby="license-title">
-        <div class="license-warning" role="note" aria-label="${escapeHtml(t['license.warning.title'])}">
-          <h3>${escapeHtml(t['license.warning.title'])}</h3>
-          <p>${escapeHtml(t['license.warning.desc'])}</p>
-        </div>
         <figure class="license-image-card">
           <img src="/tat-license.jpeg" alt="${escapeHtml(t['license.imageAlt'])}" loading="lazy" width="930" height="1280" decoding="async" />
         </figure>

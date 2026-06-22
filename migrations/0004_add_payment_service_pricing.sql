@@ -1,0 +1,2 @@
+ALTER TABLE payment_orders ADD COLUMN service_code TEXT NOT NULL DEFAULT 'arr';
+ALTER TABLE payment_orders ADD COLUMN price_thb INTEGER NOT NULL DEFAULT 1700;

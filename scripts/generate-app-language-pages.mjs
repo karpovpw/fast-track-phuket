@@ -55,10 +55,6 @@ const appHtml = fs.readFileSync(appHtmlPath, 'utf8');
 const languageUrl = (code) => code === 'en' ? `${BASE_URL}/` : `${BASE_URL}/${code}/`;
 
 const renderLicenseNotice = (t) => `        <section class="license-panel seo-app-license" aria-labelledby="seo-license-title">
-          <div class="license-warning" role="note" aria-label="${escapeHtml(t['license.warning.title'])}">
-            <div class="license-warning-title">${escapeHtml(t['license.warning.title'])}</div>
-            <p>${escapeHtml(t['license.warning.desc'])}</p>
-          </div>
           <figure class="license-image-card">
             <img src="/tat-license.jpeg" alt="${escapeHtml(t['license.imageAlt'])}" loading="lazy" width="930" height="1280" decoding="async" />
           </figure>

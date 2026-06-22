@@ -12,14 +12,42 @@ import {
   UsersRound,
 } from 'lucide-react';
 
-const paymentPriceUsd = 55;
-const paymentPriceThb = 1700;
+const thbToUsdRate = 31.5;
 const maxUploadSizeMb = 8;
 const maxUploadSizeBytes = maxUploadSizeMb * 1024 * 1024;
 
+const paymentServices = {
+  arr: {
+    title: 'Arrival Fast Track',
+    dateLabel: 'Date of arrival',
+    flightLabel: 'Arrival flight number',
+    single: 1700,
+    group: 1600,
+    child: 850,
+  },
+  dep: {
+    title: 'Departure VIP',
+    dateLabel: 'Date of departure',
+    flightLabel: 'Departure flight number',
+    single: 1800,
+    group: 1700,
+    child: 900,
+  },
+  combo: {
+    title: 'Arrival + Departure VIP Combo',
+    dateLabel: 'First service date',
+    flightLabel: 'Main flight number',
+    single: 3300,
+    group: 3100,
+    child: 1650,
+  },
+} as const;
+
+type PaymentServiceCode = keyof typeof paymentServices;
 type UploadField = 'passportPhoto' | 'selfiePhoto';
 
 type PaymentFormState = {
+  serviceCode: PaymentServiceCode;
   email: string;
   arrivalDate: string;
   flightNumber: string;
@@ -42,6 +70,7 @@ type SubmitState =
   | { type: 'error'; message: string };
 
 const initialFormState: PaymentFormState = {
+  serviceCode: 'arr',
   email: '',
   arrivalDate: '',
   flightNumber: '',
@@ -54,7 +83,7 @@ const initialFormState: PaymentFormState = {
 
 const todayIso = () => new Date().toISOString().slice(0, 10);
 
-const formatUsdPrice = (amount: number) => `USD ${new Intl.NumberFormat('en-US', {
+const formatApproxUsdPrice = (amount: number) => `≈ ${new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
   maximumFractionDigits: 0,
@@ -63,6 +92,20 @@ const formatUsdPrice = (amount: number) => `USD ${new Intl.NumberFormat('en-US',
 const formatThbPrice = (amount: number) => `THB ${new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 0,
 }).format(amount)}`;
+
+const usdApproxForThb = (thbAmount: number) => Math.max(1, Math.round(thbAmount / thbToUsdRate));
+
+const calculateServicePriceThb = (
+  serviceCode: PaymentServiceCode,
+  passengerCount: number,
+  childPassengerCount: number,
+) => {
+  const service = paymentServices[serviceCode];
+  const payingPassengers = passengerCount + childPassengerCount;
+  const adultPrice = payingPassengers > 1 ? service.group : service.single;
+
+  return (passengerCount * adultPrice) + (childPassengerCount * service.child);
+};
 
 const normalizeCount = (value: string, fallback: number) => {
   if (value === '') return 0;
@@ -152,6 +195,13 @@ const PaymentTestPage = () => {
   const previewUrlsRef = useRef<string[]>([]);
   const [fieldError, setFieldError] = useState('');
   const [submitState, setSubmitState] = useState<SubmitState>({ type: 'idle' });
+  const currentService = paymentServices[form.serviceCode];
+  const paymentPriceThb = useMemo(() => calculateServicePriceThb(
+    form.serviceCode,
+    form.passengerCount,
+    form.childPassengerCount,
+  ), [form.serviceCode, form.passengerCount, form.childPassengerCount]);
+  const paymentPriceUsd = useMemo(() => usdApproxForThb(paymentPriceThb), [paymentPriceThb]);
 
   useEffect(() => {
     const previewUrls = previewUrlsRef.current;
@@ -166,6 +216,14 @@ const PaymentTestPage = () => {
   const totalPassengers = form.passengerCount + form.childPassengerCount + form.infantPassengerCount;
   const isSubmitting = submitState.type === 'submitting' || submitState.type === 'redirecting';
   const submitError = submitState.type === 'error' ? submitState.message : '';
+
+  const setServiceField = (value: string) => {
+    if (!(value in paymentServices)) return;
+
+    setFieldError('');
+    setSubmitState({ type: 'idle' });
+    setForm((current) => ({ ...current, serviceCode: value as PaymentServiceCode }));
+  };
 
   const setTextField = (field: 'email' | 'arrivalDate' | 'flightNumber', value: string) => {
     setFieldError('');
@@ -207,8 +265,12 @@ const PaymentTestPage = () => {
       return 'Enter a valid email address.';
     }
 
+    if (!(form.serviceCode in paymentServices)) {
+      return 'Choose the service.';
+    }
+
     if (!form.arrivalDate) {
-      return 'Choose the arrival date.';
+      return 'Choose the service date.';
     }
 
     if (!form.flightNumber.trim()) {
@@ -248,6 +310,7 @@ const PaymentTestPage = () => {
     setSubmitState({ type: 'submitting' });
 
     const payload = new FormData();
+    payload.set('serviceCode', form.serviceCode);
     payload.set('email', form.email.trim());
     payload.set('arrivalDate', form.arrivalDate);
     payload.set('flightNumber', form.flightNumber.trim().toUpperCase());
@@ -255,6 +318,7 @@ const PaymentTestPage = () => {
     payload.set('childPassengerCount', String(form.childPassengerCount));
     payload.set('infantPassengerCount', String(form.infantPassengerCount));
     payload.set('priceUsd', String(paymentPriceUsd));
+    payload.set('priceThb', String(paymentPriceThb));
     if (form.passportPhoto) payload.set('passportPhoto', form.passportPhoto);
     if (form.selfiePhoto) payload.set('selfiePhoto', form.selfiePhoto);
 
@@ -291,8 +355,8 @@ const PaymentTestPage = () => {
           <div className="payment-price-pill">
             <CreditCard size={16} />
             <span className="payment-price-stack">
-              <span className="payment-price-primary">{formatUsdPrice(paymentPriceUsd)}</span>
-              <span className="payment-price-secondary">{formatThbPrice(paymentPriceThb)}</span>
+              <span className="payment-price-primary">{formatThbPrice(paymentPriceThb)}</span>
+              <span className="payment-price-secondary">({formatApproxUsdPrice(paymentPriceUsd)})</span>
             </span>
           </div>
         </div>
@@ -301,10 +365,34 @@ const PaymentTestPage = () => {
           <form className="payment-widget" onSubmit={submitPayment}>
             <div className="payment-heading">
               <p className="payment-kicker">FastTrack Phuket</p>
-              <h1 id="payment-title">Arrival Fast Track Request</h1>
+              <h1 id="payment-title">{currentService.title} Request</h1>
             </div>
 
             <div className="payment-field-grid">
+              <label className="payment-field payment-field-wide">
+                <span><ShieldCheck size={16} /> Service</span>
+                <select
+                  name="serviceCode"
+                  value={form.serviceCode}
+                  onChange={(event) => setServiceField(event.currentTarget.value)}
+                  required
+                >
+                  {Object.entries(paymentServices).map(([code, service]) => {
+                    const servicePrice = calculateServicePriceThb(
+                      code as PaymentServiceCode,
+                      form.passengerCount,
+                      form.childPassengerCount,
+                    );
+
+                    return (
+                      <option key={code} value={code}>
+                        {service.title} - {formatThbPrice(servicePrice)} ({formatApproxUsdPrice(usdApproxForThb(servicePrice))})
+                      </option>
+                    );
+                  })}
+                </select>
+              </label>
+
               <label className="payment-field">
                 <span><Mail size={16} /> Email</span>
                 <input
@@ -319,7 +407,7 @@ const PaymentTestPage = () => {
               </label>
 
               <label className="payment-field">
-                <span><CalendarDays size={16} /> Date of arrival</span>
+                <span><CalendarDays size={16} /> {currentService.dateLabel}</span>
                 <input
                   type="date"
                   name="arrivalDate"
@@ -331,7 +419,7 @@ const PaymentTestPage = () => {
               </label>
 
               <label className="payment-field payment-field-wide">
-                <span><Plane size={16} /> Flight number</span>
+                <span><Plane size={16} /> {currentService.flightLabel}</span>
                 <input
                   type="text"
                   name="flightNumber"
@@ -446,21 +534,33 @@ const PaymentTestPage = () => {
           <aside className="payment-summary" aria-label="Payment summary">
             <div>
               <p className="payment-summary-label">Amount due</p>
-              <p className="payment-summary-price">{formatUsdPrice(paymentPriceUsd)}</p>
-              <p className="payment-summary-converted">{formatThbPrice(paymentPriceThb)}</p>
+              <p className="payment-summary-price">{formatThbPrice(paymentPriceThb)}</p>
+              <p className="payment-summary-converted">({formatApproxUsdPrice(paymentPriceUsd)})</p>
             </div>
             <dl>
+              <div>
+                <dt>Service</dt>
+                <dd>{currentService.title}</dd>
+              </div>
               <div>
                 <dt>Total travelers</dt>
                 <dd>{totalPassengers}</dd>
               </div>
               <div>
-                <dt>Payment currency</dt>
-                <dd>USD</dd>
+                <dt>Adults</dt>
+                <dd>{form.passengerCount}</dd>
               </div>
               <div>
-                <dt>Thai baht reference</dt>
-                <dd>{formatThbPrice(paymentPriceThb)}</dd>
+                <dt>Children</dt>
+                <dd>{form.childPassengerCount}</dd>
+              </div>
+              <div>
+                <dt>Infants</dt>
+                <dd>{form.infantPassengerCount}</dd>
+              </div>
+              <div>
+                <dt>Approximate card charge</dt>
+                <dd>{formatApproxUsdPrice(paymentPriceUsd)}</dd>
               </div>
             </dl>
             <p className="payment-security-note">

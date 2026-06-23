@@ -24,6 +24,7 @@ type SimpleModalProps = {
 
 const packageCodes = ['arr', 'dep', 'combo'] as const;
 type PackageCode = typeof packageCodes[number];
+const faqItemIndexes = [1, 3, 4, 6] as const;
 
 const thbPrices: Record<PackageCode, { single: number; group: number; child: number; original?: number }> = {
   arr: { single: 1700, group: 1600, child: 850 },
@@ -363,6 +364,16 @@ function LandingPage() {
               </div>
               <h2 id="arrival-meeting-title">{t('meeting.title')}</h2>
               <p>{t('meeting.desc')}</p>
+              <ol className="arrival-meeting-steps">
+                <li>
+                  {t('meeting.order.1.before')}
+                  <strong>{t('meeting.order.1.strong')}</strong>
+                  {t('meeting.order.1.after')}
+                </li>
+                <li>{t('meeting.order.2')}</li>
+                <li>{t('meeting.order.3')}</li>
+              </ol>
+              <p className="arrival-meeting-note">{t('meeting.note')}</p>
             </div>
             <figure className="arrival-meeting-image">
               <img
@@ -641,7 +652,7 @@ function LandingPage() {
         <div className="container" style={{ maxWidth: '850px' }}>
           <h2 style={{ textAlign: 'center', marginBottom: '4rem' }}>{t('faq.title')}</h2>
           <div style={{ display: 'grid', gap: '1.5rem' }}>
-            {[1, 2, 3, 4, 5, 6].map(i => (
+            {faqItemIndexes.map(i => (
               <div key={i} className="card">
                 <h4 style={{ color: 'var(--color-gold)', marginBottom: '0.8rem', fontSize: '1.1rem' }}>{t(`faq.${i}.q`)}</h4>
                 <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{t(`faq.${i}.a`)}</p>

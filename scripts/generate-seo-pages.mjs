@@ -33,6 +33,8 @@ const thbPrices = {
   combo: { single: 3300, group: 3100, child: 1650 },
 };
 
+const faqItemIndexes = [1, 3, 4, 6];
+
 const priceCurrency = 'THB';
 
 const roundedLocalizedAmount = (thbAmount) => thbAmount;
@@ -93,10 +95,6 @@ const blogPages = [
       {
         q: 'Is VIP Fast Track Phuket Airport (HKT) available for all international flights?',
         a: 'The service is available for international flights at Phuket International Airport, subject to booking availability and current airport procedure.',
-      },
-      {
-        q: 'How early should I book Fast Track at HKT?',
-        a: 'Booking at least 24 hours before travel is recommended. During peak season, 48 to 72 hours gives better availability.',
       },
       {
         q: 'Does VIP Fast Track guarantee immigration approval?',
@@ -411,6 +409,12 @@ const renderArrivalMeetingNotice = (t) => `      <section class="meeting-notice"
           <p class="eyebrow">${escapeHtml(t['meeting.badge'])}</p>
           <h2 id="meeting-title">${escapeHtml(t['meeting.title'])}</h2>
           <p>${escapeHtml(t['meeting.desc'])}</p>
+          <ol>
+            <li>${escapeHtml(t['meeting.order.1.before'])}<strong>${escapeHtml(t['meeting.order.1.strong'])}</strong>${escapeHtml(t['meeting.order.1.after'])}</li>
+            <li>${escapeHtml(t['meeting.order.2'])}</li>
+            <li>${escapeHtml(t['meeting.order.3'])}</li>
+          </ol>
+          <p>${escapeHtml(t['meeting.note'])}</p>
         </div>
         <figure>
           <img src="/arrival-meeting-point.png" alt="${escapeHtml(t['meeting.imageAlt'])}" loading="lazy" width="1368" height="1149" decoding="async" />
@@ -434,7 +438,7 @@ const alternateLinksXml = () => [
 ].join('\n');
 
 const renderStructuredData = (language, t, url) => {
-  const faqItems = [1, 2, 3, 4, 5, 6].map((index) => ({
+  const faqItems = faqItemIndexes.map((index) => ({
     '@type': 'Question',
     name: t[`faq.${index}.q`],
     acceptedAnswer: {
@@ -703,7 +707,7 @@ ${[1, 2, 3, 4, 5, 6, 7].map((index) => `            <tr>
 
       <section>
         <h2>${escapeHtml(t['faq.title'])}</h2>
-${[1, 2, 3, 4, 5, 6].map((index) => `        <article>
+${faqItemIndexes.map((index) => `        <article>
           <h3>${escapeHtml(t[`faq.${index}.q`])}</h3>
           <p>${escapeHtml(t[`faq.${index}.a`])}</p>
         </article>`).join('\n')}

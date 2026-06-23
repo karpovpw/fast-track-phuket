@@ -374,26 +374,6 @@ const PaymentTestPage = () => {
           </div>
         </div>
 
-        <section className="payment-meeting-guide" aria-labelledby="payment-meeting-title">
-          <div className="payment-meeting-copy">
-            <p className="payment-kicker">Что делать в день оказания услуги</p>
-            <h2 id="payment-meeting-title">Место встречи в аэропорту</h2>
-            <p>
-              После заказа услуги в назначенный день сотрудник иммиграции будет ждать вас у стойки информации,
-              которая находится в главном холе прилета перед стойками иммиграционного контроля
-            </p>
-          </div>
-          <figure className="payment-meeting-image">
-            <img
-              src="/arrival-meeting-point.jpg"
-              alt="Information desk and Meet Here sign at Phuket airport arrival hall"
-              loading="eager"
-              width="1536"
-              height="1152"
-            />
-          </figure>
-        </section>
-
         <div className="payment-layout">
           <form className="payment-widget" onSubmit={submitPayment}>
             <div className="payment-heading">

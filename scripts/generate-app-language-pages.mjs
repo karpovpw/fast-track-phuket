@@ -65,6 +65,17 @@ const renderLicenseNotice = (t) => `        <section class="license-panel seo-ap
           </div>
         </section>`;
 
+const renderArrivalMeetingNotice = (t) => `        <section class="seo-app-meeting" aria-labelledby="seo-meeting-title">
+          <div>
+            <p class="seo-app-eyebrow">${escapeHtml(t['meeting.badge'])}</p>
+            <h2 id="seo-meeting-title">${escapeHtml(t['meeting.title'])}</h2>
+            <p>${escapeHtml(t['meeting.desc'])}</p>
+          </div>
+          <figure>
+            <img src="/arrival-meeting-point.png" alt="${escapeHtml(t['meeting.imageAlt'])}" loading="lazy" width="1368" height="1149" decoding="async" />
+          </figure>
+        </section>`;
+
 const renderStructuredData = (language, t, url) => {
   const faqItems = [1, 2, 3, 4, 5, 6].map((index) => ({
     '@type': 'Question',
@@ -233,6 +244,8 @@ ${item.features.map((feature) => `                <li>${escapeHtml(feature)}</li
             </article>`).join('\n')}
           </div>
         </section>
+
+${renderArrivalMeetingNotice(t)}
 
         <section>
           <h2>${escapeHtml(t['compare.title'])}</h2>

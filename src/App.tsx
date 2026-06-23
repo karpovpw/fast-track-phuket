@@ -5,7 +5,7 @@ import {
   Globe, MessageCircle, Star, Building,
   ChevronDown, Send, X, Check, ArrowRight,
   Coins, CreditCard, Quote, Phone,
-  ShieldCheck
+  ShieldCheck, MapPin
 } from 'lucide-react';
 import './index.css';
 import PaymentTestPage from './PaymentTestPage';
@@ -345,6 +345,36 @@ function LandingPage() {
             );
             })}
           </div>
+        </div>
+      </section>
+
+      <section className="arrival-meeting-section" aria-labelledby="arrival-meeting-title">
+        <div className="container">
+          <motion.div
+            className="arrival-meeting-panel"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="arrival-meeting-copy">
+              <div className="arrival-meeting-kicker">
+                <MapPin size={20} />
+                <span>{t('meeting.badge')}</span>
+              </div>
+              <h2 id="arrival-meeting-title">{t('meeting.title')}</h2>
+              <p>{t('meeting.desc')}</p>
+            </div>
+            <figure className="arrival-meeting-image">
+              <img
+                src="/arrival-meeting-point.png"
+                alt={t('meeting.imageAlt')}
+                loading="lazy"
+                width="1368"
+                height="1149"
+                decoding="async"
+              />
+            </figure>
+          </motion.div>
         </div>
       </section>
 

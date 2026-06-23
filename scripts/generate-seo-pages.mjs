@@ -406,6 +406,17 @@ const renderLicenseNotice = (t) => `      <section class="license-notice" aria-l
         </div>
       </section>`;
 
+const renderArrivalMeetingNotice = (t) => `      <section class="meeting-notice" aria-labelledby="meeting-title">
+        <div>
+          <p class="eyebrow">${escapeHtml(t['meeting.badge'])}</p>
+          <h2 id="meeting-title">${escapeHtml(t['meeting.title'])}</h2>
+          <p>${escapeHtml(t['meeting.desc'])}</p>
+        </div>
+        <figure>
+          <img src="/arrival-meeting-point.png" alt="${escapeHtml(t['meeting.imageAlt'])}" loading="lazy" width="1368" height="1149" decoding="async" />
+        </figure>
+      </section>`;
+
 const englishLocale = loadLocale('en');
 
 const alternateLinksHtml = () => [
@@ -622,6 +633,8 @@ ${card.features.map((feature) => `              <li>${escapeHtml(feature)}</li>`
           </article>`).join('\n')}
         </div>
       </section>
+
+${renderArrivalMeetingNotice(t)}
 
       <section>
         <h2>${escapeHtml(t['packages.title'])}</h2>

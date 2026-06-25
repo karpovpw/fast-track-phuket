@@ -368,7 +368,6 @@ const createPaymentUrl = async (env, request, order) => {
   ].join('; ');
 
   const payload = {
-    order_id: order.orderId,
     customer_email: order.email,
     products: [
       {
@@ -387,11 +386,12 @@ const createPaymentUrl = async (env, request, order) => {
     payments_limit: '1',
     installments_disabled: '1',
     callbackType: 'json',
+    _param_order_id: order.orderId,
   };
 
   if (env.PRODAMUS_SYS) {
     payload.sys = env.PRODAMUS_SYS;
-    payload.urlNotification = `${origin}/api/prodamus-webhook`;
+    payload.urlNotification = `${origin}/api/prodamus-webhook?order_id=${encodeURIComponent(order.orderId)}`;
   }
 
   if (env.PRODAMUS_PAYMENT_METHOD) {
@@ -555,12 +555,15 @@ const parseWebhookBody = async (request) => {
   return { payload: flatPayload, signatureCandidates: [flatPayload] };
 };
 
-const extractOrderId = (payload) => {
+const extractOrderId = (payload, fallbackOrderId = '') => {
   const submit = payload && typeof payload === 'object' ? payload.submit : null;
-  return payload?.order_num
+  return payload?._param_order_id
+    || submit?._param_order_id
+    || fallbackOrderId
     || payload?.order_id
-    || submit?.order_num
     || submit?.order_id
+    || payload?.order_num
+    || submit?.order_num
     || '';
 };
 
@@ -603,7 +606,8 @@ const handleProdamusWebhook = async (request, env) => {
     throw new HttpError(401, 'Invalid Prodamus signature.');
   }
 
-  const orderId = extractOrderId(payload);
+  const fallbackOrderId = new URL(request.url).searchParams.get('order_id') || '';
+  const orderId = extractOrderId(payload, fallbackOrderId);
   const providerOrderId = extractProviderOrderId(payload);
   const paymentStatus = extractPaymentStatus(payload);
   const now = new Date().toISOString();

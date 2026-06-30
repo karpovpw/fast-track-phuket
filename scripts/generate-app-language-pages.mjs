@@ -28,13 +28,22 @@ const thbPrices = {
   combo: { single: 3300, group: 3100, child: 1650 },
 };
 
+const thbToRubRate = 2.33299;
 const faqItemIndexes = [1, 3, 4, 6];
 
-const priceCurrency = 'THB';
+const priceCurrencyFor = (languageCode) => languageCode === 'ru' ? 'RUB' : 'THB';
 
-const roundedLocalizedAmount = (thbAmount) => thbAmount;
+const roundedLocalizedAmount = (thbAmount, languageCode) => (
+  languageCode === 'ru' ? Math.round((thbAmount * thbToRubRate) / 100) * 100 : thbAmount
+);
 
-const formatLocalizedPrice = (thbAmount) => {
+const formatLocalizedPrice = (thbAmount, languageCode) => {
+  if (languageCode === 'ru') {
+    return `${new Intl.NumberFormat('ru-RU', {
+      maximumFractionDigits: 0,
+    }).format(roundedLocalizedAmount(thbAmount, languageCode))} ₽`;
+  }
+
   return `THB ${new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 0,
   }).format(thbAmount)}`;
@@ -149,7 +158,7 @@ const renderStructuredData = (language, t, url) => {
             '@type': 'Offer',
             name: t['packages.arr.title'],
             price: String(roundedLocalizedAmount(thbPrices.arr.group, language.code)),
-            priceCurrency,
+            priceCurrency: priceCurrencyFor(language.code),
             url: `${BASE_URL}/arrival-fast-track/`,
             availability: 'https://schema.org/InStock',
           },
@@ -157,7 +166,7 @@ const renderStructuredData = (language, t, url) => {
             '@type': 'Offer',
             name: t['packages.dep.title'],
             price: String(roundedLocalizedAmount(thbPrices.dep.group, language.code)),
-            priceCurrency,
+            priceCurrency: priceCurrencyFor(language.code),
             url: `${BASE_URL}/departure-vip/`,
             availability: 'https://schema.org/InStock',
           },
@@ -165,7 +174,7 @@ const renderStructuredData = (language, t, url) => {
             '@type': 'Offer',
             name: t['packages.combo.title'],
             price: String(roundedLocalizedAmount(thbPrices.combo.group, language.code)),
-            priceCurrency,
+            priceCurrency: priceCurrencyFor(language.code),
             url: `${BASE_URL}/phuket-airport-fast-track-prices/`,
             availability: 'https://schema.org/InStock',
           },
@@ -305,7 +314,19 @@ const injectRootFallback = (html, language, locale) => html.replace(
   renderRootFallback(language, locale),
 );
 
-const localizeShellPrices = (html) => html;
+const localizeShellPrices = (html, language) => {
+  if (language.code !== 'ru') return html;
+
+  return html
+    .replaceAll('THB 1,600', '3 700 ₽')
+    .replaceAll('THB 1,700', '4 000 ₽')
+    .replaceAll('THB 3,100', '7 200 ₽')
+    .replaceAll('"currenciesAccepted": "THB"', '"currenciesAccepted": "RUB"')
+    .replaceAll('"price": "1600"', '"price": "3700"')
+    .replaceAll('"price": "1700"', '"price": "4000"')
+    .replaceAll('"price": "3100"', '"price": "7200"')
+    .replaceAll('"priceCurrency": "THB"', '"priceCurrency": "RUB"');
+};
 
 const englishLanguage = languages.find((language) => language.code === 'en');
 const englishLocale = JSON.parse(fs.readFileSync(path.join(localeDir, 'en.json'), 'utf8'));

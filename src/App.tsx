@@ -32,12 +32,21 @@ const thbPrices: Record<PackageCode, { single: number; group: number; child: num
   combo: { single: 3300, group: 3100, child: 1650, original: 3500 },
 };
 
+const thbToRubRate = 2.33299;
 const selectedLanguageStorageKey = 'fasttrack.selectedLanguage';
 
 const formatThaiBahtPrice = (thbAmount: number) => {
   return `THB ${new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 0,
   }).format(thbAmount)}`;
+};
+
+const roundRussianRublePrice = (thbAmount: number) => Math.round((thbAmount * thbToRubRate) / 100) * 100;
+
+const formatRussianRublePrice = (thbAmount: number) => {
+  return `${new Intl.NumberFormat('ru-RU', {
+    maximumFractionDigits: 0,
+  }).format(roundRussianRublePrice(thbAmount))} ₽`;
 };
 
 const SimpleModal = ({ isOpen, onClose, title, children, highlight = false }: SimpleModalProps) => {
@@ -93,7 +102,12 @@ function LandingPage() {
     window.location.assign(getLanguagePath(code));
   };
 
-  const priceFor = (amount: number) => formatThaiBahtPrice(amount);
+  const currentLanguage = i18n.resolvedLanguage || i18n.language || 'en';
+  const isRussianLanguage = currentLanguage.split('-')[0] === 'ru';
+  const priceFor = (amount: number) => (
+    isRussianLanguage ? formatRussianRublePrice(amount) : formatThaiBahtPrice(amount)
+  );
+  const perPassengerLabel = isRussianLanguage ? ' / чел.' : ' / pax';
   const footerRequisites = t('footer.requisites');
 
   const totalPrice = useMemo(() => {
@@ -449,7 +463,7 @@ function LandingPage() {
                         <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{t('packages.arr.title')}</div>
                       </td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>{priceFor(thbPrices.arr.single)}</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>{priceFor(thbPrices.arr.group)} / pax</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>{priceFor(thbPrices.arr.group)}{perPassengerLabel}</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>{priceFor(thbPrices.arr.child)}</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: '#25D366', fontWeight: 700 }}>{t('packages.price.infant')}</td>
                    </tr>
@@ -458,7 +472,7 @@ function LandingPage() {
                         <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{t('packages.dep.title')}</div>
                      </td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>{priceFor(thbPrices.dep.single)}</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>{priceFor(thbPrices.dep.group)} / pax</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>{priceFor(thbPrices.dep.group)}{perPassengerLabel}</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>{priceFor(thbPrices.dep.child)}</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: '#25D366', fontWeight: 700 }}>{t('packages.price.infant')}</td>
                    </tr>
@@ -467,7 +481,7 @@ function LandingPage() {
                         <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{t('packages.combo.title')}</div>
                      </td>
                      <td style={{ padding: '1.5rem', fontSize: '1.2rem', fontWeight: 600 }}>{priceFor(thbPrices.combo.single)}</td>
-                     <td style={{ padding: '1.5rem', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>{priceFor(thbPrices.combo.group)} / pax</td>
+                     <td style={{ padding: '1.5rem', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>{priceFor(thbPrices.combo.group)}{perPassengerLabel}</td>
                      <td style={{ padding: '1.5rem' }}>{priceFor(thbPrices.combo.child)}</td>
                      <td style={{ padding: '1.5rem', color: '#25D366', fontWeight: 700 }}>{t('packages.price.infant')}</td>
                    </tr>

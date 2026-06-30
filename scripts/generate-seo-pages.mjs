@@ -33,13 +33,22 @@ const thbPrices = {
   combo: { single: 3300, group: 3100, child: 1650 },
 };
 
+const thbToRubRate = 2.33299;
 const faqItemIndexes = [1, 3, 4, 6];
 
-const priceCurrency = 'THB';
+const priceCurrencyFor = (languageCode) => languageCode === 'ru' ? 'RUB' : 'THB';
 
-const roundedLocalizedAmount = (thbAmount) => thbAmount;
+const roundedLocalizedAmount = (thbAmount, languageCode) => (
+  languageCode === 'ru' ? Math.round((thbAmount * thbToRubRate) / 100) * 100 : thbAmount
+);
 
-const formatLocalizedPrice = (thbAmount) => {
+const formatLocalizedPrice = (thbAmount, languageCode = 'en') => {
+  if (languageCode === 'ru') {
+    return `${new Intl.NumberFormat('ru-RU', {
+      maximumFractionDigits: 0,
+    }).format(roundedLocalizedAmount(thbAmount, languageCode))} ₽`;
+  }
+
   return `THB ${new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 0,
   }).format(thbAmount)}`;
@@ -502,7 +511,7 @@ const renderStructuredData = (language, t, url) => {
           '@type': 'Offer',
           name: t['packages.arr.title'],
           price: String(roundedLocalizedAmount(thbPrices.arr.group, language.code)),
-          priceCurrency,
+          priceCurrency: priceCurrencyFor(language.code),
           url: `${BASE_URL}/arrival-fast-track/`,
           availability: 'https://schema.org/InStock',
         },
@@ -510,7 +519,7 @@ const renderStructuredData = (language, t, url) => {
           '@type': 'Offer',
           name: t['packages.dep.title'],
           price: String(roundedLocalizedAmount(thbPrices.dep.group, language.code)),
-          priceCurrency,
+          priceCurrency: priceCurrencyFor(language.code),
           url: `${BASE_URL}/departure-vip/`,
           availability: 'https://schema.org/InStock',
         },
@@ -518,7 +527,7 @@ const renderStructuredData = (language, t, url) => {
           '@type': 'Offer',
           name: t['packages.combo.title'],
           price: String(roundedLocalizedAmount(thbPrices.combo.group, language.code)),
-          priceCurrency,
+          priceCurrency: priceCurrencyFor(language.code),
           url: `${BASE_URL}/phuket-airport-fast-track-prices/`,
           availability: 'https://schema.org/InStock',
         },

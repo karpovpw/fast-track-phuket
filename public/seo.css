@@ -170,6 +170,15 @@ li {
   object-fit: cover;
 }
 
+.page-heading {
+  margin-bottom: 28px;
+}
+
+.page-heading p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+}
+
 .fact-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));

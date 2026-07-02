@@ -2640,18 +2640,11 @@ ${renderBlogIndexStructuredData(language, localizedPages)}
   <body>
 ${renderBlogNav(language, t)}
     <main>
-      <section class="hero">
-        <div>
-          <p class="eyebrow">HKT airport guides · ${escapeHtml(ui.updated)} ${LASTMOD}</p>
-          <h1>${escapeHtml(ui.hubTitle)}</h1>
-          <p>${escapeHtml(ui.hubIntro)}</p>
-          <div class="cta">
-            <a class="button" href="https://wa.me/66618016793">${escapeHtml(ui.bookWhatsApp)}</a>
-            <a class="button" href="https://t.me/fast_track_phuket">${escapeHtml(ui.bookTelegram)}</a>
-          </div>
-        </div>
-        <img src="/hkt-airport.png" alt="Phuket International Airport HKT" width="640" height="640" fetchpriority="high" decoding="async" />
-      </section>
+      <header class="page-heading">
+        <p class="eyebrow">HKT airport guides · ${escapeHtml(ui.updated)} ${LASTMOD}</p>
+        <h1>${escapeHtml(ui.hubTitle)}</h1>
+        <p>${escapeHtml(ui.hubIntro)}</p>
+      </header>
 
 ${renderLicenseNotice(t)}
 
@@ -2715,17 +2708,10 @@ ${renderBlogStructuredData(localizedPage, url, language)}
 ${renderBlogNav(language, t)}
     <main>
       <article>
-        <header class="hero">
-          <div>
-            <p class="eyebrow">${escapeHtml(ui.guideKicker)} · ${escapeHtml(ui.updated)} ${LASTMOD}</p>
-            <h1>${escapeHtml(localizedPage.title)}</h1>
-            <p>${escapeHtml(localizedPage.summary)}</p>
-            <div class="cta">
-              <a class="button" href="https://wa.me/66618016793">${escapeHtml(ui.askWhatsApp)}</a>
-              <a class="button" href="https://t.me/fast_track_phuket">${escapeHtml(ui.askTelegram)}</a>
-            </div>
-          </div>
-          <img src="/hkt-airport.png" alt="${escapeHtml(localizedPage.title)}" width="640" height="640" fetchpriority="high" decoding="async" />
+        <header class="page-heading">
+          <p class="eyebrow">${escapeHtml(ui.guideKicker)} · ${escapeHtml(ui.updated)} ${LASTMOD}</p>
+          <h1>${escapeHtml(localizedPage.title)}</h1>
+          <p>${escapeHtml(localizedPage.summary)}</p>
         </header>
 
         <section class="fact-grid" aria-label="Guide topics">

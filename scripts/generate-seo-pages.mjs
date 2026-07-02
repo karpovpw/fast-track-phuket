@@ -2641,7 +2641,6 @@ ${renderBlogIndexStructuredData(language, localizedPages)}
 ${renderBlogNav(language, t)}
     <main>
       <header class="page-heading">
-        <p class="eyebrow">HKT airport guides · ${escapeHtml(ui.updated)} ${LASTMOD}</p>
         <h1>${escapeHtml(ui.hubTitle)}</h1>
         <p>${escapeHtml(ui.hubIntro)}</p>
       </header>
@@ -2709,7 +2708,6 @@ ${renderBlogNav(language, t)}
     <main>
       <article>
         <header class="page-heading">
-          <p class="eyebrow">${escapeHtml(ui.guideKicker)} · ${escapeHtml(ui.updated)} ${LASTMOD}</p>
           <h1>${escapeHtml(localizedPage.title)}</h1>
           <p>${escapeHtml(localizedPage.summary)}</p>
         </header>

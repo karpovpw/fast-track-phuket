@@ -322,7 +322,7 @@ function LandingPage() {
                          </span>
                          <span className="price-value">{priceFor(packagePrice.child)}</span>
                        </div>
-                       <div className="price-col">
+                       <div className="price-col price-free-col">
                          <span className="price-label">
                            {t('packages.th5').split('|')[0]}
                          </span>

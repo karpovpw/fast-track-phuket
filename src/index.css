@@ -654,6 +654,16 @@ td.cross { color: #ef4444; }
   align-items: center;
   gap: 0.4rem;
 }
+.price-free-col {
+  grid-column: 1 / -1;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 0.6rem;
+}
+.price-free span {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
 
 .package-main-price,
 .calculator-total-price {
@@ -784,8 +794,7 @@ td.cross { color: #ef4444; }
   min-width: 0;
 }
 
-.price-label,
-.price-free span {
+.price-label {
   overflow-wrap: anywhere;
 }
 

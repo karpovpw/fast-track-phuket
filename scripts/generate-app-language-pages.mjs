@@ -1,69 +1,32 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-
-const BASE_URL = 'https://fast-track-phuket.com';
+import {
+  BASE_URL,
+  BUSINESS,
+  languages,
+  thbPrices,
+  faqItemIndexes,
+  priceCurrencyFor,
+  roundedLocalizedAmount,
+  formatLocalizedPrice,
+  escapeHtml,
+  splitList,
+  languageUrl,
+  localBusinessNode,
+  webSiteNode,
+  serializeJsonLd,
+} from './site-shared.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..');
 const distDir = path.join(projectRoot, 'dist');
 const localeDir = path.join(projectRoot, 'src', 'locales');
 
-const languages = [
-  { code: 'en', htmlLang: 'en', dir: 'ltr', ogLocale: 'en_US' },
-  { code: 'ru', htmlLang: 'ru', dir: 'ltr', ogLocale: 'ru_RU' },
-  { code: 'zh', htmlLang: 'zh', dir: 'ltr', ogLocale: 'zh_CN' },
-  { code: 'hi', htmlLang: 'hi', dir: 'ltr', ogLocale: 'hi_IN' },
-  { code: 'he', htmlLang: 'he', dir: 'rtl', ogLocale: 'he_IL' },
-  { code: 'ar', htmlLang: 'ar', dir: 'rtl', ogLocale: 'ar_AR' },
-  { code: 'es', htmlLang: 'es', dir: 'ltr', ogLocale: 'es_ES' },
-  { code: 'fr', htmlLang: 'fr', dir: 'ltr', ogLocale: 'fr_FR' },
-  { code: 'de', htmlLang: 'de', dir: 'ltr', ogLocale: 'de_DE' },
-  { code: 'it', htmlLang: 'it', dir: 'ltr', ogLocale: 'it_IT' },
-];
-
-const thbPrices = {
-  arr: { adult: 1900, child: 900 },
-  dep: { adult: 1900, child: 900 },
-  combo: { adult: 3600, child: 1800 },
-};
-
-const thbToRubRate = 2.33299;
-const faqItemIndexes = [1, 3, 4, 6];
-
-const priceCurrencyFor = (languageCode) => languageCode === 'ru' ? 'RUB' : 'THB';
-
-const roundedLocalizedAmount = (thbAmount, languageCode) => (
-  languageCode === 'ru' ? Math.round((thbAmount * thbToRubRate) / 100) * 100 : thbAmount
-);
-
-const formatLocalizedPrice = (thbAmount, languageCode) => {
-  if (languageCode === 'ru') {
-    return `${new Intl.NumberFormat('ru-RU', {
-      maximumFractionDigits: 0,
-    }).format(roundedLocalizedAmount(thbAmount, languageCode))} ₽`;
-  }
-
-  return `THB ${new Intl.NumberFormat('en-US', {
-    maximumFractionDigits: 0,
-  }).format(thbAmount)}`;
-};
-
-const escapeHtml = (value) => String(value)
-  .replaceAll('&', '&amp;')
-  .replaceAll('<', '&lt;')
-  .replaceAll('>', '&gt;')
-  .replaceAll('"', '&quot;')
-  .replaceAll("'", '&#39;');
-
-const splitList = (value) => String(value || '').split('|').filter(Boolean);
-
 const replaceTag = (html, pattern, replacement) => html.replace(pattern, replacement);
 
 const appHtmlPath = path.join(distDir, 'index.html');
 const appHtml = fs.readFileSync(appHtmlPath, 'utf8');
-
-const languageUrl = (code) => code === 'en' ? `${BASE_URL}/` : `${BASE_URL}/${code}/`;
 
 const renderLicenseNotice = (t) => `        <section class="license-panel seo-app-license" aria-labelledby="seo-license-title">
           <figure class="license-image-card">
@@ -73,6 +36,7 @@ const renderLicenseNotice = (t) => `        <section class="license-panel seo-ap
             <p class="license-kicker">${escapeHtml(t['license.badge'])}</p>
             <h2 id="seo-license-title">${escapeHtml(t['license.title'])}</h2>
             <p>${escapeHtml(t['license.desc'])}</p>
+            <p class="license-id">TAT License No. 11/07698 · ILVES TOUR CO., LTD.</p>
           </div>
         </section>`;
 
@@ -93,6 +57,9 @@ const renderArrivalMeetingNotice = (t) => `        <section class="seo-app-meeti
           </figure>
         </section>`;
 
+// The one and only JSON-LD graph for the home page of each language.
+// index.html deliberately carries no schema of its own — everything lives
+// here so entity data cannot drift between head and body copies.
 const renderStructuredData = (language, t, url) => {
   const faqItems = faqItemIndexes.map((index) => ({
     '@type': 'Question',
@@ -103,9 +70,11 @@ const renderStructuredData = (language, t, url) => {
     },
   }));
 
-  return JSON.stringify({
+  return serializeJsonLd({
     '@context': 'https://schema.org',
     '@graph': [
+      webSiteNode(),
+      localBusinessNode(),
       {
         '@type': 'WebPage',
         '@id': `${url}#webpage`,
@@ -113,18 +82,11 @@ const renderStructuredData = (language, t, url) => {
         name: t['hero.title'],
         description: t['hero.subtitle'],
         inLanguage: language.htmlLang,
-        isPartOf: {
-          '@type': 'WebSite',
-          '@id': `${BASE_URL}/#website`,
-          name: 'VIP Fast Track Phuket Airport (HKT)',
-          url: `${BASE_URL}/`,
-        },
-        about: {
-          '@id': `${BASE_URL}/#service`,
-        },
+        isPartOf: { '@id': `${BASE_URL}/#website` },
+        about: { '@id': `${BASE_URL}/#service` },
         primaryImageOfPage: {
           '@type': 'ImageObject',
-          url: `${BASE_URL}/hkt-airport.png`,
+          url: BUSINESS.imageUrl,
         },
       },
       {
@@ -133,24 +95,11 @@ const renderStructuredData = (language, t, url) => {
         name: t['hero.title'],
         serviceType: 'Airport VIP fast track meet and assist',
         description: t['hero.subtitle'],
-        provider: {
-          '@type': 'LocalBusiness',
-          '@id': `${BASE_URL}/#business`,
-          name: 'VIP Fast Track Phuket Airport (HKT)',
-          url: `${BASE_URL}/`,
-          telephone: '+66 6-1801-6793',
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: '222 Mai Khao, Thalang District',
-            addressLocality: 'Phuket',
-            postalCode: '83110',
-            addressCountry: 'TH',
-          },
-        },
+        provider: { '@id': `${BASE_URL}/#business` },
         areaServed: {
           '@type': 'Airport',
-          name: 'Phuket International Airport',
-          iataCode: 'HKT',
+          name: BUSINESS.airport.name,
+          iataCode: BUSINESS.airport.iataCode,
         },
         availableLanguage: languages.map((item) => item.htmlLang),
         offers: [
@@ -187,7 +136,7 @@ const renderStructuredData = (language, t, url) => {
         mainEntity: faqItems,
       },
     ],
-  }, null, 2).replaceAll('<', '\\u003c');
+  });
 };
 
 const renderRootFallback = (language, t) => {
@@ -235,9 +184,9 @@ ${topicLinks.map((link) => `          <a href="${link.url}">${escapeHtml(link.la
           <h1>${escapeHtml(t['hero.title'])}</h1>
           <p>${escapeHtml(t['hero.subtitle'])}</p>
           <div class="seo-app-cta">
-            <a href="https://wa.me/66618016793">${escapeHtml(t['hero.cta.wa'])}</a>
-            <a href="https://t.me/fast_track_phuket">${escapeHtml(t['hero.cta.tg'])}</a>
-            <a href="tel:+66618016793">+66 6-1801-6793</a>
+            <a href="${BUSINESS.whatsappUrl}">${escapeHtml(t['hero.cta.wa'])}</a>
+            <a href="${BUSINESS.telegramUrl}">${escapeHtml(t['hero.cta.tg'])}</a>
+            <a href="${BUSINESS.phoneHref}">${BUSINESS.telephone}</a>
           </div>
         </section>
 
@@ -309,26 +258,16 @@ ${renderStructuredData(language, t, url)}
     </div>`;
 };
 
+// seo-fallback markers let generate-payment-route-fallbacks.mjs strip the
+// prerendered content back out without depending on the markup inside.
 const injectRootFallback = (html, language, locale) => html.replace(
   /<div id="root"><\/div>/,
-  renderRootFallback(language, locale),
+  `<!-- seo-fallback:start -->${renderRootFallback(language, locale)}<!-- seo-fallback:end -->`,
 );
-
-const localizeShellPrices = (html, language) => {
-  if (language.code !== 'ru') return html;
-
-  return html
-    .replaceAll('THB 1,900', '4 400 ₽')
-    .replaceAll('THB 3,600', '8 400 ₽')
-    .replaceAll('"currenciesAccepted": "THB"', '"currenciesAccepted": "RUB"')
-    .replaceAll('"price": "1900"', '"price": "4400"')
-    .replaceAll('"price": "3600"', '"price": "8400"')
-    .replaceAll('"priceCurrency": "THB"', '"priceCurrency": "RUB"');
-};
 
 const englishLanguage = languages.find((language) => language.code === 'en');
 const englishLocale = JSON.parse(fs.readFileSync(path.join(localeDir, 'en.json'), 'utf8'));
-fs.writeFileSync(appHtmlPath, localizeShellPrices(injectRootFallback(appHtml, englishLanguage, englishLocale), englishLanguage));
+fs.writeFileSync(appHtmlPath, injectRootFallback(appHtml, englishLanguage, englishLocale));
 
 for (const language of languages.filter((item) => item.code !== 'en')) {
   const locale = JSON.parse(fs.readFileSync(path.join(localeDir, `${language.code}.json`), 'utf8'));
@@ -336,7 +275,7 @@ for (const language of languages.filter((item) => item.code !== 'en')) {
   const title = `${locale['hero.title']} | VIP Fast Track Phuket Airport (HKT)`;
   const description = locale['hero.subtitle'];
 
-  let localizedHtml = localizeShellPrices(injectRootFallback(appHtml, language, locale), language);
+  let localizedHtml = injectRootFallback(appHtml, language, locale);
 
   localizedHtml = replaceTag(
     localizedHtml,

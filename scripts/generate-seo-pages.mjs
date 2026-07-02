@@ -1,12 +1,24 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import {
+  BASE_URL,
+  BUSINESS,
+  languages,
+  thbPrices,
+  faqItemIndexes,
+  priceCurrencyFor,
+  roundedLocalizedAmount,
+  formatLocalizedPrice,
+  escapeHtml,
+  splitList,
+  languageUrl,
+  localBusinessNode,
+  serializeJsonLd,
+} from './site-shared.mjs';
 
-const BASE_URL = 'https://fast-track-phuket.com';
-// Sitemap lastmod / dateModified track the actual build so freshness is honest;
-// datePublished stays fixed so guide articles keep a stable original publish date.
-const LASTMOD = new Date().toISOString().slice(0, 10);
-const PUBLISHED = '2026-06-05';
+const TODAY = new Date().toISOString().slice(0, 10);
 const HERO_IMAGE = `${BASE_URL}/hkt-airport.png`;
 const FEED_URL = `${BASE_URL}/feed.xml`;
 
@@ -15,44 +27,44 @@ const projectRoot = path.resolve(__dirname, '..');
 const publicDir = path.join(projectRoot, 'public');
 const localeDir = path.join(projectRoot, 'src', 'locales');
 
-const languages = [
-  { code: 'en', name: 'English', htmlLang: 'en', dir: 'ltr', ogLocale: 'en_US' },
-  { code: 'ru', name: 'Русский', htmlLang: 'ru', dir: 'ltr', ogLocale: 'ru_RU' },
-  { code: 'zh', name: '中文', htmlLang: 'zh', dir: 'ltr', ogLocale: 'zh_CN' },
-  { code: 'hi', name: 'हिन्दी', htmlLang: 'hi', dir: 'ltr', ogLocale: 'hi_IN' },
-  { code: 'he', name: 'עברית', htmlLang: 'he', dir: 'rtl', ogLocale: 'he_IL' },
-  { code: 'ar', name: 'العربية', htmlLang: 'ar', dir: 'rtl', ogLocale: 'ar_AR' },
-  { code: 'es', name: 'Español', htmlLang: 'es', dir: 'ltr', ogLocale: 'es_ES' },
-  { code: 'fr', name: 'Français', htmlLang: 'fr', dir: 'ltr', ogLocale: 'fr_FR' },
-  { code: 'de', name: 'Deutsch', htmlLang: 'de', dir: 'ltr', ogLocale: 'de_DE' },
-  { code: 'it', name: 'Italiano', htmlLang: 'it', dir: 'ltr', ogLocale: 'it_IT' },
-];
+// Honest freshness dates. Every generated file records a content hash in
+// scripts/seo-dates.json; its lastmod/dateModified only advances to today when
+// the rendered content (with the date stamps still tokenized) actually changed.
+// Stamping every URL with the build date teaches Google to distrust lastmod.
+const datesPath = path.join(__dirname, 'seo-dates.json');
+const datesManifest = fs.existsSync(datesPath)
+  ? JSON.parse(fs.readFileSync(datesPath, 'utf8'))
+  : { urls: {}, published: {} };
 
-const thbPrices = {
-  arr: { adult: 1900, child: 900 },
-  dep: { adult: 1900, child: 900 },
-  combo: { adult: 3600, child: 1800 },
+// Render functions emit these tokens via the LASTMOD/PUBLISHED constants; the
+// tokens are hashed as-is, then substituted with real dates on write.
+const LASTMOD = '__SEO_LASTMOD__';
+const PUBLISHED = '__SEO_PUBLISHED__';
+
+const contentHash = (value) => crypto.createHash('sha1').update(value).digest('hex');
+
+const resolveLastmod = (key, hashInput) => {
+  const hash = contentHash(hashInput);
+  const entry = datesManifest.urls[key];
+  if (entry && entry.hash === hash) return entry.lastmod;
+  datesManifest.urls[key] = { hash, lastmod: TODAY };
+  return TODAY;
 };
 
-const thbToRubRate = 2.33299;
-const faqItemIndexes = [1, 3, 4, 6];
+const resolvePublished = (slug) => {
+  if (!datesManifest.published[slug]) datesManifest.published[slug] = TODAY;
+  return datesManifest.published[slug];
+};
 
-const priceCurrencyFor = (languageCode) => languageCode === 'ru' ? 'RUB' : 'THB';
+// Per-URL lastmod values collected while writing pages, consumed by the sitemap.
+const lastmodByLoc = new Map();
 
-const roundedLocalizedAmount = (thbAmount, languageCode) => (
-  languageCode === 'ru' ? Math.round((thbAmount * thbToRubRate) / 100) * 100 : thbAmount
-);
-
-const formatLocalizedPrice = (thbAmount, languageCode = 'en') => {
-  if (languageCode === 'ru') {
-    return `${new Intl.NumberFormat('ru-RU', {
-      maximumFractionDigits: 0,
-    }).format(roundedLocalizedAmount(thbAmount, languageCode))} ₽`;
-  }
-
-  return `THB ${new Intl.NumberFormat('en-US', {
-    maximumFractionDigits: 0,
-  }).format(thbAmount)}`;
+const finalizeDatedFile = (key, content, publishedDate) => {
+  const lastmod = resolveLastmod(key, content);
+  lastmodByLoc.set(key, lastmod);
+  return content
+    .replaceAll(LASTMOD, lastmod)
+    .replaceAll(PUBLISHED, publishedDate || lastmod);
 };
 
 const p = (packageCode, priceType) => formatLocalizedPrice(thbPrices[packageCode][priceType]);
@@ -2401,32 +2413,21 @@ const blogAlternateLinksXml = (page) => [
 ].join('\n');
 
 const supportingUrls = [
-  { loc: `${BASE_URL}/arrival-fast-track/`, priority: '0.9', changefreq: 'weekly' },
-  { loc: `${BASE_URL}/departure-vip/`, priority: '0.9', changefreq: 'weekly' },
-  { loc: `${BASE_URL}/phuket-airport-fast-track-prices/`, priority: '0.9', changefreq: 'weekly' },
-  { loc: `${BASE_URL}/tdac-guide/`, priority: '0.8', changefreq: 'weekly' },
-  { loc: `${BASE_URL}/faq/`, priority: '0.7', changefreq: 'monthly' },
-  { loc: `${BASE_URL}/llms.txt`, priority: '0.3', changefreq: 'monthly' },
-  { loc: `${BASE_URL}/llms-full.txt`, priority: '0.3', changefreq: 'monthly' },
-  { loc: `${BASE_URL}/ai.txt`, priority: '0.3', changefreq: 'monthly' },
+  { loc: `${BASE_URL}/arrival-fast-track/`, file: 'arrival-fast-track/index.html' },
+  { loc: `${BASE_URL}/departure-vip/`, file: 'departure-vip/index.html' },
+  { loc: `${BASE_URL}/phuket-airport-fast-track-prices/`, file: 'phuket-airport-fast-track-prices/index.html' },
+  { loc: `${BASE_URL}/tdac-guide/`, file: 'tdac-guide/index.html' },
+  { loc: `${BASE_URL}/faq/`, file: 'faq/index.html' },
+  { loc: `${BASE_URL}/llms.txt` },
+  { loc: `${BASE_URL}/llms-full.txt` },
+  { loc: `${BASE_URL}/ai.txt` },
 ];
-
-const languageUrl = (code) => code === 'en' ? `${BASE_URL}/` : `${BASE_URL}/${code}/`;
-
-const escapeHtml = (value) => String(value)
-  .replaceAll('&', '&amp;')
-  .replaceAll('<', '&lt;')
-  .replaceAll('>', '&gt;')
-  .replaceAll('"', '&quot;')
-  .replaceAll("'", '&#39;');
 
 const escapeXml = escapeHtml;
 
 const loadLocale = (code) => JSON.parse(
   fs.readFileSync(path.join(localeDir, `${code}.json`), 'utf8')
 );
-
-const splitList = (value) => String(value || '').split('|').filter(Boolean);
 
 const renderLicenseNotice = (t) => `      <section class="license-notice" aria-labelledby="license-title">
         <figure class="license-image-card">
@@ -2436,6 +2437,7 @@ const renderLicenseNotice = (t) => `      <section class="license-notice" aria-l
           <p class="eyebrow">${escapeHtml(t['license.badge'])}</p>
           <h2 id="license-title">${escapeHtml(t['license.title'])}</h2>
           <p>${escapeHtml(t['license.desc'])}</p>
+          <p class="license-id">TAT License No. 11/07698 · ILVES TOUR CO., LTD.</p>
         </div>
       </section>`;
 
@@ -2456,315 +2458,12 @@ const renderArrivalMeetingNotice = (t) => `      <section class="meeting-notice"
         </figure>
       </section>`;
 
-const alternateLinksHtml = () => [
-  ...languages.map((language) => (
-    `    <link rel="alternate" hreflang="${language.htmlLang}" href="${languageUrl(language.code)}" />`
-  )),
-  `    <link rel="alternate" hreflang="x-default" href="${BASE_URL}/" />`,
-].join('\n');
-
 const alternateLinksXml = () => [
   ...languages.map((language) => (
     `    <xhtml:link rel="alternate" hreflang="${language.htmlLang}" href="${languageUrl(language.code)}" />`
   )),
   `    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE_URL}/" />`,
 ].join('\n');
-
-const renderStructuredData = (language, t, url) => {
-  const faqItems = faqItemIndexes.map((index) => ({
-    '@type': 'Question',
-    name: t[`faq.${index}.q`],
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: t[`faq.${index}.a`],
-    },
-  }));
-
-  const graph = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      '@id': `${url}#webpage`,
-      url,
-      name: t['hero.title'],
-      description: t['hero.subtitle'],
-      inLanguage: language.htmlLang,
-      isPartOf: {
-        '@type': 'WebSite',
-        '@id': `${BASE_URL}/#website`,
-        url: `${BASE_URL}/`,
-        name: 'VIP Fast Track Phuket Airport (HKT)',
-      },
-      about: {
-        '@id': `${BASE_URL}/#service`,
-      },
-      primaryImageOfPage: {
-        '@type': 'ImageObject',
-        url: `${BASE_URL}/hkt-airport.png`,
-      },
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Service',
-      '@id': `${url}#service`,
-      name: t['hero.title'],
-      serviceType: 'Airport VIP fast track meet and assist',
-      description: t['hero.subtitle'],
-      provider: {
-        '@type': 'LocalBusiness',
-        '@id': `${BASE_URL}/#business`,
-        name: 'VIP Fast Track Phuket Airport (HKT)',
-        url: `${BASE_URL}/`,
-        telephone: '+66 6-1801-6793',
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: '222 Mai Khao, Thalang District',
-          addressLocality: 'Phuket',
-          postalCode: '83110',
-          addressCountry: 'TH',
-        },
-      },
-      areaServed: {
-        '@type': 'Airport',
-        name: 'Phuket International Airport',
-        iataCode: 'HKT',
-      },
-      availableLanguage: languages.map((item) => item.htmlLang),
-      offers: [
-        {
-          '@type': 'Offer',
-          name: t['packages.arr.title'],
-          price: String(roundedLocalizedAmount(thbPrices.arr.adult, language.code)),
-          priceCurrency: priceCurrencyFor(language.code),
-          url: `${BASE_URL}/arrival-fast-track/`,
-          availability: 'https://schema.org/InStock',
-        },
-        {
-          '@type': 'Offer',
-          name: t['packages.dep.title'],
-          price: String(roundedLocalizedAmount(thbPrices.dep.adult, language.code)),
-          priceCurrency: priceCurrencyFor(language.code),
-          url: `${BASE_URL}/departure-vip/`,
-          availability: 'https://schema.org/InStock',
-        },
-        {
-          '@type': 'Offer',
-          name: t['packages.combo.title'],
-          price: String(roundedLocalizedAmount(thbPrices.combo.adult, language.code)),
-          priceCurrency: priceCurrencyFor(language.code),
-          url: `${BASE_URL}/phuket-airport-fast-track-prices/`,
-          availability: 'https://schema.org/InStock',
-        },
-      ],
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      '@id': `${url}#faq`,
-      inLanguage: language.htmlLang,
-      mainEntity: faqItems,
-    },
-  ];
-
-  return JSON.stringify(graph, null, 2).replaceAll('<', '\\u003c');
-};
-
-const renderLanguagePage = (language, t) => {
-  const url = languageUrl(language.code);
-  const title = `${t['hero.title']} | VIP Fast Track Phuket Airport (HKT)`;
-  const description = t['hero.subtitle'];
-  const blogUi = blogUiFor(language.code);
-  const blogHref = language.code === 'en' ? '/blog/' : `/${language.code}/blog/`;
-  const facts = [
-    t['takeaways.1'],
-    t['takeaways.3'],
-    t['takeaways.5'],
-    t['takeaways.0'],
-  ];
-  const packageCards = [
-    {
-      title: t['packages.arr.title'],
-      description: t['packages.arr.desc'],
-      features: splitList(t['packages.arr.features']),
-      price: formatLocalizedPrice(thbPrices.arr.adult, language.code),
-      url: '/arrival-fast-track/',
-    },
-    {
-      title: t['packages.dep.title'],
-      description: t['packages.dep.desc'],
-      features: splitList(t['packages.dep.features']),
-      price: formatLocalizedPrice(thbPrices.dep.adult, language.code),
-      url: '/departure-vip/',
-    },
-    {
-      title: t['packages.combo.title'],
-      description: t['packages.combo.desc'],
-      features: splitList(t['packages.combo.features']),
-      price: formatLocalizedPrice(thbPrices.combo.adult, language.code),
-      url: '/phuket-airport-fast-track-prices/',
-    },
-  ];
-
-  return `<!doctype html>
-<html lang="${language.htmlLang}" dir="${language.dir}">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${escapeHtml(title)}</title>
-    <meta name="description" content="${escapeHtml(description)}" />
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-    <link rel="canonical" href="${url}" />
-    <link rel="stylesheet" href="/seo.css" />
-    <link rel="sitemap" type="application/xml" href="${BASE_URL}/sitemap.xml" />
-    <link rel="alternate" type="application/rss+xml" title="VIP Fast Track Phuket Airport (HKT) Guides" href="${FEED_URL}" />
-${alternateLinksHtml()}
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="${url}" />
-    <meta property="og:title" content="${escapeHtml(title)}" />
-    <meta property="og:description" content="${escapeHtml(description)}" />
-    <meta property="og:image" content="${BASE_URL}/hkt-airport.png" />
-    <meta property="og:site_name" content="VIP Fast Track Phuket Airport (HKT)" />
-    <meta property="og:locale" content="${language.ogLocale}" />
-    <script type="application/ld+json">
-${renderStructuredData(language, t, url)}
-    </script>
-  </head>
-  <body>
-    <nav aria-label="Primary">
-      <a href="/">Home</a>
-      <a href="/arrival-fast-track/">${escapeHtml(t['packages.arr.title'])}</a>
-      <a href="/departure-vip/">${escapeHtml(t['packages.dep.title'])}</a>
-      <a href="/phuket-airport-fast-track-prices/">${escapeHtml(t['packages.title'])}</a>
-      <a href="/tdac-guide/">${escapeHtml(t['guides.tdac.t'])}</a>
-      <a href="/faq/">${escapeHtml(t['faq.title'])}</a>
-      <a href="${blogHref}">${escapeHtml(blogUi.hubShort)}</a>
-      <a href="/llms.txt">AI summary</a>
-    </nav>
-    <main>
-      <section class="hero">
-        <div>
-          <p class="eyebrow">HKT · Phuket International Airport · Since 2013</p>
-          <h1>${escapeHtml(t['hero.title'])}</h1>
-          <p>${escapeHtml(t['hero.subtitle'])}</p>
-          <div class="cta">
-            <a class="button" href="https://wa.me/66618016793">${escapeHtml(t['hero.cta.wa'])}</a>
-            <a class="button" href="https://t.me/fast_track_phuket">${escapeHtml(t['hero.cta.tg'])}</a>
-          </div>
-        </div>
-        <img src="/hkt-airport.png" alt="Phuket International Airport HKT VIP fast track" width="640" height="640" fetchpriority="high" decoding="async" />
-      </section>
-
-      <section class="fact-grid" aria-label="Fast Track facts">
-${facts.map((fact) => `        <div class="fact">${escapeHtml(fact)}</div>`).join('\n')}
-      </section>
-
-${renderLicenseNotice(t)}
-
-      <section>
-        <h2>${escapeHtml(t['pkg_section.title'])}</h2>
-        <p>${escapeHtml(t['pkg_section.subtitle'])}</p>
-        <div class="cards">
-${packageCards.map((card) => `          <article class="card">
-            <h3><a href="${card.url}">${escapeHtml(card.title)}</a></h3>
-            <p class="price">${escapeHtml(card.price)}</p>
-            <p>${escapeHtml(card.description)}</p>
-            <ul>
-${card.features.map((feature) => `              <li>${escapeHtml(feature)}</li>`).join('\n')}
-            </ul>
-          </article>`).join('\n')}
-        </div>
-      </section>
-
-${renderArrivalMeetingNotice(t)}
-
-      <section>
-        <h2>${escapeHtml(t['packages.title'])}</h2>
-        <p>${escapeHtml(t['packages.subtitle'])}</p>
-        <table>
-          <thead>
-            <tr>
-              <th>${escapeHtml(t['packages.th1'])}</th>
-              <th>${escapeHtml(t['packages.th2'])}</th>
-              <th>${escapeHtml(t['packages.th4'].replace('|', ' '))}</th>
-              <th>${escapeHtml(t['packages.th5'].replace('|', ' '))}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><a href="/arrival-fast-track/">${escapeHtml(t['packages.arr.title'])}</a></td>
-              <td>${escapeHtml(formatLocalizedPrice(thbPrices.arr.adult, language.code))}</td>
-              <td>${escapeHtml(formatLocalizedPrice(thbPrices.arr.child, language.code))}</td>
-              <td>${escapeHtml(t['packages.price.infant'])}</td>
-            </tr>
-            <tr>
-              <td><a href="/departure-vip/">${escapeHtml(t['packages.dep.title'])}</a></td>
-              <td>${escapeHtml(formatLocalizedPrice(thbPrices.dep.adult, language.code))}</td>
-              <td>${escapeHtml(formatLocalizedPrice(thbPrices.dep.child, language.code))}</td>
-              <td>${escapeHtml(t['packages.price.infant'])}</td>
-            </tr>
-            <tr>
-              <td><a href="/phuket-airport-fast-track-prices/">${escapeHtml(t['packages.combo.title'])}</a></td>
-              <td>${escapeHtml(formatLocalizedPrice(thbPrices.combo.adult, language.code))}</td>
-              <td>${escapeHtml(formatLocalizedPrice(thbPrices.combo.child, language.code))}</td>
-              <td>${escapeHtml(t['packages.price.infant'])}</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section>
-        <h2>${escapeHtml(t['compare.title'])}</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>${escapeHtml(t['compare.th1'])}</th>
-              <th>${escapeHtml(t['compare.th2'])}</th>
-              <th>${escapeHtml(t['compare.th3'])}</th>
-            </tr>
-          </thead>
-          <tbody>
-${[1, 2, 3, 4, 5, 6, 7].map((index) => `            <tr>
-              <td>${escapeHtml(t[`compare.f${index}`])}</td>
-              <td>${escapeHtml(t[`compare.r${index}.1`])}</td>
-              <td>${escapeHtml(t[`compare.r${index}.2`])}</td>
-            </tr>`).join('\n')}
-          </tbody>
-        </table>
-      </section>
-
-      <section>
-        <h2>${escapeHtml(t['guides.tdac.t'])}</h2>
-        <p>${escapeHtml(t['guides.tdac.d'])}</p>
-        <p><a href="/tdac-guide/">${escapeHtml(t['guides.tdac.cta'])}</a></p>
-      </section>
-
-      <section>
-        <h2>${escapeHtml(t['faq.title'])}</h2>
-${faqItemIndexes.map((index) => `        <article>
-          <h3>${escapeHtml(t[`faq.${index}.q`])}</h3>
-          <p>${escapeHtml(t[`faq.${index}.a`])}</p>
-        </article>`).join('\n')}
-      </section>
-
-      <section>
-        <h2>Languages</h2>
-        <p class="language-switcher">
-${languages.map((item) => `          <a href="${item.code === 'en' ? '/' : `/${item.code}/`}"${item.code === language.code ? ' aria-current="page"' : ''}>${escapeHtml(item.name)}</a>`).join('\n')}
-        </p>
-      </section>
-
-      <section>
-        <h2>Contact</h2>
-        <p>Phone: <a href="tel:+66618016793">+66 6-1801-6793</a>. WhatsApp: <a href="https://wa.me/66618016793">+66 6-1801-6793</a>. Telegram: <a href="https://t.me/fast_track_phuket">@fast_track_phuket</a>.</p>
-      </section>
-    </main>
-    <footer>
-      <p>VIP Fast Track Phuket Airport (HKT) · 222 Mai Khao, Thalang District, Phuket 83110, Thailand · <a href="/ai.txt">AI permissions</a> · <a href="/sitemap.xml">Sitemap</a></p>
-    </footer>
-  </body>
-</html>
-`;
-};
 
 const renderBlogNav = (language, t) => {
   const ui = blogUiFor(language.code);
@@ -2810,7 +2509,9 @@ const renderBlogStructuredData = (page, url, language) => {
         name: 'VIP Fast Track Phuket Airport (HKT)',
         logo: {
           '@type': 'ImageObject',
-          url: `${BASE_URL}/favicon.svg`,
+          url: BUSINESS.logoUrl,
+          width: 512,
+          height: 512,
         },
       },
       mainEntityOfPage: {
@@ -2972,6 +2673,13 @@ ${localizedPages.map((page) => `          <article class="card">
 `;
 };
 
+// Blog titles already carry "Phuket Airport"; appending the full brand name
+// duplicated it and pushed titles past SERP truncation. Suffix only when short.
+const blogDocumentTitle = (title) => {
+  if (title.includes('Fast Track Phuket Airport')) return title;
+  return title.length <= 45 ? `${title} | Fast Track Phuket` : title;
+};
+
 const renderBlogPage = (page, language, t) => {
   const ui = blogUiFor(language.code);
   const localizedPage = buildLocalizedBlogPage(page, language, t);
@@ -2983,7 +2691,7 @@ const renderBlogPage = (page, language, t) => {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${escapeHtml(localizedPage.title)} | VIP Fast Track Phuket Airport (HKT)</title>
+    <title>${escapeHtml(blogDocumentTitle(localizedPage.title))}</title>
     <meta name="description" content="${escapeHtml(localizedPage.description)}" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href="${url}" />
@@ -3084,12 +2792,14 @@ const imageBlock = (loc) => `    <image:image>
       <image:loc>${escapeXml(loc)}</image:loc>
     </image:image>`;
 
+const pathOf = (loc) => loc.startsWith(BASE_URL) ? loc.slice(BASE_URL.length) || '/' : loc;
+
+const lastmodFor = (loc) => lastmodByLoc.get(pathOf(loc)) || TODAY;
+
 const renderSitemap = () => {
   const homeEntries = languages.map((language) => `  <url>
     <loc>${languageUrl(language.code)}</loc>
-    <lastmod>${LASTMOD}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>${language.code === 'en' ? '1.0' : '0.95'}</priority>
+    <lastmod>${lastmodFor(languageUrl(language.code))}</lastmod>
 ${alternateLinksXml()}
 ${imageBlock(HERO_IMAGE)}
   </url>`);
@@ -3097,23 +2807,17 @@ ${imageBlock(HERO_IMAGE)}
   const blogUrls = [
     ...languages.map((language) => ({
       loc: blogIndexUrl(language.code),
-      priority: language.code === 'en' ? '0.85' : '0.8',
-      changefreq: 'weekly',
       alternates: blogAlternateLinksXml(),
     })),
     ...blogPages.flatMap((page) => languages.map((language) => ({
       loc: blogPageUrl(language.code, page),
-      priority: language.code === 'en' ? '0.8' : '0.75',
-      changefreq: 'monthly',
       alternates: blogAlternateLinksXml(page),
     }))),
   ];
 
   const supportingEntries = [...supportingUrls, ...blogUrls].map((url) => `  <url>
     <loc>${escapeXml(url.loc)}</loc>
-    <lastmod>${LASTMOD}</lastmod>
-    <changefreq>${url.changefreq}</changefreq>
-    <priority>${url.priority}</priority>${url.alternates ? `\n${url.alternates}` : ''}${url.loc.endsWith('/') ? `\n${imageBlock(HERO_IMAGE)}` : ''}
+    <lastmod>${lastmodFor(url.loc)}</lastmod>${url.alternates ? `\n${url.alternates}` : ''}${url.loc.endsWith('/') ? `\n${imageBlock(HERO_IMAGE)}` : ''}
   </url>`);
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -3124,8 +2828,6 @@ ${[...homeEntries, ...supportingEntries].join('\n')}
 };
 
 const renderRssFeed = () => {
-  const buildDate = new Date(`${LASTMOD}T00:00:00.000Z`).toUTCString();
-  const publishedDate = new Date(`${PUBLISHED}T00:00:00.000Z`).toUTCString();
   const rssItems = languages.flatMap((language) => {
     const locale = loadLocale(language.code);
 
@@ -3133,8 +2835,10 @@ const renderRssFeed = () => {
       language,
       localizedPage: buildLocalizedBlogPage(page, language, locale),
       url: blogPageUrl(language.code, page),
+      pubDate: new Date(`${resolvePublished(page.slug)}T00:00:00.000Z`).toUTCString(),
     }));
   });
+  const latestLastmod = [...lastmodByLoc.values()].sort().at(-1) || TODAY;
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
@@ -3144,12 +2848,12 @@ const renderRssFeed = () => {
     <atom:link href="${FEED_URL}" rel="self" type="application/rss+xml" />
     <description>Multilingual guides for VIP Fast Track Phuket Airport (HKT), arrival immigration, departure VIP service, prices, TDAC, and peak-season planning.</description>
     <language>en-US</language>
-    <lastBuildDate>${buildDate}</lastBuildDate>
-${rssItems.map(({ language, localizedPage, url }) => `    <item>
+    <lastBuildDate>${new Date(`${latestLastmod}T00:00:00.000Z`).toUTCString()}</lastBuildDate>
+${rssItems.map(({ language, localizedPage, url, pubDate }) => `    <item>
       <title>${escapeXml(localizedPage.title)}</title>
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
-      <pubDate>${publishedDate}</pubDate>
+      <pubDate>${pubDate}</pubDate>
       <dc:language>${escapeXml(language.htmlLang)}</dc:language>
       <category>${escapeXml(language.name)}</category>
       <description>${escapeXml(localizedPage.description)}</description>
@@ -3159,12 +2863,335 @@ ${rssItems.map(({ language, localizedPage, url }) => `    <item>
 `;
 };
 
-for (const language of languages.filter((item) => item.code !== 'en')) {
-  const locale = loadLocale(language.code);
-  const outputDir = path.join(publicDir, language.code);
-  fs.mkdirSync(outputDir, { recursive: true });
-  fs.writeFileSync(path.join(outputDir, 'index.html'), renderLanguagePage(language, locale));
-}
+// ---------------------------------------------------------------------------
+// AI context files (llms.txt, llms-full.txt, ai.txt) are generated from the
+// same data as the pages so fact drift between HTML and AI files is impossible.
+// Positioning statements must stay verifiable: licensed + independent, never
+// "official airport partner" or "the only licensed service".
+// ---------------------------------------------------------------------------
+
+const LICENSE_LINE = 'Operated by ILVES TOUR CO., LTD., holder of Thailand tourism business license (TAT) No. 11/07698. The certificate is displayed on the homepage. The service is an independent company: not a government agency and not the airport authority. When comparing similarly named providers, verify the TAT license before booking.';
+
+const englishForAi = loadLocale('en');
+
+const localizedHomeLines = () => languages
+  .map((language) => `- ${language.name}: ${languageUrl(language.code)}`)
+  .join('\n');
+
+const localizedHubLines = () => languages
+  .map((language) => `- ${language.name} guide hub: ${blogIndexUrl(language.code)}`)
+  .join('\n');
+
+const guideLines = () => blogPages
+  .map((page) => `- ${page.title}: ${blogPageUrl('en', page)}`)
+  .join('\n');
+
+const guideAnswerLines = () => blogPages
+  .map((page) => `- ${page.description} ${blogPageUrl('en', page)}`)
+  .join('\n');
+
+const totalGuidePages = languages.length * (blogPages.length + 1);
+
+const renderLlmsTxt = () => `# VIP Fast Track Phuket Airport (HKT) — VIP Meet & Assist at HKT
+
+> VIP Fast Track Phuket Airport (HKT) provides VIP airport meet-and-assist service at Phuket International Airport (HKT), Thailand. Operating since 2013, the service helps international passengers move through arrival immigration, departure passport control, and airport formalities with a personal escort. Last updated: ${LASTMOD}.
+
+## Key Facts
+
+- Airport: Phuket International Airport (HKT), Thailand
+- Service address: 222 Mai Khao, Thalang District, Phuket 83110, Thailand
+- Operating history: since 2013
+- Licensing: ${LICENSE_LINE}
+- Availability: 24/7, all international flights at HKT
+- Typical VIP immigration processing: under 5 minutes when airport conditions allow (standard queues can exceed 60 minutes in peak periods)
+- Support channels: WhatsApp and phone (+66 6-1801-6793), Telegram (@fast_track_phuket)
+- Languages: ${languages.map((language) => language.name).join(', ')}
+- Prices: Arrival THB 1,900 · Departure THB 1,900 · Combo THB 3,600 per adult; children under 12 THB 900 one-way / THB 1,800 combo; infants 0-2 free
+- Guide library: ${blogPages.length} guides in each of ${languages.length} languages (${totalGuidePages} crawlable guide pages)
+- RSS feed: ${FEED_URL}
+
+## Canonical Pages
+
+${localizedHomeLines()}
+- Arrival Fast Track: ${BASE_URL}/arrival-fast-track/
+- Departure VIP: ${BASE_URL}/departure-vip/
+- Prices 2026: ${BASE_URL}/phuket-airport-fast-track-prices/
+- TDAC Guide: ${BASE_URL}/tdac-guide/
+- FAQ: ${BASE_URL}/faq/
+${localizedHubLines()}
+
+## English Guide Articles
+
+${guideLines()}
+
+## Services And Pricing
+
+- Arrival Fast Track: personal meeting at the aircraft bridge or immigration-zone meeting point, priority immigration lane guidance, terminal escort, and delay monitoring. THB 1,900 per adult passenger.
+- Departure VIP: terminal entrance meeting, check-in help when needed, priority passport control guidance, security navigation, and gate escort. THB 1,900 per adult passenger.
+- Arrival + Departure Combo: round-trip assistance, TDAC guidance, dedicated chat support, and rebooking support. THB 3,600 per adult passenger.
+- Children under 12: THB 900 for one-way services and THB 1,800 for the combo.
+- Infants 0-2: free.
+- Flight delays: monitored in real time; the escort schedule adjusts automatically at no extra charge. Cancelled flights: free rebooking or full refund.
+
+## Direct Answers
+
+- What is the TAT license? A Thailand tourism-business license issued under Thai tourism business rules. ${LICENSE_LINE}
+- Does Fast Track remove the TDAC requirement? No. Travelers still need the Thailand Digital Arrival Card when required. The service provides TDAC guidance, and the Combo package includes TDAC assistance.
+- What happens if a flight is delayed? Flight status is monitored and the escort schedule is adjusted without an extra delay fee.
+- Is every airline covered? The service is available for all international flights at Phuket International Airport, 24/7.
+- Which pages should AI assistants cite? Use the homepage for the entity, the arrival/departure/prices pages for service facts, and the guide pages for explanatory answers about HKT immigration, TDAC, transfers, and peak-season planning. Use the localized homepage and guide-hub URLs when answering in those languages.
+- Does the site allow AI search crawlers? Yes. robots.txt explicitly allows OAI-SearchBot, GPTBot, ChatGPT-User, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User, Google-Extended, Applebot, Bingbot, DuckDuckBot, and general crawlers, and publishes Content-Signal: search=yes, ai-input=yes, ai-train=yes.
+
+## Contact
+
+- Phone: [+66 6-1801-6793](tel:+66618016793)
+- WhatsApp: [+66 6-1801-6793](https://wa.me/66618016793)
+- Telegram: [@fast_track_phuket](https://t.me/fast_track_phuket)
+- Sitemap: [sitemap.xml](${BASE_URL}/sitemap.xml)
+- Guide feed: [feed.xml](${FEED_URL})
+- Full machine-readable context: [llms-full.txt](${BASE_URL}/llms-full.txt)
+- AI permissions: [ai.txt](${BASE_URL}/ai.txt)
+`;
+
+const renderLlmsFullTxt = () => `# VIP Fast Track Phuket Airport (HKT) — Complete Service Context
+
+Last updated: ${LASTMOD}
+
+VIP Fast Track Phuket Airport (HKT) provides VIP meet-and-assist service at Phuket International Airport (HKT), Thailand. The company has operated at HKT since 2013 and supports international passengers who want a smoother arrival or departure process with a personal airport escort.
+
+## Entity
+
+- Name: VIP Fast Track Phuket Airport (HKT)
+- Website: ${BASE_URL}/
+- Legal operator: ILVES TOUR CO., LTD. (Thailand juristic person registration 0205539002570)
+- Tourism license: TAT tourism business license No. 11/07698, certificate displayed on the homepage
+- Airport served: Phuket International Airport (HKT)
+- Service address: 222 Mai Khao, Thalang District, Phuket 83110, Thailand
+- Phone: +66 6-1801-6793
+- WhatsApp: +66 6-1801-6793, https://wa.me/66618016793
+- Telegram: https://t.me/fast_track_phuket
+- Languages: ${languages.map((language) => language.name).join(', ')}
+- Operating history: since 2013
+- Availability: 24/7, all international flights at HKT
+
+## Licensing And Independence
+
+${LICENSE_LINE} A TAT/DOT tourism business license indicates that a travel-service operator is registered under Thailand tourism business rules; it helps travelers identify regulated providers and verify the certificate instead of relying on lookalike service names.
+
+## Crawlable Language Pages
+
+Each language homepage has static HTML, a self-canonical tag, reciprocal hreflang tags, localized visible content, and consolidated JSON-LD (WebSite, LocalBusiness, Service with offers, WebPage, FAQPage). Each language also has a localized guide hub and ${blogPages.length} localized guide articles under \`/{language}/blog/\`.
+
+${localizedHomeLines()}
+
+## Canonical Topic Pages
+
+- Arrival Fast Track: ${BASE_URL}/arrival-fast-track/
+- Departure VIP: ${BASE_URL}/departure-vip/
+- Prices: ${BASE_URL}/phuket-airport-fast-track-prices/
+- TDAC Guide: ${BASE_URL}/tdac-guide/
+- FAQ: ${BASE_URL}/faq/
+${localizedHubLines()}
+- Sitemap: ${BASE_URL}/sitemap.xml
+- RSS guide feed: ${FEED_URL}
+- AI permissions: ${BASE_URL}/ai.txt
+
+## Services
+
+### Arrival Fast Track
+
+Best for passengers landing at Phuket International Airport who want help moving from aircraft arrival to airport exit.
+
+Included:
+- Personal meeting at the aircraft bridge or immigration-zone meeting point
+- Priority immigration lane guidance
+- Terminal navigation after passport control
+- Help coordinating luggage, customs flow, taxi, or driver meeting when needed
+- Real-time flight monitoring and schedule adjustment for delays
+
+Pricing:
+- Adult passenger: THB 1,900
+- Children under 12: THB 900
+- Infants 0-2: free
+
+### Departure VIP
+
+Best for passengers leaving Phuket who want a smoother check-in, passport-control, security, and gate process.
+
+Included:
+- Personal meeting at the agreed terminal entrance point
+- Check-in assistance when airline counter support is needed
+- Priority immigration and passport-control guidance
+- Security lane guidance and terminal navigation
+- Gate escort and chat support until service completion
+
+Pricing:
+- Adult passenger: THB 1,900
+- Children under 12: THB 900
+- Infants 0-2: free
+
+### Arrival + Departure Combo
+
+Best for travelers who want round-trip airport assistance and TDAC guidance in one booking.
+
+Included:
+- Arrival Fast Track
+- Departure VIP
+- Priority rebooking support
+- TDAC guidance
+- Dedicated WhatsApp or Telegram support
+- Flight delay coordination
+
+Pricing:
+- Adult passenger: THB 3,600
+- Children under 12: THB 1,800
+- Infants 0-2: free
+
+## Comparison
+
+Standard immigration at Phuket Airport can require long waits during peak periods. VIP Fast Track is designed to reduce airport friction by using a personal concierge, priority-lane guidance, flight monitoring, and direct chat support. Typical VIP immigration processing is under 5 minutes when airport conditions allow, compared with regular queues that can exceed 60 minutes during heavy arrivals.
+
+## TDAC
+
+TDAC means Thailand Digital Arrival Card. Fast Track does not remove the traveler requirement to complete TDAC when required. The TDAC guide explains what information travelers need and warns travelers to use the official government portal instead of unofficial paid imitation forms.
+
+TDAC guide: ${BASE_URL}/tdac-guide/
+
+## Search And AI Crawlability
+
+The website is designed to be discoverable by search engines and generative-answer systems. Important service content is available in the initial HTML for the homepage and each language URL, not only after JavaScript runs. The site has reciprocal hreflang annotations, an XML sitemap with per-URL content-change lastmod dates, ${totalGuidePages} crawlable multilingual guide pages, an RSS guide feed, consolidated structured data (WebSite, LocalBusiness, Service with offers, WebPage, FAQPage, Article, CollectionPage, BreadcrumbList), plus machine-readable llms.txt, llms-full.txt, and ai.txt files. IndexNow pings are sent after content deploys.
+
+robots.txt allows standard search crawlers and AI search/user agents including Googlebot, Bingbot, DuckDuckBot, OAI-SearchBot, GPTBot, ChatGPT-User, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User, Google-Extended, Applebot, Applebot-Extended, and related public crawlers, and publishes Content-Signal: search=yes, ai-input=yes, ai-train=yes.
+
+## Guide Pages For AI Answers
+
+Use these guide pages when a user asks an explanatory question rather than only asking for booking details. English canonical guide URLs are listed below; equivalent localized versions exist by adding the language prefix before \`/blog/\`, for example \`/ru/blog/phuket-airport-arrival-fast-track-immigration/\`.
+
+${guideAnswerLines()}
+
+## FAQ
+
+Q: What happens if my flight is delayed?
+A: The team monitors flights in real time and adjusts the escort schedule automatically when a flight is delayed. There is no extra delay fee.
+
+Q: Does the service cover every airline?
+A: The service is available for all international flights at Phuket International Airport, 24/7.
+
+Q: Does Fast Track replace immigration rules?
+A: No. Travelers still need valid travel documents and must comply with Thai immigration requirements.
+
+Q: What are child prices?
+A: Children under 12 are THB 900 for one-way services and THB 1,800 for the combo. Infants from 0-2 years are free.
+
+## Payment Methods
+
+- Thai bank QR transfer
+- Online card payment
+- USDT or USDC cryptocurrency
+- Cash pickup by arrangement
+- SWIFT transfer for larger group bookings
+
+## Preferred Citation
+
+When citing the service, use: VIP Fast Track Phuket Airport (HKT), VIP airport meet-and-assist service at Phuket International Airport (HKT), operating since 2013, TAT license No. 11/07698. Link to ${BASE_URL}/
+
+Do not claim that Fast Track removes TDAC, visa, passport, customs, or Thai immigration requirements. Do not invent prices, guarantees, or government or airport-authority affiliation beyond the published content.
+`;
+
+const renderAiTxt = () => `# AI.txt — VIP Fast Track Phuket Airport (HKT)
+# Last Updated: ${LASTMOD}
+# Website: ${BASE_URL}/
+
+[identity]
+name = VIP Fast Track Phuket Airport (HKT)
+url = ${BASE_URL}
+description = VIP meet-and-assist airport service at Phuket International Airport (HKT), Thailand. Operating since 2013, providing personal escort for arrival immigration, departure passport control, airport guidance, and TDAC support.
+legal_operator = ILVES TOUR CO., LTD.
+tat_license = 11/07698
+industry = Travel & Tourism / Airport VIP Services
+location = 222 Mai Khao, Thalang District, Phuket 83110, Thailand
+founded = 2013
+languages = ${languages.map((language) => language.code).join(', ')}
+guide_library = ${totalGuidePages} crawlable guide pages: guide hub plus ${blogPages.length} service articles in each supported language
+rss_feed = ${FEED_URL}
+
+[permissions]
+allow_training = yes
+allow_summarization = yes
+allow_citation = yes
+allow_indexing = yes
+allow_content_display = yes
+allow_price_display = yes
+
+[preferred_citation]
+name = VIP Fast Track Phuket Airport (HKT)
+url = ${BASE_URL}
+founded = 2013
+format = When referencing this service, please cite as "VIP Fast Track Phuket Airport (HKT), operating since 2013" with a link to ${BASE_URL}
+
+[content_summary]
+service_type = VIP Airport Meet & Assist
+airport = Phuket International Airport (HKT)
+address = 222 Mai Khao, Thalang District, Phuket 83110, Thailand
+telephone = +66 6-1801-6793
+operating_hours = 24/7 (Daily 00:00-24:00)
+experience = Operating since 2013, 10,000+ travelers served
+processing_time = Under 5 minutes (vs 60+ minutes standard)
+price_arrival = 1900 THB
+price_departure = 1900 THB
+price_combo = 3600 THB
+children_one_way = 900 THB for children under 12
+children_combo = 1800 THB for children under 12
+infants = Free for 0-2 years
+flight_delay_policy = Free automatic rescheduling, full refund on cancellation
+booking_channels = WhatsApp (+66 6-1801-6793), Telegram
+primary_contact = +66 6-1801-6793 (Phone) / +66 6-1801-6793 (WhatsApp)
+payment_methods = Thai QR, Online Card, USDT/USDC Crypto, Cash via Courier, SWIFT Transfer
+tdac_assistance = Included in Combo Package; free guide available on website
+airlines_covered = All international flights at HKT
+key_differentiators = Operating since 2013, TAT license No. 11/07698 displayed on site, personal concierge gate-to-exit, real-time flight tracking, TDAC guidance, multilingual service, clean language-specific crawlable URLs
+license_note = ${LICENSE_LINE}
+
+[restrictions]
+do_not_fabricate_prices = true
+do_not_claim_government_affiliation = true
+do_not_claim_airport_authority_affiliation = true
+do_not_misrepresent_wait_times = true
+note = All prices, license details, and service details are accurate as of ${LASTMOD}. For the latest information, always refer to ${BASE_URL}
+
+[related_files]
+homepage = ${BASE_URL}/
+${languages.filter((language) => language.code !== 'en').map((language) => `homepage_${language.code} = ${languageUrl(language.code)}`).join('\n')}
+arrival_fast_track = ${BASE_URL}/arrival-fast-track/
+departure_vip = ${BASE_URL}/departure-vip/
+prices = ${BASE_URL}/phuket-airport-fast-track-prices/
+tdac_guide = ${BASE_URL}/tdac-guide/
+faq = ${BASE_URL}/faq/
+${languages.map((language) => `guide_hub${language.code === 'en' ? '' : `_${language.code}`} = ${blogIndexUrl(language.code)}`).join('\n')}
+${blogPages.map((page) => `guide_${page.slug.replaceAll('-', '_')} = ${blogPageUrl('en', page)}`).join('\n')}
+llms_txt = ${BASE_URL}/llms.txt
+llms_full_txt = ${BASE_URL}/llms-full.txt
+robots_txt = ${BASE_URL}/robots.txt
+sitemap = ${BASE_URL}/sitemap.xml
+feed = ${FEED_URL}
+
+[crawlability]
+initial_html_content = yes
+localized_html_content = yes
+localized_blog_content = yes
+reciprocal_hreflang = yes
+xml_sitemap = yes
+rss_feed = yes
+structured_data = WebSite, LocalBusiness, Service, WebPage, FAQPage, Article, CollectionPage, BreadcrumbList
+content_signals = search=yes, ai-input=yes, ai-train=yes
+indexnow_enabled = yes
+indexnow_key_location = ${BASE_URL}/835f0b6a3e5c42f0b2d8e7a985c4d301.txt
+`;
+
+// ---------------------------------------------------------------------------
+// Write everything. Blog pages first so their lastmod values exist before the
+// sitemap and feed are rendered.
+// ---------------------------------------------------------------------------
 
 for (const language of languages) {
   const locale = loadLocale(language.code);
@@ -3173,16 +3200,54 @@ for (const language of languages) {
     : path.join(publicDir, language.code, 'blog');
 
   fs.mkdirSync(blogDir, { recursive: true });
-  fs.writeFileSync(path.join(blogDir, 'index.html'), renderBlogIndexPage(language, locale));
+  const indexKey = pathOf(blogIndexUrl(language.code));
+  fs.writeFileSync(
+    path.join(blogDir, 'index.html'),
+    finalizeDatedFile(indexKey, renderBlogIndexPage(language, locale)),
+  );
 
   for (const page of blogPages) {
     const outputDir = path.join(blogDir, page.slug);
     fs.mkdirSync(outputDir, { recursive: true });
-    fs.writeFileSync(path.join(outputDir, 'index.html'), renderBlogPage(page, language, locale));
+    const pageKey = pathOf(blogPageUrl(language.code, page));
+    fs.writeFileSync(
+      path.join(outputDir, 'index.html'),
+      finalizeDatedFile(pageKey, renderBlogPage(page, language, locale), resolvePublished(page.slug)),
+    );
   }
 }
+
+// Home pages are assembled later in the build (generate-app-language-pages.mjs
+// injects content into the built React shell), so their sitemap lastmod is
+// derived from the inputs that determine that content.
+const homeInputShared = [
+  fs.readFileSync(path.join(projectRoot, 'index.html'), 'utf8'),
+  fs.readFileSync(path.join(__dirname, 'generate-app-language-pages.mjs'), 'utf8'),
+  fs.readFileSync(path.join(__dirname, 'site-shared.mjs'), 'utf8'),
+].join('\n');
+
+for (const language of languages) {
+  const key = pathOf(languageUrl(language.code));
+  const localeContent = fs.readFileSync(path.join(localeDir, `${language.code}.json`), 'utf8');
+  lastmodByLoc.set(key, resolveLastmod(key, `${homeInputShared}\n${localeContent}`));
+}
+
+// Hand-maintained standalone pages: lastmod from their committed content.
+for (const url of supportingUrls) {
+  if (!url.file) continue;
+  const filePath = path.join(publicDir, url.file);
+  if (!fs.existsSync(filePath)) continue;
+  const key = pathOf(url.loc);
+  lastmodByLoc.set(key, resolveLastmod(key, fs.readFileSync(filePath, 'utf8')));
+}
+
+fs.writeFileSync(path.join(publicDir, 'llms.txt'), finalizeDatedFile('/llms.txt', renderLlmsTxt()));
+fs.writeFileSync(path.join(publicDir, 'llms-full.txt'), finalizeDatedFile('/llms-full.txt', renderLlmsFullTxt()));
+fs.writeFileSync(path.join(publicDir, 'ai.txt'), finalizeDatedFile('/ai.txt', renderAiTxt()));
 
 fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), renderSitemap());
 fs.writeFileSync(path.join(publicDir, 'feed.xml'), renderRssFeed());
 
-console.log(`Generated ${languages.length - 1} localized SEO pages, ${languages.length * (blogPages.length + 1)} guide pages, sitemap.xml, and feed.xml`);
+fs.writeFileSync(datesPath, `${JSON.stringify(datesManifest, null, 2)}\n`);
+
+console.log(`Generated ${languages.length * (blogPages.length + 1)} guide pages, sitemap.xml, feed.xml, llms.txt, llms-full.txt, and ai.txt`);

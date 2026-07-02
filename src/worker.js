@@ -659,6 +659,195 @@ const handlePaymentReturn = async (request, env) => {
   return jsonResponse({ ok: true });
 };
 
+// ---------------------------------------------------------------------------
+// SEO / GEO traffic telemetry.
+//
+// Cookie-free, PII-free daily rollups in D1: which AI/search crawlers read the
+// site, which assistants and search engines send humans, which pages and
+// locales they land on. This is the only measurement layer the site has, so it
+// must never interfere with serving — all writes happen in ctx.waitUntil and
+// swallow their own errors.
+// ---------------------------------------------------------------------------
+
+const crawlerPatterns = [
+  ['oai-searchbot', 'OAI-SearchBot'],
+  ['chatgpt-user', 'ChatGPT-User'],
+  ['gptbot', 'GPTBot'],
+  ['claude-searchbot', 'Claude-SearchBot'],
+  ['claude-user', 'Claude-User'],
+  ['claudebot', 'ClaudeBot'],
+  ['claude-web', 'Claude-Web'],
+  ['anthropic-ai', 'anthropic-ai'],
+  ['perplexity-user', 'Perplexity-User'],
+  ['perplexitybot', 'PerplexityBot'],
+  ['google-extended', 'Google-Extended'],
+  ['googleother', 'GoogleOther'],
+  ['googlebot', 'Googlebot'],
+  ['bingbot', 'Bingbot'],
+  ['yandexbot', 'YandexBot'],
+  ['yandeximages', 'YandexImages'],
+  ['baiduspider', 'Baiduspider'],
+  ['duckassistbot', 'DuckAssistBot'],
+  ['duckduckbot', 'DuckDuckBot'],
+  ['applebot-extended', 'Applebot-Extended'],
+  ['applebot', 'Applebot'],
+  ['amazonbot', 'Amazonbot'],
+  ['meta-externalagent', 'Meta-ExternalAgent'],
+  ['meta-externalfetcher', 'Meta-ExternalFetcher'],
+  ['facebookexternalhit', 'FacebookExternalHit'],
+  ['bytespider', 'Bytespider'],
+  ['mistralai-user', 'MistralAI-User'],
+  ['mistralai', 'MistralAI'],
+  ['cohere', 'cohere-ai'],
+  ['youbot', 'YouBot'],
+  ['ccbot', 'CCBot'],
+  ['semrushbot', 'SemrushBot'],
+  ['ahrefsbot', 'AhrefsBot'],
+  ['telegrambot', 'TelegramBot'],
+  ['twitterbot', 'Twitterbot'],
+  ['linkedinbot', 'LinkedInBot'],
+  ['whatsapp', 'WhatsApp'],
+];
+
+const crawlerNameFor = (userAgent) => {
+  const ua = String(userAgent || '').toLowerCase();
+  if (!ua) return null;
+  for (const [pattern, name] of crawlerPatterns) {
+    if (ua.includes(pattern)) return name;
+  }
+  return null;
+};
+
+const referrerSources = [
+  ['chatgpt.com', 'ai:chatgpt'],
+  ['chat.openai.com', 'ai:chatgpt'],
+  ['perplexity.ai', 'ai:perplexity'],
+  ['claude.ai', 'ai:claude'],
+  ['gemini.google.com', 'ai:gemini'],
+  ['bard.google.com', 'ai:gemini'],
+  ['copilot.microsoft.com', 'ai:copilot'],
+  ['grok.com', 'ai:grok'],
+  ['x.ai', 'ai:grok'],
+  ['meta.ai', 'ai:meta'],
+  ['deepseek.com', 'ai:deepseek'],
+  ['you.com', 'ai:you'],
+  ['mistral.ai', 'ai:mistral'],
+  ['duckduckgo.com', 'search:duckduckgo'],
+  ['search.brave.com', 'search:brave'],
+  ['ecosia.org', 'search:ecosia'],
+  ['yandex.', 'search:yandex'],
+  ['baidu.com', 'search:baidu'],
+  ['bing.com', 'search:bing'],
+  ['google.', 'search:google'],
+  ['tripadvisor.', 'social:tripadvisor'],
+  ['reddit.com', 'social:reddit'],
+  ['facebook.com', 'social:facebook'],
+  ['instagram.com', 'social:instagram'],
+  ['youtube.com', 'social:youtube'],
+  ['twitter.com', 'social:x'],
+  ['x.com', 'social:x'],
+  ['t.co', 'social:x'],
+  ['vk.com', 'social:vk'],
+  ['t.me', 'social:telegram'],
+  ['telegram.', 'social:telegram'],
+  ['whatsapp.', 'social:whatsapp'],
+  ['wa.me', 'social:whatsapp'],
+];
+
+const referrerSourceFor = (referrer, ownHost) => {
+  if (!referrer) return 'direct';
+  let host;
+  try {
+    host = new URL(referrer).host.toLowerCase();
+  } catch {
+    return 'direct';
+  }
+  if (!host || host === ownHost || host.endsWith('.fast-track-phuket.com')) return null;
+  for (const [pattern, name] of referrerSources) {
+    if (host.includes(pattern)) return name;
+  }
+  return `other:${host}`;
+};
+
+const pageLanguageFor = (pathname) => {
+  const first = pathname.split('/').filter(Boolean)[0] || '';
+  return ['ru', 'zh', 'hi', 'he', 'ar', 'es', 'fr', 'de', 'it'].includes(first) ? first : 'en';
+};
+
+const skippedTrackingPaths = ['/payment-test/', '/test-payments/'];
+
+const recordSeoTraffic = async (request, response, env) => {
+  try {
+    if (!env.PAYMENTS_DB || request.method !== 'GET') return;
+    const contentType = response.headers.get('content-type') || '';
+    if (!contentType.includes('text/html')) return;
+
+    const url = new URL(request.url);
+    const pathname = url.pathname.endsWith('/') || url.pathname.includes('.')
+      ? url.pathname
+      : `${url.pathname}/`;
+    if (skippedTrackingPaths.some((prefix) => pathname.startsWith(prefix))) return;
+
+    const day = new Date().toISOString().slice(0, 10);
+    const crawler = crawlerNameFor(request.headers.get('user-agent'));
+    const rows = [];
+
+    if (crawler) {
+      rows.push(['bot', crawler], ['bot-page', `${crawler} ${pathname}`]);
+    } else {
+      const source = referrerSourceFor(request.headers.get('referer'), url.host.toLowerCase());
+      if (source) rows.push(['referrer', source]);
+      rows.push(['page', pathname], ['lang', pageLanguageFor(pathname)]);
+      const country = request.cf?.country;
+      if (country) rows.push(['country', country]);
+    }
+    if (!rows.length) return;
+
+    const statement = env.PAYMENTS_DB.prepare(`
+      INSERT INTO seo_traffic_daily (day, dimension, name, hits) VALUES (?, ?, ?, 1)
+      ON CONFLICT(day, dimension, name) DO UPDATE SET hits = hits + 1
+    `);
+    await env.PAYMENTS_DB.batch(rows.map(([dimension, name]) => statement.bind(day, dimension, name)));
+  } catch {
+    // Telemetry must never affect page serving.
+  }
+};
+
+const handleSeoStats = async (request, env) => {
+  const url = new URL(request.url);
+  const token = url.searchParams.get('token') || '';
+  if (!env.SEO_STATS_TOKEN || token !== env.SEO_STATS_TOKEN) {
+    throw new HttpError(401, 'Invalid stats token.');
+  }
+  if (!env.PAYMENTS_DB) {
+    throw new HttpError(503, 'Stats database is not configured.');
+  }
+
+  const days = Math.min(Math.max(Number(url.searchParams.get('days')) || 30, 1), 365);
+  const since = new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
+  const { results } = await env.PAYMENTS_DB.prepare(`
+    SELECT day, dimension, name, hits FROM seo_traffic_daily
+    WHERE day >= ? ORDER BY day ASC
+  `).bind(since).all();
+
+  const totals = {};
+  const byDay = {};
+  for (const row of results || []) {
+    totals[row.dimension] = totals[row.dimension] || {};
+    totals[row.dimension][row.name] = (totals[row.dimension][row.name] || 0) + row.hits;
+    byDay[row.day] = byDay[row.day] || {};
+    byDay[row.day][row.dimension] = byDay[row.day][row.dimension] || {};
+    byDay[row.day][row.dimension][row.name] = row.hits;
+  }
+  for (const dimension of Object.keys(totals)) {
+    totals[dimension] = Object.fromEntries(
+      Object.entries(totals[dimension]).sort((a, b) => b[1] - a[1]).slice(0, 100),
+    );
+  }
+
+  return jsonResponse({ since, days, totals, byDay });
+};
+
 const handleApiRequest = async (request, env) => {
   const url = new URL(request.url);
 
@@ -678,11 +867,15 @@ const handleApiRequest = async (request, env) => {
     return handleProdamusWebhook(request, env);
   }
 
+  if (url.pathname === '/api/seo-stats' && request.method === 'GET') {
+    return handleSeoStats(request, env);
+  }
+
   return jsonResponse({ error: 'Not found.' }, 404);
 };
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
     try {
@@ -691,7 +884,9 @@ export default {
       }
 
       if (env.ASSETS) {
-        return env.ASSETS.fetch(request);
+        const response = await env.ASSETS.fetch(request);
+        if (ctx) ctx.waitUntil(recordSeoTraffic(request, response, env));
+        return response;
       }
 
       return new Response('Not found', { status: 404 });

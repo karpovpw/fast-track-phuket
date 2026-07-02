@@ -80,6 +80,26 @@ const run = (command, args, options = {}) => {
 
 run('npm', ['run', 'build']);
 
+// Apply pending D1 migrations (e.g. seo_traffic_daily rollups) before the
+// Worker that depends on them goes live. No-op when everything is applied.
+run('npx', ['wrangler', 'd1', 'migrations', 'apply', 'fasttrack_payments', '--remote']);
+
+// Sync the /api/seo-stats read token from Keychain to a Worker secret. The
+// repo is public, so the token must never appear in wrangler.jsonc.
+const statsToken = readSecretFromKeychain('fast-track-phuket-seo-stats-token', 'SEO_STATS_TOKEN');
+if (statsToken) {
+  const secretResult = spawnSync('npx', ['wrangler', 'secret', 'put', 'SEO_STATS_TOKEN'], {
+    stdio: ['pipe', 'inherit', 'inherit'],
+    input: statsToken,
+    env: { ...process.env, ...cloudflareEnv },
+  });
+  if (secretResult.status !== 0) {
+    console.warn('Warning: failed to sync SEO_STATS_TOKEN secret; /api/seo-stats will reject requests.');
+  }
+} else {
+  console.warn('Warning: no SEO stats token in Keychain (service fast-track-phuket-seo-stats-token).');
+}
+
 writeFileSync('dist/.assetsignore', [
   '**/.DS_Store',
   '**/.git',

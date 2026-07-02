@@ -29,6 +29,9 @@
     "PRODAMUS_THB_USD_RATE": "31.5",
     "PRODAMUS_PAYMENT_METHOD": "ACUSDKB"
   },
+  // SEO_STATS_TOKEN (read token for GET /api/seo-stats) is a Worker secret:
+  // stored in macOS Keychain (service fast-track-phuket-seo-stats-token) and
+  // pushed with `wrangler secret put SEO_STATS_TOKEN` by the deploy script.
   "d1_databases": [
     {
       "binding": "PAYMENTS_DB",

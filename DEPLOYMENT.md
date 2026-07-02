@@ -19,6 +19,15 @@ The script also supports a scoped API token:
 - API token service: `fast-track-phuket-cloudflare-api-token`
 - API token account: `CLOUDFLARE_API_TOKEN`
 
+SEO stats read token (for `GET /api/seo-stats?token=...`, aggregate traffic
+rollups only, no PII):
+
+- Keychain service: `fast-track-phuket-seo-stats-token`
+- Keychain account: `SEO_STATS_TOKEN`
+- The deploy script pushes it to the Worker with `wrangler secret put`; it is
+  never committed because the repository is public.
+- Read it locally: `security find-generic-password -s fast-track-phuket-seo-stats-token -a SEO_STATS_TOKEN -w`
+
 As of 2026-07-02, the Global API Key plus email path was verified and used successfully for production deploy. The stored scoped API token existed but was invalid, and Wrangler OAuth login failed during token exchange.
 
 ## Commands

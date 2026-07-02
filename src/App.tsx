@@ -300,6 +300,7 @@ function LandingPage() {
               </div>
               <h2 id="license-title">{t('license.title')}</h2>
               <p>{t('license.desc')}</p>
+              <p className="license-id">TAT License No. 11/07698 · ILVES TOUR CO., LTD.</p>
             </div>
           </motion.div>
         </div>

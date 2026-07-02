@@ -95,6 +95,9 @@ Allow: /
 User-agent: Meta-ExternalFetcher
 Allow: /
 
+# Content Signals (contentsignals.org): welcome search, AI answers, and training.
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+
 Sitemap: https://fast-track-phuket.com/sitemap.xml
 Host: fast-track-phuket.com
 

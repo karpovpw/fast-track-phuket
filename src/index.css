@@ -304,6 +304,13 @@ a {
   max-width: 64ch;
 }
 
+.license-panel .license-id {
+  margin-top: 0.9rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: var(--color-gold, #d4af37);
+}
+
 .license-image-card {
   min-width: 0;
   margin: 0;

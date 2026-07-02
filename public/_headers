@@ -34,6 +34,14 @@
 /feed.xml
   Cache-Control: public, max-age=86400
 
+# Utility routes must never enter search indexes (also noindex via meta).
+/payment-result/*
+  X-Robots-Tag: noindex
+/payment-test/*
+  X-Robots-Tag: noindex
+/test-payments/*
+  X-Robots-Tag: noindex
+
 # Security and privacy headers for every response.
 /*
   X-Content-Type-Options: nosniff

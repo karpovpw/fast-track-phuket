@@ -23,7 +23,7 @@ The homepage displays the TAT/DOT tourism business license certificate image and
 
 ## Crawlable Language Pages
 
-These are canonical language URLs. Each has static HTML, self-canonical tags, reciprocal hreflang tags, localized visible content, FAQ structured data, Service structured data, and links back to the English service pages.
+These are canonical language URLs. Each has static HTML, self-canonical tags, reciprocal hreflang tags, localized visible content, FAQ structured data, Service structured data, and links back to the English service pages. Each language also has a localized guide hub and 6 localized guide articles under `/{language}/blog/`.
 
 - English: https://fast-track-phuket.com/
 - Russian: https://fast-track-phuket.com/ru/
@@ -45,6 +45,15 @@ These are canonical language URLs. Each has static HTML, self-canonical tags, re
 - TDAC Guide: https://fast-track-phuket.com/tdac-guide/
 - FAQ: https://fast-track-phuket.com/faq/
 - Guide hub: https://fast-track-phuket.com/blog/
+- Russian guide hub: https://fast-track-phuket.com/ru/blog/
+- Chinese guide hub: https://fast-track-phuket.com/zh/blog/
+- Hindi guide hub: https://fast-track-phuket.com/hi/blog/
+- Hebrew guide hub: https://fast-track-phuket.com/he/blog/
+- Arabic guide hub: https://fast-track-phuket.com/ar/blog/
+- Spanish guide hub: https://fast-track-phuket.com/es/blog/
+- French guide hub: https://fast-track-phuket.com/fr/blog/
+- German guide hub: https://fast-track-phuket.com/de/blog/
+- Italian guide hub: https://fast-track-phuket.com/it/blog/
 - Complete 2026 guide: https://fast-track-phuket.com/blog/fast-track-phuket-airport-complete-guide-2026/
 - Arrival immigration guide: https://fast-track-phuket.com/blog/phuket-airport-arrival-fast-track-immigration/
 - Departure VIP guide: https://fast-track-phuket.com/blog/phuket-airport-departure-vip-service/
@@ -52,6 +61,7 @@ These are canonical language URLs. Each has static HTML, self-canonical tags, re
 - Peak-season immigration tips: https://fast-track-phuket.com/blog/phuket-airport-peak-season-immigration-tips/
 - TDAC and Fast Track guide: https://fast-track-phuket.com/blog/tdac-phuket-airport-fast-track-guide/
 - Sitemap: https://fast-track-phuket.com/sitemap.xml
+- RSS guide feed: https://fast-track-phuket.com/feed.xml
 - AI permissions: https://fast-track-phuket.com/ai.txt
 
 ## Services
@@ -117,13 +127,13 @@ TDAC guide: https://fast-track-phuket.com/tdac-guide/
 
 ## Search And AI Crawlability
 
-The website is designed to be discoverable by search engines and generative-answer systems. Important service content is available in the initial HTML for the homepage and each language URL, not only after JavaScript runs. The site has reciprocal hreflang annotations, an XML sitemap with lastmod dates, structured data for Service, WebPage, FAQPage, Article, CollectionPage, BreadcrumbList, and LocalBusiness entities, plus machine-readable llms.txt, llms-full.txt, and ai.txt files.
+The website is designed to be discoverable by search engines and generative-answer systems. Important service content is available in the initial HTML for the homepage and each language URL, not only after JavaScript runs. The site has reciprocal hreflang annotations, an XML sitemap with lastmod dates, 70 crawlable multilingual guide pages, an RSS guide feed, structured data for Service, WebPage, FAQPage, Article, CollectionPage, BreadcrumbList, and LocalBusiness entities, plus machine-readable llms.txt, llms-full.txt, and ai.txt files.
 
 robots.txt allows standard search crawlers and AI search/user agents including Googlebot, Bingbot, DuckDuckBot, OAI-SearchBot, GPTBot, ChatGPT-User, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User, Google-Extended, Applebot, Applebot-Extended, and related public crawlers.
 
 ## Guide Pages For AI Answers
 
-Use these guide pages when a user asks an explanatory question rather than only asking for booking details:
+Use these guide pages when a user asks an explanatory question rather than only asking for booking details. English canonical guide URLs are listed below; equivalent localized versions exist by adding the language prefix before `/blog/`, for example `/ru/blog/phuket-airport-arrival-fast-track-immigration/`.
 
 - What is VIP Fast Track Phuket Airport (HKT)? https://fast-track-phuket.com/blog/fast-track-phuket-airport-complete-guide-2026/
 - How does Arrival Fast Track work at HKT? https://fast-track-phuket.com/blog/phuket-airport-arrival-fast-track-immigration/

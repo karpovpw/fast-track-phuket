@@ -31,6 +31,8 @@
   Cache-Control: public, max-age=86400
 /ai.txt
   Cache-Control: public, max-age=86400
+/feed.xml
+  Cache-Control: public, max-age=86400
 
 # Security and privacy headers for every response.
 /*

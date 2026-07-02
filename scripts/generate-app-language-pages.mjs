@@ -221,7 +221,7 @@ const renderRootFallback = (language, t) => {
     { url: '/phuket-airport-fast-track-prices/', label: t['packages.title'] },
     { url: '/tdac-guide/', label: t['guides.tdac.t'] },
     { url: '/faq/', label: t['faq.title'] },
-    { url: '/blog/', label: 'Phuket Airport guides' },
+    { url: language.code === 'en' ? '/blog/' : `/${language.code}/blog/`, label: t['footer.nav.blog'] },
     { url: '/llms.txt', label: 'AI summary' },
   ];
 

@@ -5,7 +5,7 @@ import {
   Globe, MessageCircle, Star, Building,
   ChevronDown, Send, X, Check, ArrowRight,
   Coins, CreditCard, Quote, Phone,
-  ShieldCheck, MapPin
+  ShieldCheck, MapPin, BookOpen
 } from 'lucide-react';
 import './index.css';
 import PaymentTestPage from './PaymentTestPage';
@@ -103,7 +103,9 @@ function LandingPage() {
   };
 
   const currentLanguage = i18n.resolvedLanguage || i18n.language || 'en';
-  const isRussianLanguage = currentLanguage.split('-')[0] === 'ru';
+  const currentLanguageCode = currentLanguage.split('-')[0];
+  const isRussianLanguage = currentLanguageCode === 'ru';
+  const localizedBlogPath = currentLanguageCode === 'en' ? '/blog/' : `/${currentLanguageCode}/blog/`;
   const priceFor = (amount: number) => (
     isRussianLanguage ? formatRussianRublePrice(amount) : formatThaiBahtPrice(amount)
   );
@@ -138,6 +140,45 @@ function LandingPage() {
     { key: "1", icon: <Building size={24} />, title: t("payments.1.t"), desc: t("payments.1.d") },
     { key: "2", icon: <Coins size={24} />, title: t("payments.2.t"), desc: t("payments.2.d") },
     { key: "4", icon: <CreditCard size={24} />, title: t("payments.4.t"), desc: t("payments.4.d") }
+  ];
+
+  const guideCards = [
+    {
+      key: 'complete',
+      href: `${localizedBlogPath}fast-track-phuket-airport-complete-guide-2026/`,
+      title: t('blog.card.complete.title'),
+      desc: t('blog.card.complete.desc'),
+    },
+    {
+      key: 'arrival',
+      href: `${localizedBlogPath}phuket-airport-arrival-fast-track-immigration/`,
+      title: t('blog.card.arrival.title'),
+      desc: t('blog.card.arrival.desc'),
+    },
+    {
+      key: 'departure',
+      href: `${localizedBlogPath}phuket-airport-departure-vip-service/`,
+      title: t('blog.card.departure.title'),
+      desc: t('blog.card.departure.desc'),
+    },
+    {
+      key: 'prices',
+      href: `${localizedBlogPath}phuket-airport-fast-track-prices-worth-it/`,
+      title: t('blog.card.prices.title'),
+      desc: t('blog.card.prices.desc'),
+    },
+    {
+      key: 'peak',
+      href: `${localizedBlogPath}phuket-airport-peak-season-immigration-tips/`,
+      title: t('blog.card.peak.title'),
+      desc: t('blog.card.peak.desc'),
+    },
+    {
+      key: 'tdac',
+      href: `${localizedBlogPath}tdac-phuket-airport-fast-track-guide/`,
+      title: t('blog.card.tdac.title'),
+      desc: t('blog.card.tdac.desc'),
+    },
   ];
 
   return (
@@ -197,6 +238,9 @@ function LandingPage() {
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
             <a href={ctaLinks.phone} className="mobile-hide" style={{ color: 'var(--color-gold)', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
               <Phone size={18} /> <span>{t('nav.call')}</span>
+            </a>
+            <a href={localizedBlogPath} className="mobile-hide" style={{ color: '#fff', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
+              <BookOpen size={18} /> <span>{t('footer.nav.blog')}</span>
             </a>
             <a href={ctaLinks.telegram} target="_blank" rel="noreferrer" className="mobile-hide" style={{ color: '#2AABEE', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none' }}>
               <Send size={18} /> <span>Telegram</span>
@@ -589,6 +633,40 @@ function LandingPage() {
         </div>
       </section>
 
+      <section className="guide-hub-section" aria-labelledby="guide-hub-title">
+        <div className="container">
+          <div className="guide-hub-head">
+            <div>
+              <div className="guide-hub-kicker">
+                <BookOpen size={20} />
+                <span>{t('blog.section.kicker')}</span>
+              </div>
+              <h2 id="guide-hub-title">{t('blog.section.title')}</h2>
+              <p>{t('blog.section.subtitle')}</p>
+            </div>
+            <a href={localizedBlogPath} className="btn btn-outline guide-hub-link">
+              <BookOpen size={18} />
+              <span>{t('blog.section.cta')}</span>
+            </a>
+          </div>
+
+          <div className="guide-hub-grid">
+            {guideCards.map((card) => (
+              <a key={card.key} href={card.href} className="card guide-card">
+                <span className="guide-card-icon" aria-hidden="true">
+                  <BookOpen size={19} />
+                </span>
+                <span className="guide-card-copy">
+                  <strong>{card.title}</strong>
+                  <span>{card.desc}</span>
+                </span>
+                <ArrowRight size={18} className="guide-card-arrow" aria-hidden="true" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Workers / Team Section */}
       <section style={{ padding: '6rem 0' }}>
         <div className="container">
@@ -687,6 +765,7 @@ function LandingPage() {
             <a href="/phuket-airport-fast-track-prices/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>{t('footer.nav.prices')}</a>
             <a href="/tdac-guide/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>{t('footer.nav.tdac')}</a>
             <a href="/faq/" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>{t('footer.nav.faq')}</a>
+            <a href={localizedBlogPath} style={{ color: 'inherit', fontWeight: 600, textDecoration: 'none' }}>{t('footer.nav.blog')}</a>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', marginBottom: '2.5rem', fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>
             <button onClick={() => setActiveModal('terms')} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontWeight: 600 }}>{t('footer.terms')}</button>

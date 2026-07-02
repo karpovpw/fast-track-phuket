@@ -102,3 +102,4 @@ Host: fast-track-phuket.com
 # LLM context: https://fast-track-phuket.com/llms.txt
 # LLM full context: https://fast-track-phuket.com/llms-full.txt
 # AI permissions: https://fast-track-phuket.com/ai.txt
+# Guide feed: https://fast-track-phuket.com/feed.xml

@@ -26,10 +26,10 @@ const packageCodes = ['arr', 'dep', 'combo'] as const;
 type PackageCode = typeof packageCodes[number];
 const faqItemIndexes = [1, 3, 4, 6] as const;
 
-const thbPrices: Record<PackageCode, { single: number; group: number; child: number; original?: number }> = {
-  arr: { single: 1700, group: 1600, child: 850 },
-  dep: { single: 1800, group: 1700, child: 900 },
-  combo: { single: 3300, group: 3100, child: 1650, original: 3500 },
+const thbPrices: Record<PackageCode, { adult: number; child: number; original?: number }> = {
+  arr: { adult: 1900, child: 900 },
+  dep: { adult: 1900, child: 900 },
+  combo: { adult: 3600, child: 1800, original: 3800 },
 };
 
 const thbToRubRate = 2.33299;
@@ -107,19 +107,14 @@ function LandingPage() {
   const priceFor = (amount: number) => (
     isRussianLanguage ? formatRussianRublePrice(amount) : formatThaiBahtPrice(amount)
   );
-  const perPassengerLabel = isRussianLanguage ? ' / чел.' : ' / pax';
   const footerRequisites = t('footer.requisites');
 
   const totalPrice = useMemo(() => {
     const adults = typeof calcAdults === 'number' ? calcAdults : 0;
     const kids = typeof calcKids === 'number' ? calcKids : 0;
-    const totalPayingPax = adults + kids;
-    
     const packagePrice = thbPrices[calcService as PackageCode] || thbPrices.arr;
-    
-    const adultPrice = totalPayingPax > 1 ? packagePrice.group : packagePrice.single;
-    
-    return (adults * adultPrice) + (kids * packagePrice.child);
+
+    return (adults * packagePrice.adult) + (kids * packagePrice.child);
   }, [calcService, calcAdults, calcKids]);
 
   const ctaLinks = {
@@ -298,11 +293,11 @@ function LandingPage() {
                         <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
                           {pkg === 'combo' ? (
                             <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
-                              <span className="package-main-price" style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>{priceFor(packagePrice.single)}</span>
-                              <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.9rem' }}>{priceFor(packagePrice.original || packagePrice.single)}</span>
+                              <span className="package-main-price" style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>{priceFor(packagePrice.adult)}</span>
+                              <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.9rem' }}>{priceFor(packagePrice.original || packagePrice.adult)}</span>
                             </div>
                           ) : (
-                            <div className="package-main-price" style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>{priceFor(packagePrice.single)}</div>
+                            <div className="package-main-price" style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>{priceFor(packagePrice.adult)}</div>
                           )}
                         </div>
                         <div style={{ fontSize: '0.7rem', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '1px', marginTop: '4px' }}>{t('packages.th2')}</div>
@@ -312,17 +307,14 @@ function LandingPage() {
                     <div className="price-grid">
                        <div className="price-col">
                          <span className="price-label">
-                           {t('packages.th3').split('|')[0]}
-                         </span>
-                         <span className="price-value">{priceFor(packagePrice.group)}</span>
-                       </div>
-                       <div className="price-col">
-                         <span className="price-label">
                            {t('packages.th4').split('|')[0]}
                          </span>
                          <span className="price-value">{priceFor(packagePrice.child)}</span>
                        </div>
-                       <div className="price-col price-free-col" style={{ gridColumn: 'span 2', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '0.6rem' }}>
+                       <div className="price-col">
+                         <span className="price-label">
+                           {t('packages.th5').split('|')[0]}
+                         </span>
                          <div className="price-free">
                            <Star size={14} fill="var(--color-gold)" /> <span>{t('packages.price.infant')}</span>
                          </div>
@@ -433,7 +425,7 @@ function LandingPage() {
           <div className="card pricing-card" style={{ padding: 0, overflow: 'hidden', border: '1px solid var(--color-gold)', position: 'relative' }}>
              <div className="pricing-guarantee" style={{ position: 'absolute', top: 0, left: 0, background: 'var(--color-gold)', color: '#000', padding: '0.4rem 1rem', borderBottomRightRadius: '8px', fontWeight: 'bold', fontSize: '0.8rem', zIndex: 10 }}>{t('pricing.guarantee')}</div>
              <div className="table-scroll" style={{ overflowX: 'auto' }}>
-               <table style={{ minWidth: '800px', width: '100%', margin: 0, border: 'none' }}>
+               <table style={{ minWidth: '680px', width: '100%', margin: 0, border: 'none' }}>
                  <thead>
                    <tr>
                      <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)', verticalAlign: 'middle' }}>
@@ -441,9 +433,6 @@ function LandingPage() {
                       </th>
                       <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)', verticalAlign: 'middle' }}>
                         {t('packages.th2')}
-                      </th>
-                      <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)', color: 'var(--color-gold)', verticalAlign: 'middle' }}>
-                        {t('packages.th3').split('|').map((line: string, i: number) => <div key={i}>{line}</div>)}
                       </th>
                       <th style={{ padding: '2rem 1.5rem 1.5rem', background: 'rgba(212, 175, 55, 0.1)', borderBottom: '1px solid rgba(212, 175, 55, 0.3)', verticalAlign: 'middle' }}>
                         {t('packages.th4').split('|').map((line: string, i: number) => (
@@ -462,8 +451,7 @@ function LandingPage() {
                       <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                         <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{t('packages.arr.title')}</div>
                       </td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>{priceFor(thbPrices.arr.single)}</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>{priceFor(thbPrices.arr.group)}{perPassengerLabel}</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>{priceFor(thbPrices.arr.adult)}</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>{priceFor(thbPrices.arr.child)}</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: '#25D366', fontWeight: 700 }}>{t('packages.price.infant')}</td>
                    </tr>
@@ -471,8 +459,7 @@ function LandingPage() {
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                         <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{t('packages.dep.title')}</div>
                      </td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>{priceFor(thbPrices.dep.single)}</td>
-                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>{priceFor(thbPrices.dep.group)}{perPassengerLabel}</td>
+                     <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '1.2rem', fontWeight: 600 }}>{priceFor(thbPrices.dep.adult)}</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>{priceFor(thbPrices.dep.child)}</td>
                      <td style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: '#25D366', fontWeight: 700 }}>{t('packages.price.infant')}</td>
                    </tr>
@@ -480,8 +467,7 @@ function LandingPage() {
                      <td style={{ padding: '1.5rem' }}>
                         <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{t('packages.combo.title')}</div>
                      </td>
-                     <td style={{ padding: '1.5rem', fontSize: '1.2rem', fontWeight: 600 }}>{priceFor(thbPrices.combo.single)}</td>
-                     <td style={{ padding: '1.5rem', color: 'var(--color-gold)', fontSize: '1.2rem', fontWeight: 700 }}>{priceFor(thbPrices.combo.group)}{perPassengerLabel}</td>
+                     <td style={{ padding: '1.5rem', fontSize: '1.2rem', fontWeight: 600 }}>{priceFor(thbPrices.combo.adult)}</td>
                      <td style={{ padding: '1.5rem' }}>{priceFor(thbPrices.combo.child)}</td>
                      <td style={{ padding: '1.5rem', color: '#25D366', fontWeight: 700 }}>{t('packages.price.infant')}</td>
                    </tr>
@@ -511,9 +497,9 @@ function LandingPage() {
                   <div style={{ display: 'block', marginBottom: '1.5rem' }}>
                     <label style={{ display: 'block', color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('calc.service')}</label>
                     <select value={calcService} onChange={(e) => setCalcService(e.target.value)} style={{ width: '100%', padding: '1rem', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '4px' }}>
-                      <option value="arr" style={{ color: '#000' }}>{t('packages.arr.title')} ({priceFor(thbPrices.arr.single)})</option>
-                      <option value="dep" style={{ color: '#000' }}>{t('packages.dep.title')} ({priceFor(thbPrices.dep.single)})</option>
-                      <option value="combo" style={{ color: '#000' }}>{t('packages.combo.title')} ({priceFor(thbPrices.combo.single)})</option>
+                      <option value="arr" style={{ color: '#000' }}>{t('packages.arr.title')} ({priceFor(thbPrices.arr.adult)})</option>
+                      <option value="dep" style={{ color: '#000' }}>{t('packages.dep.title')} ({priceFor(thbPrices.dep.adult)})</option>
+                      <option value="combo" style={{ color: '#000' }}>{t('packages.combo.title')} ({priceFor(thbPrices.combo.adult)})</option>
                     </select>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>

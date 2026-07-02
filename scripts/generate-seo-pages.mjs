@@ -28,9 +28,9 @@ const languages = [
 ];
 
 const thbPrices = {
-  arr: { single: 1700, group: 1600, child: 850 },
-  dep: { single: 1800, group: 1700, child: 900 },
-  combo: { single: 3300, group: 3100, child: 1650 },
+  arr: { adult: 1900, child: 900 },
+  dep: { adult: 1900, child: 900 },
+  combo: { adult: 3600, child: 1800 },
 };
 
 const thbToRubRate = 2.33299;
@@ -88,8 +88,8 @@ const blogPages = [
       {
         heading: 'Prices and package choice',
         paragraphs: [
-          `Arrival Fast Track starts from ${p('arr', 'group')} per person for two or more passengers, with a single-passenger rate of ${p('arr', 'single')}. Departure VIP starts from ${p('dep', 'group')} per person for two or more passengers, with a single-passenger rate of ${p('dep', 'single')}. The arrival plus departure combo starts from ${p('combo', 'group')} per person for two or more passengers.`,
-          'Children under 12 receive a 50% discount and infants from 0 to 2 years are free. For travelers who need both landing and return-flight assistance, the combo is usually the simplest booking because it combines both airport directions and support in one conversation.',
+          `Arrival Fast Track is ${p('arr', 'adult')} per adult passenger. Departure VIP is ${p('dep', 'adult')} per adult passenger. The arrival plus departure combo is ${p('combo', 'adult')} per adult passenger.`,
+          `Children under 12 are ${p('arr', 'child')} for one-way services and ${p('combo', 'child')} for the combo. Infants from 0 to 2 years are free. For travelers who need both landing and return-flight assistance, the combo is usually the simplest booking because it combines both airport directions and support in one conversation.`,
         ],
       },
       {
@@ -193,8 +193,8 @@ const blogPages = [
       {
         heading: 'Departure pricing',
         paragraphs: [
-          `Departure VIP starts from ${p('dep', 'group')} per person for two or more passengers. A single passenger is ${p('dep', 'single')}. Children under 12 receive a 50% discount and infants from 0 to 2 years are free.`,
-          `Travelers booking both arrival and departure should compare the combo package, which starts from ${p('combo', 'group')} per person for two or more passengers.`,
+          `Departure VIP is ${p('dep', 'adult')} per adult passenger. Children under 12 are ${p('dep', 'child')} and infants from 0 to 2 years are free.`,
+          `Travelers booking both arrival and departure should compare the combo package, which is ${p('combo', 'adult')} per adult passenger.`,
         ],
       },
     ],
@@ -223,8 +223,8 @@ const blogPages = [
       {
         heading: 'Current price anchors',
         paragraphs: [
-          `The main price anchors are ${p('arr', 'group')} per person for Arrival Fast Track when booking two or more passengers, ${p('dep', 'group')} per person for Departure VIP when booking two or more passengers, and ${p('combo', 'group')} per person for the arrival plus departure combo.`,
-          `Single-passenger pricing is ${p('arr', 'single')} for arrival, ${p('dep', 'single')} for departure, and ${p('combo', 'single')} for the combo. Children under 12 receive a 50% discount, and infants from 0 to 2 years are free.`,
+          `The main price anchors are ${p('arr', 'adult')} per adult passenger for Arrival Fast Track, ${p('dep', 'adult')} per adult passenger for Departure VIP, and ${p('combo', 'adult')} per adult passenger for the arrival plus departure combo.`,
+          `Children under 12 are ${p('arr', 'child')} for one-way services and ${p('combo', 'child')} for the combo. Infants from 0 to 2 years are free.`,
         ],
       },
       {
@@ -245,14 +245,14 @@ const blogPages = [
         heading: 'How to choose the package',
         paragraphs: [
           'Choose Arrival Fast Track if the main problem is landing smoothly and reaching the hotel, villa, marina, or driver faster. Choose Departure VIP if the stressful part is leaving Phuket, dealing with check-in, and clearing passport control. Choose the combo if you want both directions handled in one booking.',
-          'For families and groups, the group rate and child discount usually make the per-person value clearer than buying separate single-passenger services.',
+          'For families and groups, the published per-passenger rates make the final quote easier to calculate before booking.',
         ],
       },
     ],
     faq: [
       {
         q: 'What is the cheapest VIP Fast Track Phuket Airport (HKT) option?',
-        a: `Arrival Fast Track starts from ${p('arr', 'group')} per person for two or more passengers.`,
+        a: `Arrival Fast Track is ${p('arr', 'adult')} per adult passenger.`,
       },
       {
         q: 'Is Fast Track worth it for families?',
@@ -260,7 +260,7 @@ const blogPages = [
       },
       {
         q: 'Is the combo cheaper than booking arrival and departure separately?',
-        a: `The combo starts from ${p('combo', 'group')} per person for two or more passengers and is usually the simplest option for travelers who need both directions.`,
+        a: `The combo is ${p('combo', 'adult')} per adult passenger and is usually the simplest option for travelers who need both directions.`,
       },
     ],
   },
@@ -510,7 +510,7 @@ const renderStructuredData = (language, t, url) => {
         {
           '@type': 'Offer',
           name: t['packages.arr.title'],
-          price: String(roundedLocalizedAmount(thbPrices.arr.group, language.code)),
+          price: String(roundedLocalizedAmount(thbPrices.arr.adult, language.code)),
           priceCurrency: priceCurrencyFor(language.code),
           url: `${BASE_URL}/arrival-fast-track/`,
           availability: 'https://schema.org/InStock',
@@ -518,7 +518,7 @@ const renderStructuredData = (language, t, url) => {
         {
           '@type': 'Offer',
           name: t['packages.dep.title'],
-          price: String(roundedLocalizedAmount(thbPrices.dep.group, language.code)),
+          price: String(roundedLocalizedAmount(thbPrices.dep.adult, language.code)),
           priceCurrency: priceCurrencyFor(language.code),
           url: `${BASE_URL}/departure-vip/`,
           availability: 'https://schema.org/InStock',
@@ -526,7 +526,7 @@ const renderStructuredData = (language, t, url) => {
         {
           '@type': 'Offer',
           name: t['packages.combo.title'],
-          price: String(roundedLocalizedAmount(thbPrices.combo.group, language.code)),
+          price: String(roundedLocalizedAmount(thbPrices.combo.adult, language.code)),
           priceCurrency: priceCurrencyFor(language.code),
           url: `${BASE_URL}/phuket-airport-fast-track-prices/`,
           availability: 'https://schema.org/InStock',
@@ -560,21 +560,21 @@ const renderLanguagePage = (language, t) => {
       title: t['packages.arr.title'],
       description: t['packages.arr.desc'],
       features: splitList(t['packages.arr.features']),
-      price: formatLocalizedPrice(thbPrices.arr.group, language.code),
+      price: formatLocalizedPrice(thbPrices.arr.adult, language.code),
       url: '/arrival-fast-track/',
     },
     {
       title: t['packages.dep.title'],
       description: t['packages.dep.desc'],
       features: splitList(t['packages.dep.features']),
-      price: formatLocalizedPrice(thbPrices.dep.group, language.code),
+      price: formatLocalizedPrice(thbPrices.dep.adult, language.code),
       url: '/departure-vip/',
     },
     {
       title: t['packages.combo.title'],
       description: t['packages.combo.desc'],
       features: splitList(t['packages.combo.features']),
-      price: formatLocalizedPrice(thbPrices.combo.group, language.code),
+      price: formatLocalizedPrice(thbPrices.combo.adult, language.code),
       url: '/phuket-airport-fast-track-prices/',
     },
   ];
@@ -657,7 +657,6 @@ ${renderArrivalMeetingNotice(t)}
             <tr>
               <th>${escapeHtml(t['packages.th1'])}</th>
               <th>${escapeHtml(t['packages.th2'])}</th>
-              <th>${escapeHtml(t['packages.th3'].replace('|', ' '))}</th>
               <th>${escapeHtml(t['packages.th4'].replace('|', ' '))}</th>
               <th>${escapeHtml(t['packages.th5'].replace('|', ' '))}</th>
             </tr>
@@ -665,22 +664,19 @@ ${renderArrivalMeetingNotice(t)}
           <tbody>
             <tr>
               <td><a href="/arrival-fast-track/">${escapeHtml(t['packages.arr.title'])}</a></td>
-              <td>${escapeHtml(formatLocalizedPrice(thbPrices.arr.single, language.code))}</td>
-              <td>${escapeHtml(formatLocalizedPrice(thbPrices.arr.group, language.code))}</td>
+              <td>${escapeHtml(formatLocalizedPrice(thbPrices.arr.adult, language.code))}</td>
               <td>${escapeHtml(formatLocalizedPrice(thbPrices.arr.child, language.code))}</td>
               <td>${escapeHtml(t['packages.price.infant'])}</td>
             </tr>
             <tr>
               <td><a href="/departure-vip/">${escapeHtml(t['packages.dep.title'])}</a></td>
-              <td>${escapeHtml(formatLocalizedPrice(thbPrices.dep.single, language.code))}</td>
-              <td>${escapeHtml(formatLocalizedPrice(thbPrices.dep.group, language.code))}</td>
+              <td>${escapeHtml(formatLocalizedPrice(thbPrices.dep.adult, language.code))}</td>
               <td>${escapeHtml(formatLocalizedPrice(thbPrices.dep.child, language.code))}</td>
               <td>${escapeHtml(t['packages.price.infant'])}</td>
             </tr>
             <tr>
               <td><a href="/phuket-airport-fast-track-prices/">${escapeHtml(t['packages.combo.title'])}</a></td>
-              <td>${escapeHtml(formatLocalizedPrice(thbPrices.combo.single, language.code))}</td>
-              <td>${escapeHtml(formatLocalizedPrice(thbPrices.combo.group, language.code))}</td>
+              <td>${escapeHtml(formatLocalizedPrice(thbPrices.combo.adult, language.code))}</td>
               <td>${escapeHtml(formatLocalizedPrice(thbPrices.combo.child, language.code))}</td>
               <td>${escapeHtml(t['packages.price.infant'])}</td>
             </tr>

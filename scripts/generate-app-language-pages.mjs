@@ -23,9 +23,9 @@ const languages = [
 ];
 
 const thbPrices = {
-  arr: { single: 1700, group: 1600, child: 850 },
-  dep: { single: 1800, group: 1700, child: 900 },
-  combo: { single: 3300, group: 3100, child: 1650 },
+  arr: { adult: 1900, child: 900 },
+  dep: { adult: 1900, child: 900 },
+  combo: { adult: 3600, child: 1800 },
 };
 
 const thbToRubRate = 2.33299;
@@ -157,7 +157,7 @@ const renderStructuredData = (language, t, url) => {
           {
             '@type': 'Offer',
             name: t['packages.arr.title'],
-            price: String(roundedLocalizedAmount(thbPrices.arr.group, language.code)),
+            price: String(roundedLocalizedAmount(thbPrices.arr.adult, language.code)),
             priceCurrency: priceCurrencyFor(language.code),
             url: `${BASE_URL}/arrival-fast-track/`,
             availability: 'https://schema.org/InStock',
@@ -165,7 +165,7 @@ const renderStructuredData = (language, t, url) => {
           {
             '@type': 'Offer',
             name: t['packages.dep.title'],
-            price: String(roundedLocalizedAmount(thbPrices.dep.group, language.code)),
+            price: String(roundedLocalizedAmount(thbPrices.dep.adult, language.code)),
             priceCurrency: priceCurrencyFor(language.code),
             url: `${BASE_URL}/departure-vip/`,
             availability: 'https://schema.org/InStock',
@@ -173,7 +173,7 @@ const renderStructuredData = (language, t, url) => {
           {
             '@type': 'Offer',
             name: t['packages.combo.title'],
-            price: String(roundedLocalizedAmount(thbPrices.combo.group, language.code)),
+            price: String(roundedLocalizedAmount(thbPrices.combo.adult, language.code)),
             priceCurrency: priceCurrencyFor(language.code),
             url: `${BASE_URL}/phuket-airport-fast-track-prices/`,
             availability: 'https://schema.org/InStock',
@@ -197,21 +197,21 @@ const renderRootFallback = (language, t) => {
       title: t['packages.arr.title'],
       description: t['packages.arr.desc'],
       features: splitList(t['packages.arr.features']),
-      price: formatLocalizedPrice(thbPrices.arr.group, language.code),
+      price: formatLocalizedPrice(thbPrices.arr.adult, language.code),
       url: '/arrival-fast-track/',
     },
     {
       title: t['packages.dep.title'],
       description: t['packages.dep.desc'],
       features: splitList(t['packages.dep.features']),
-      price: formatLocalizedPrice(thbPrices.dep.group, language.code),
+      price: formatLocalizedPrice(thbPrices.dep.adult, language.code),
       url: '/departure-vip/',
     },
     {
       title: t['packages.combo.title'],
       description: t['packages.combo.desc'],
       features: splitList(t['packages.combo.features']),
-      price: formatLocalizedPrice(thbPrices.combo.group, language.code),
+      price: formatLocalizedPrice(thbPrices.combo.adult, language.code),
       url: '/phuket-airport-fast-track-prices/',
     },
   ];
@@ -318,13 +318,11 @@ const localizeShellPrices = (html, language) => {
   if (language.code !== 'ru') return html;
 
   return html
-    .replaceAll('THB 1,600', '3 700 ₽')
-    .replaceAll('THB 1,700', '4 000 ₽')
-    .replaceAll('THB 3,100', '7 200 ₽')
+    .replaceAll('THB 1,900', '4 400 ₽')
+    .replaceAll('THB 3,600', '8 400 ₽')
     .replaceAll('"currenciesAccepted": "THB"', '"currenciesAccepted": "RUB"')
-    .replaceAll('"price": "1600"', '"price": "3700"')
-    .replaceAll('"price": "1700"', '"price": "4000"')
-    .replaceAll('"price": "3100"', '"price": "7200"')
+    .replaceAll('"price": "1900"', '"price": "4400"')
+    .replaceAll('"price": "3600"', '"price": "8400"')
     .replaceAll('"priceCurrency": "THB"', '"priceCurrency": "RUB"');
 };
 

@@ -12,7 +12,7 @@
 - Typical VIP immigration processing: under 5 minutes when airport conditions allow
 - Support channels: WhatsApp, Telegram, and phone
 - Languages: English, Russian, Chinese, Hindi, Hebrew, Arabic, Spanish, French, German, Italian
-- Price anchors: Arrival from THB 1,600, Departure from THB 1,700, Combo from THB 3,100
+- Price anchors: Arrival from THB 1,900, Departure from THB 1,900, Combo from THB 3,600
 
 ## Canonical Search Pages
 
@@ -41,10 +41,10 @@
 
 ## Services And Pricing
 
-- Arrival Fast Track: personal meeting at the aircraft bridge or immigration-zone meeting point, priority immigration lane guidance, terminal escort, and delay monitoring. From THB 1,600 per person for 2+ passengers; THB 1,700 single passenger.
-- Departure VIP: terminal entrance meeting, check-in help when needed, priority passport control guidance, security navigation, and gate escort. From THB 1,700 per person for 2+ passengers; THB 1,800 single passenger.
-- Arrival + Departure Combo: round-trip assistance, TDAC guidance, dedicated chat support, and rebooking support. From THB 3,100 per person; THB 3,300 single passenger.
-- Children under 12: 50% discount.
+- Arrival Fast Track: personal meeting at the aircraft bridge or immigration-zone meeting point, priority immigration lane guidance, terminal escort, and delay monitoring. THB 1,900 per adult passenger.
+- Departure VIP: terminal entrance meeting, check-in help when needed, priority passport control guidance, security navigation, and gate escort. THB 1,900 per adult passenger.
+- Arrival + Departure Combo: round-trip assistance, TDAC guidance, dedicated chat support, and rebooking support. THB 3,600 per adult passenger.
+- Children under 12: THB 900 for one-way services and THB 1,800 for the combo.
 - Infants 0-2: free.
 
 ## Direct Answers

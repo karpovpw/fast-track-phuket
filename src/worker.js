@@ -7,23 +7,20 @@ const paymentServices = {
   arr: {
     sku: 'fasttrack-arrival',
     name: 'Phuket Airport Arrival Fast Track',
-    single: 1700,
-    group: 1600,
-    child: 850,
+    adult: 1900,
+    child: 900,
   },
   dep: {
     sku: 'fasttrack-departure',
     name: 'Phuket Airport Departure VIP',
-    single: 1800,
-    group: 1700,
+    adult: 1900,
     child: 900,
   },
   combo: {
     sku: 'fasttrack-combo',
     name: 'Phuket Airport Arrival + Departure VIP Combo',
-    single: 3300,
-    group: 3100,
-    child: 1650,
+    adult: 3600,
+    child: 1800,
   },
 };
 
@@ -110,9 +107,7 @@ const requiredServiceCode = (formData) => {
 
 const calculateOrderPricing = (env, serviceCode, passengerCount, childPassengerCount) => {
   const service = paymentServices[serviceCode];
-  const payingPassengers = passengerCount + childPassengerCount;
-  const adultPrice = payingPassengers > 1 ? service.group : service.single;
-  const priceThb = (passengerCount * adultPrice) + (childPassengerCount * service.child);
+  const priceThb = (passengerCount * service.adult) + (childPassengerCount * service.child);
   const priceUsd = Math.max(1, Math.round(priceThb / parseThbToUsdRate(env)));
 
   return {

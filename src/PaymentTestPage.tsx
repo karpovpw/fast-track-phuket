@@ -22,25 +22,22 @@ const paymentServices = {
     title: 'Arrival Fast Track',
     dateLabel: 'Date of arrival',
     flightLabel: 'Arrival flight number',
-    single: 1700,
-    group: 1600,
-    child: 850,
+    adult: 1900,
+    child: 900,
   },
   dep: {
     title: 'Departure VIP',
     dateLabel: 'Date of departure',
     flightLabel: 'Departure flight number',
-    single: 1800,
-    group: 1700,
+    adult: 1900,
     child: 900,
   },
   combo: {
     title: 'Arrival + Departure VIP Combo',
     dateLabel: 'First service date',
     flightLabel: 'Main flight number',
-    single: 3300,
-    group: 3100,
-    child: 1650,
+    adult: 3600,
+    child: 1800,
   },
 } as const;
 
@@ -102,10 +99,8 @@ const calculateServicePriceThb = (
   childPassengerCount: number,
 ) => {
   const service = paymentServices[serviceCode];
-  const payingPassengers = passengerCount + childPassengerCount;
-  const adultPrice = payingPassengers > 1 ? service.group : service.single;
 
-  return (passengerCount * adultPrice) + (childPassengerCount * service.child);
+  return (passengerCount * service.adult) + (childPassengerCount * service.child);
 };
 
 const normalizeCount = (value: string, fallback: number) => {

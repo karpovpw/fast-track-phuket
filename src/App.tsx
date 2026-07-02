@@ -107,6 +107,17 @@ function LandingPage() {
   const priceFor = (amount: number) => (
     isRussianLanguage ? formatRussianRublePrice(amount) : formatThaiBahtPrice(amount)
   );
+  const originalPriceFor = (packageCode: PackageCode, amount: number) => {
+    if (isRussianLanguage && packageCode === 'combo') {
+      const oneWayAdultTotal = roundRussianRublePrice(thbPrices.arr.adult) + roundRussianRublePrice(thbPrices.dep.adult);
+
+      return `${new Intl.NumberFormat('ru-RU', {
+        maximumFractionDigits: 0,
+      }).format(oneWayAdultTotal)} ₽`;
+    }
+
+    return priceFor(amount);
+  };
   const footerRequisites = t('footer.requisites');
 
   const totalPrice = useMemo(() => {
@@ -294,7 +305,7 @@ function LandingPage() {
                           {pkg === 'combo' ? (
                             <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
                               <span className="package-main-price" style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>{priceFor(packagePrice.adult)}</span>
-                              <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.9rem' }}>{priceFor(packagePrice.original || packagePrice.adult)}</span>
+                              <span style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '0.9rem' }}>{originalPriceFor(pkg, packagePrice.original ?? packagePrice.adult)}</span>
                             </div>
                           ) : (
                             <div className="package-main-price" style={{ color: 'var(--color-gold)', fontSize: '2.2rem', fontWeight: 800, lineHeight: 1 }}>{priceFor(packagePrice.adult)}</div>
